@@ -1,0 +1,87 @@
+version: 1
+purpose: >-
+  Discover the target repository, resolve material unknowns with the human,
+  and configure the Flywheel before application missions begin.
+behavior:
+  inspect_before_asking: true
+  ask_only_unresolved_questions: true
+  persist_each_accepted_answer: true
+  explain_reason_for_question: true
+  distinguish_target_and_flywheel_technology: true
+provenance_values:
+  - discovered
+  - provided
+  - inferred
+  - defaulted
+  - approved
+  - deferred
+  - rejected
+sections:
+  - id: repository-purpose
+    writes_to:
+      - .flywheel/operating-model/config/repository-context.yaml
+    questions:
+      - id: repository-purpose
+        required: true
+        prompt: What problem does this repository solve, and who uses its output?
+      - id: repository-scope
+        required: true
+        prompt: What types of work should future Flywheel missions be allowed to perform in this repository?
+  - id: repository-constraints
+    writes_to:
+      - .flywheel/operating-model/config/repository-context.yaml
+    questions:
+      - id: authoritative-documents
+        required: false
+        prompt: Which documents, specifications, or external systems are authoritative for this repository?
+      - id: security-compliance
+        required: false
+        prompt: What security, privacy, regulatory, licensing, or data-handling constraints must future missions follow?
+      - id: environment-restrictions
+        required: true
+        prompt: What operating systems, network restrictions, credentials, hosted services, or execution environments constrain work?
+  - id: governance
+    writes_to:
+      - .flywheel/operating-model/config/governance.yaml
+    questions:
+      - id: autonomous-boundaries
+        required: true
+        prompt: What work may the AI perform without asking for approval?
+      - id: approval-boundaries
+        required: true
+        prompt: Which actions must always pause for human approval?
+      - id: source-control-policy
+        required: true
+        prompt: What branch, commit, pull request, review, and merge rules must missions follow?
+  - id: validation
+    writes_to:
+      - .flywheel/operating-model/config/validation.yaml
+    questions:
+      - id: evidence-expectations
+        required: true
+        prompt: What evidence must support goal completion?
+      - id: required-checks
+        required: true
+        prompt: Which builds, tests, reviews, or other checks are mandatory before changes are accepted?
+  - id: flywheel-tool-requirements
+    writes_to:
+      - .flywheel/operating-model/config/flywheel-context.yaml
+      - .flywheel/operating-model/config/capabilities.yaml
+    questions:
+      - id: execution-locations
+        required: true
+        prompt: Where must the Flywheel operating tools run, and which runtimes can be assumed to exist there?
+      - id: portability
+        required: true
+        prompt: What portability, installation, offline, packaging, or dependency requirements apply to the Flywheel tools?
+      - id: tool-technology
+        required: false
+        prompt: Do you have preferences or prohibitions for the Flywheel tool language, framework, test framework, command interface, or storage approach?
+        note: These choices are independent from the target application's technology stack.
+completion:
+  required_conditions:
+    - Repository purpose and mission scope are recorded.
+    - Governance and approval boundaries are confirmed.
+    - Validation and evidence expectations are confirmed.
+    - Material unknowns are resolved or explicitly deferred.
+    - No Flywheel implementation technology is selected merely because the target repository uses it.
