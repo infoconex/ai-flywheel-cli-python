@@ -1,0 +1,58 @@
+schema_version: 1
+value_record:
+  required:
+    - key
+    - value
+    - origin
+    - status
+  fields:
+    key:
+      description: Stable repository-root-relative configuration path written by the answer.
+    value:
+      description: Confirmed, discovered, inferred, defaulted, approved, deferred, or rejected value.
+    origin:
+      allowed:
+        - discovered
+        - provided
+        - inferred
+        - defaulted
+        - approved
+        - deferred
+        - rejected
+    status:
+      allowed:
+        - candidate
+        - confirmed
+        - approved
+        - deferred
+        - rejected
+        - superseded
+    confidence:
+      allowed:
+        - low
+        - medium
+        - high
+        - confirmed
+    source:
+      description: File, command, human response, policy, or durable evidence reference.
+    rationale:
+      description: Why the value was recorded or selected.
+    recorded_at:
+      description: ISO-8601 timestamp.
+    recorded_by:
+      description: Human or operator identity.
+    approval:
+      required_when: status is approved
+      fields:
+        approver: {}
+        approved_at: {}
+        evidence: {}
+    supersedes:
+      description: Prior value record replaced by this value.
+rules:
+  - Never overwrite a conflicting value without preserving the prior record.
+  - Material inferred values require confirmation or approval before use.
+  - Repository technology and Flywheel implementation technology use separate keys and configuration files.
+  - Unknown values remain explicit and do not become defaults by omission.
+  - Deferred and rejected values remain durable and include rationale.
+  - All file paths are repository-root-relative.
