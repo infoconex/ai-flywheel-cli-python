@@ -1,0 +1,74 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: reuse-assessment.schema.yaml
+type: object
+additionalProperties: false
+required: [schema_version, id, mission_id, goal_id, execution_id, subject_type, subject_ref, adaptation_refs, status, disposition, statement, evidence_refs, validation_refs, applicability, limitations, reuse_guidance, duplicate_refs, conflict_refs, proposed_knowledge_ref, supersedes_refs, approval_required, approval_refs, decision_ref, rationale, assessed_at, assessed_by]
+properties:
+  schema_version: {type: integer, const: 1}
+  id: {type: string, pattern: '^REUSE-[0-9]{3,}$'}
+  mission_id: {type: string, minLength: 1}
+  goal_id: {type: string, minLength: 1}
+  execution_id: {type: string, pattern: '^EX-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+  subject_type: {type: string, enum: [candidate-learning, existing-knowledge]}
+  subject_ref: {type: string, minLength: 1}
+  adaptation_refs: {type: array, uniqueItems: true, items: {type: string, pattern: '^ADAPT-[0-9]{3,}$'}}
+  status: {type: string, enum: [planned, completed]}
+  disposition: {type: [string, 'null'], enum: [promote, supersede, defer, reject, not-reusable, reused, inapplicable, revision-required, deprecated, not-considered, null]}
+  statement: {type: string, minLength: 1}
+  evidence_refs: {type: array, uniqueItems: true, items: {type: string, minLength: 1}}
+  validation_refs: {type: array, uniqueItems: true, items: {type: string, pattern: '^VAL-[0-9]{3,}$'}}
+  applicability: {type: array, items: {type: string, minLength: 1}}
+  limitations: {type: array, items: {type: string, minLength: 1}}
+  reuse_guidance: {type: [string, 'null']}
+  duplicate_refs: {type: array, uniqueItems: true, items: {type: string, minLength: 1}}
+  conflict_refs: {type: array, uniqueItems: true, items: {type: string, minLength: 1}}
+  proposed_knowledge_ref: {type: [string, 'null']}
+  supersedes_refs: {type: array, uniqueItems: true, items: {type: string, minLength: 1}}
+  approval_required: {type: boolean}
+  approval_refs: {type: array, uniqueItems: true, items: {type: string, minLength: 1}}
+  decision_ref: {type: [string, 'null']}
+  rationale: {type: [string, 'null']}
+  assessed_at: {type: [string, 'null'], format: date-time}
+  assessed_by: {type: [string, 'null']}
+allOf:
+  - if: {properties: {status: {const: planned}}, required: [status]}
+    then:
+      properties:
+        disposition: {type: 'null'}
+        rationale: {type: 'null'}
+        assessed_at: {type: 'null'}
+        assessed_by: {type: 'null'}
+  - if: {properties: {status: {const: completed}}, required: [status]}
+    then:
+      properties:
+        disposition: {type: string}
+        rationale: {type: string, minLength: 1}
+        assessed_at: {type: string, format: date-time}
+        assessed_by: {type: string, minLength: 1}
+  - if: {properties: {subject_type: {const: candidate-learning}}, required: [subject_type]}
+    then:
+      properties:
+        disposition: {enum: [promote, supersede, defer, reject, not-reusable, null]}
+  - if: {properties: {subject_type: {const: existing-knowledge}}, required: [subject_type]}
+    then:
+      properties:
+        disposition: {enum: [reused, inapplicable, revision-required, deprecated, not-considered, null]}
+  - if: {properties: {disposition: {enum: [promote, supersede]}}, required: [disposition]}
+    then:
+      properties:
+        evidence_refs: {minItems: 1}
+        validation_refs: {minItems: 1}
+        applicability: {minItems: 1}
+        limitations: {type: array}
+        reuse_guidance: {type: string, minLength: 1}
+        proposed_knowledge_ref: {type: string, minLength: 1}
+        conflict_refs: {maxItems: 0}
+  - if: {properties: {disposition: {const: supersede}}, required: [disposition]}
+    then: {properties: {supersedes_refs: {minItems: 1}}}
+  - if: {properties: {approval_required: {const: false}}, required: [approval_required]}
+    then: {properties: {approval_refs: {maxItems: 0}}}
+  - if: {properties: {approval_required: {const: true}, status: {const: completed}}, required: [approval_required, status]}
+    then:
+      properties:
+        approval_refs: {minItems: 1}
+        decision_ref: {type: string, minLength: 1}
