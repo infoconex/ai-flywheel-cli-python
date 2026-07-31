@@ -1,0 +1,38 @@
+schema_version: 1
+id: establish-ai-flywheel-operations
+title: Onboard Repository to AI Flywheel
+status: active
+objective: >-
+  Establish the repository's AI Flywheel operating environment so later
+  missions can safely address application or other repository work. This
+  mission discovers, reconciles, and configures repository context; defines
+  and builds repository-specific Flywheel operating tools; validates them;
+  and proves readiness without performing application feature work.
+constraints:
+  - Do not perform application feature, modernization, or defect work during this mission unless explicitly required to prove Flywheel operation.
+  - Keep target repository technologies separate from Flywheel implementation technologies.
+  - Do not prescribe the Flywheel implementation language, framework, test framework, command interface, or architecture before discovery and human approval.
+  - Persist onboarding answers, repository observations, provenance, decisions, and unknowns in the operating model and records.
+  - Require human approval for material implementation choices.
+  - Begin with direct artifact operation and transition to self-hosting when validated tools are capable.
+success_criteria:
+  - id: MSC-001
+    statement: Repository context, governance, validation, and mission boundaries are sufficient for future work.
+  - id: MSC-002
+    statement: Required, selected, deferred, and rejected Flywheel capabilities are recorded.
+  - id: MSC-003
+    statement: The Flywheel implementation stack is selected independently and approved.
+  - id: MSC-004
+    statement: Repository-specific operating tools are implemented and validated.
+  - id: MSC-005
+    statement: A proving mission is successfully operated with the new tools.
+  - id: MSC-006
+    statement: State changes to ready-for-missions only after operational and artifact validation.
+  - id: MSC-007
+    statement: Onboarding findings and framework improvements are persisted.
+goals:
+  - 001-discover-repository-and-gather-context
+  - 002-reconcile-and-approve-operating-context
+  - 003-define-and-approve-implementation
+  - 004-build-and-validate-operating-tools
+  - 005-self-host-prove-and-evaluate
