@@ -1,0 +1,17 @@
+schema_version: 1
+required:
+  - read and validate Flywheel configuration
+  - associate work with an active mission and goal
+  - create and update mission, goal, and execution records
+  - enforce valid state transitions and approval gates
+  - capture evidence, decisions, findings, and learning
+  - validate completion before persistence
+recommended:
+  - list and filter missions and goals
+  - structured logging
+  - human-readable status reporting
+  - reusable validation commands
+selected: []
+deferred: []
+rejected: []
+repository_defined: []
