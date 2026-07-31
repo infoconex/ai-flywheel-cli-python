@@ -1,0 +1,88 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: persistence-plan.schema.yaml
+type: object
+additionalProperties: false
+required: [schema_version, id, mission_id, goal_id, execution_id, created_at, operator, status, targets, write_order, recovery, final_verification]
+properties:
+  schema_version: {type: integer, const: 1}
+  id: {type: string, pattern: '^PERSIST-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+  mission_id: {type: string, minLength: 1}
+  goal_id: {type: string, minLength: 1}
+  execution_id: {type: string, pattern: '^EX-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+  created_at: {type: string, format: date-time, pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$'}
+  operator: {type: string, minLength: 1}
+  status: {type: string, enum: [planned, applying, applied, failed, rolled-back, blocked]}
+  targets:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items: {$ref: '#/$defs/target'}
+  write_order:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items: {type: string, pattern: '^PT-[0-9]{3,}$'}
+  recovery:
+    type: object
+    additionalProperties: false
+    required: [mode, finding_ref, blocker]
+    properties:
+      mode: {type: string, enum: [not-started, exact-rollback, compensating-record, human-reconciliation]}
+      finding_ref: {type: [string, 'null']}
+      blocker: {type: [string, 'null']}
+  final_verification:
+    type: object
+    additionalProperties: false
+    required: [required, verified_at, result]
+    properties:
+      required: {type: boolean, const: true}
+      verified_at: {type: [string, 'null'], format: date-time}
+      result: {type: string, enum: [pending, passed, failed]}
+$defs:
+  target:
+    type: object
+    additionalProperties: false
+    required: [id, artifact_type, path, operation, mutability, dependency_refs, expected_precondition, proposed_content_digest, rollback]
+    properties:
+      id: {type: string, pattern: '^PT-[0-9]{3,}$'}
+      artifact_type: {type: string, enum: [evidence, decision, finding, approval, certification, readiness-validation, reuse-assessment, execution, goal, mission, state, context, knowledge]}
+      path: {type: string, minLength: 1}
+      operation: {type: string, enum: [create, update]}
+      mutability: {type: string, enum: [create-only, append-only, supersede-only, cas-update]}
+      dependency_refs:
+        type: array
+        uniqueItems: true
+        items: {type: string, pattern: '^PT-[0-9]{3,}$'}
+      expected_precondition:
+        oneOf:
+          - type: object
+            additionalProperties: false
+            required: [absence]
+            properties: {absence: {const: true}}
+          - type: object
+            additionalProperties: false
+            required: [blob_sha]
+            properties: {blob_sha: {type: string, minLength: 1}}
+      proposed_content_digest: {type: string, minLength: 1}
+      rollback:
+        type: object
+        additionalProperties: false
+        required: [mode, retained_content_digest]
+        properties:
+          mode: {type: string, enum: [delete-created, restore-retained-content, compensating-record, none]}
+          retained_content_digest: {type: [string, 'null']}
+    allOf:
+      - if: {properties: {operation: {const: create}}, required: [operation]}
+        then:
+          properties:
+            expected_precondition:
+              type: object
+              required: [absence]
+            mutability: {enum: [create-only, append-only, supersede-only]}
+      - if: {properties: {operation: {const: update}}, required: [operation]}
+        then:
+          properties:
+            expected_precondition:
+              type: object
+              required: [blob_sha]
+            mutability: {const: cas-update}
