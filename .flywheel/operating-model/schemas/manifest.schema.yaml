@@ -1,0 +1,67 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: manifest.schema.yaml
+type: object
+additionalProperties: false
+required: [schema_version, framework, path_base, entrypoint, locations, required_files, onboarding, implementation, compatibility]
+properties:
+  schema_version: {type: integer, const: 1}
+  framework:
+    type: object
+    additionalProperties: false
+    required: [name, version, mode, specification]
+    properties:
+      name: {type: string, const: AI Flywheel}
+      version: {type: string, pattern: '^[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?$'}
+      mode: {type: string, enum: [manual-bootstrap, tool-managed]}
+      specification: {type: string, minLength: 1}
+  path_base: {type: string, const: repository-root}
+  entrypoint: {const: .flywheel/operating-model/guidance/startup.md}
+  locations:
+    type: object
+    additionalProperties: false
+    required: [state, operating_model, missions, records, knowledge, schemas]
+    properties:
+      state: {const: .flywheel/state.yaml}
+      operating_model: {const: .flywheel/operating-model}
+      missions: {const: .flywheel/operations/missions}
+      records: {const: .flywheel/operations/records}
+      knowledge: {const: .flywheel/operations/knowledge}
+      schemas: {const: .flywheel/operating-model/schemas}
+  required_files:
+    type: array
+    minItems: 11
+    uniqueItems: true
+    items: {type: string, pattern: '^\.flywheel/'}
+    allOf:
+      - contains: {const: .flywheel/state.yaml}
+      - contains: {const: .flywheel/operating-model/guidance/startup.md}
+      - contains: {const: .flywheel/operating-model/schemas/README.md}
+      - contains: {const: .flywheel/operating-model/schemas/manifest.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/state.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/mission.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/goal.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/execution.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/record.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/knowledge.schema.yaml}
+      - contains: {const: .flywheel/operating-model/schemas/startup-failure.schema.yaml}
+  onboarding:
+    type: object
+    additionalProperties: false
+    required: [mission, status]
+    properties:
+      mission: {type: string, minLength: 1}
+      status: {type: string, enum: [pending, active, completed, upgrading]}
+  implementation:
+    type: object
+    additionalProperties: false
+    required: [status, manifest]
+    properties:
+      status: {type: string, enum: [not-created, proposed, approved, implemented, validated]}
+      manifest: {type: [string, 'null']}
+  compatibility:
+    type: object
+    additionalProperties: false
+    required: [application_missions_require_readiness, manual_operation_permitted]
+    properties:
+      application_missions_require_readiness: {const: ready-for-missions}
+      manual_operation_permitted: {type: boolean}
