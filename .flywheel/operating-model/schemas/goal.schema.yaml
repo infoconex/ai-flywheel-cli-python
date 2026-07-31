@@ -1,0 +1,67 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: goal.schema.yaml
+type: object
+additionalProperties: false
+required: [schema_version, id, mission_id, title, status, objective, acceptance_criteria, evidence_required]
+properties:
+  schema_version: {type: integer, const: 1}
+  id: {type: string, minLength: 1}
+  mission_id: {type: string, minLength: 1}
+  title: {type: string, minLength: 1}
+  status: {type: string, enum: [proposed, ready, active, blocked, completed, cancelled, failed]}
+  objective: {type: string, minLength: 1}
+  depends_on:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
+  blocked_by:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
+  procedure:
+    type: array
+    items: {type: string, minLength: 1}
+  acceptance_criteria:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id, statement]
+      additionalProperties: false
+      properties:
+        id: {type: string, pattern: '^AC-[0-9]{3,}$'}
+        statement: {type: string, minLength: 1}
+  evidence_required:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [criterion_id]
+      additionalProperties: false
+      properties:
+        criterion_id: {type: string, pattern: '^AC-[0-9]{3,}$'}
+        artifacts:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items: {type: string, minLength: 1}
+        evidence_types:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items: {type: string, minLength: 1}
+        artifact_refs:
+          type: array
+          uniqueItems: true
+          items: {type: string, minLength: 1}
+      anyOf:
+        - required: [artifacts]
+        - required: [evidence_types]
+        - required: [artifact_refs]
+  constraints:
+    type: array
+    items: {type: string, minLength: 1}
+  approvals_required:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
