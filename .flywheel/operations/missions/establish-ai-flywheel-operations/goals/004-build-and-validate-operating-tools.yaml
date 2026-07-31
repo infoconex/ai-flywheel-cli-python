@@ -1,0 +1,36 @@
+schema_version: 1
+id: 004-build-and-validate-operating-tools
+mission_id: establish-ai-flywheel-operations
+title: Build and Validate Operating Tools
+status: blocked
+blocked_by:
+  - 003-define-and-approve-implementation
+objective: Build the approved minimum repository-specific tools required to operate the AI Flywheel.
+procedure:
+  - Implement only approved capabilities using the approved Flywheel language, architecture, standards, and dependencies.
+  - Implement machine validation for state, goal, execution, lifecycle, evidence, approval, reference, and readiness rules.
+  - Add automated tests for permitted and prohibited transitions.
+  - Validate mission, goal, execution, evidence, approval, record-location, and state-transition behavior.
+  - Record failures, adaptations, and validation evidence.
+acceptance_criteria:
+  - id: AC-001
+    statement: All required approved capabilities are implemented or explicitly deferred without violating readiness requirements.
+  - id: AC-002
+    statement: Invalid references, unauthorized operations, missing lifecycle stages, and incomplete goal completion are rejected.
+  - id: AC-003
+    statement: Machine-readable artifact schemas and cross-reference validation pass.
+  - id: AC-004
+    statement: Automated tests and required validation checks pass.
+  - id: AC-005
+    statement: Implementation location, dependencies, entry points, commands, and limitations are documented in the implementation manifest.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [source changes, capability validation]
+  - criterion_id: AC-002
+    artifacts: [negative test results]
+  - criterion_id: AC-003
+    artifacts: [schema and reference validation results]
+  - criterion_id: AC-004
+    artifacts: [test results, validation results]
+  - criterion_id: AC-005
+    artifacts: [implementation manifest]
