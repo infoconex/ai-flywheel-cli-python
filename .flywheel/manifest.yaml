@@ -1,0 +1,75 @@
+schema_version: 1
+framework:
+  name: AI Flywheel
+  version: 0.1.0-development
+  mode: manual-bootstrap
+  specification: https://github.com/Infoconex/ai-flywheel-spec
+path_base: repository-root
+entrypoint: .flywheel/operating-model/guidance/startup.md
+locations:
+  state: .flywheel/state.yaml
+  operating_model: .flywheel/operating-model
+  missions: .flywheel/operations/missions
+  records: .flywheel/operations/records
+  knowledge: .flywheel/operations/knowledge
+  schemas: .flywheel/operating-model/schemas
+required_files:
+  - .flywheel/state.yaml
+  - .flywheel/operating-model/guidance/startup.md
+  - .flywheel/operating-model/guidance/startup-failure.md
+  - .flywheel/operating-model/guidance/broken-reference-recovery.md
+  - .flywheel/operating-model/guidance/authority.md
+  - .flywheel/operating-model/guidance/approval-boundaries.md
+  - .flywheel/operating-model/guidance/operator.md
+  - .flywheel/operating-model/guidance/invariants.md
+  - .flywheel/operating-model/guidance/principles.md
+  - .flywheel/operating-model/guidance/lifecycle.md
+  - .flywheel/operating-model/guidance/sop.md
+  - .flywheel/operating-model/guidance/mission-model.md
+  - .flywheel/operating-model/guidance/execution-model.md
+  - .flywheel/operating-model/guidance/transition-recovery.md
+  - .flywheel/operating-model/guidance/records.md
+  - .flywheel/operating-model/guidance/evidence.md
+  - .flywheel/operating-model/guidance/decisions.md
+  - .flywheel/operating-model/guidance/failure-handling.md
+  - .flywheel/operating-model/guidance/adaptation.md
+  - .flywheel/operating-model/guidance/validation.md
+  - .flywheel/operating-model/guidance/persistence.md
+  - .flywheel/operating-model/guidance/reuse.md
+  - .flywheel/operating-model/guidance/readiness.md
+  - .flywheel/operating-model/guidance/certification.md
+  - .flywheel/operating-model/guidance/classifications.md
+  - .flywheel/operating-model/guidance/tool-usage.md
+  - .flywheel/operating-model/config/repository-context.yaml
+  - .flywheel/operating-model/config/flywheel-context.yaml
+  - .flywheel/operating-model/config/governance.yaml
+  - .flywheel/operating-model/config/approval-validation.yaml
+  - .flywheel/operating-model/config/certification-validation.yaml
+  - .flywheel/operating-model/config/capabilities.yaml
+  - .flywheel/operating-model/config/validation.yaml
+  - .flywheel/operating-model/onboarding/process.md
+  - .flywheel/operating-model/onboarding/interview.yaml
+  - .flywheel/operating-model/onboarding/answer-model.yaml
+  - .flywheel/operating-model/schemas/README.md
+  - .flywheel/operating-model/schemas/manifest.schema.yaml
+  - .flywheel/operating-model/schemas/state.schema.yaml
+  - .flywheel/operating-model/schemas/mission.schema.yaml
+  - .flywheel/operating-model/schemas/goal.schema.yaml
+  - .flywheel/operating-model/schemas/execution.schema.yaml
+  - .flywheel/operating-model/schemas/record.schema.yaml
+  - .flywheel/operating-model/schemas/approval-record.schema.yaml
+  - .flywheel/operating-model/schemas/certification-record.schema.yaml
+  - .flywheel/operating-model/schemas/readiness-validation.schema.yaml
+  - .flywheel/operating-model/schemas/knowledge.schema.yaml
+  - .flywheel/operating-model/schemas/persistence-plan.schema.yaml
+  - .flywheel/operating-model/schemas/reuse-assessment.schema.yaml
+  - .flywheel/operating-model/schemas/startup-failure.schema.yaml
+onboarding:
+  mission: establish-ai-flywheel-operations
+  status: active
+implementation:
+  status: not-created
+  manifest: null
+compatibility:
+  application_missions_require_readiness: ready-for-missions
+  manual_operation_permitted: true
