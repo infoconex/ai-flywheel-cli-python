@@ -1,0 +1,45 @@
+schema_version: 1
+id: 001-discover-repository-and-gather-context
+mission_id: establish-ai-flywheel-operations
+title: Discover Repository and Gather Context
+status: active
+objective: >-
+  Inspect the target repository, identify known facts and material unknowns,
+  ask only the questions needed to gather onboarding context, and persist the
+  confirmed operating context required before reconciliation and Flywheel
+  implementation design.
+procedure:
+  - Read the operating model and declarative interview definition.
+  - Inspect repository structure, documentation, configuration, build, test, automation, and constraints before asking questions.
+  - Record direct observations as discovered facts with evidence.
+  - Identify unknowns and material inferences without resolving conflicts that belong to the reconciliation goal.
+  - Ask one focused unresolved question at a time and explain why it matters.
+  - Persist each accepted answer immediately in the appropriate context or configuration file.
+  - Mark material inferences as pending approval and deferred items as explicit unknowns.
+  - Keep target repository technology separate from Flywheel implementation technology.
+acceptance_criteria:
+  - id: AC-001
+    statement: Repository purpose, users, scope, and authoritative sources are recorded.
+  - id: AC-002
+    statement: Target application technologies and constraints are recorded in repository context only.
+  - id: AC-003
+    statement: Governance, approval, source-control, validation, and evidence expectations are captured.
+  - id: AC-004
+    statement: Required Flywheel execution environments and tool constraints are captured without selecting an implementation stack.
+  - id: AC-005
+    statement: Every material value records provenance as discovered, provided, inferred, defaulted, approved, or deferred.
+  - id: AC-006
+    statement: Remaining material unknowns are explicitly listed for reconciliation.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [.flywheel/operating-model/config/repository-context.yaml]
+  - criterion_id: AC-002
+    artifacts: [.flywheel/operating-model/config/repository-context.yaml]
+  - criterion_id: AC-003
+    artifacts: [.flywheel/operating-model/config/governance.yaml, .flywheel/operating-model/config/validation.yaml]
+  - criterion_id: AC-004
+    artifacts: [.flywheel/operating-model/config/flywheel-context.yaml, .flywheel/operating-model/config/capabilities.yaml]
+  - criterion_id: AC-005
+    artifacts: [repository discovery evidence]
+  - criterion_id: AC-006
+    artifacts: [unresolved and deferred unknowns list]
