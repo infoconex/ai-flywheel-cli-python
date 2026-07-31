@@ -1,0 +1,37 @@
+schema_version: 1
+purpose:
+  value: null
+  origin: null
+  status: candidate
+repository:
+  type: null
+  primary_artifacts: []
+application:
+  languages: []
+  frameworks: []
+  runtimes: []
+  architecture: []
+build:
+  systems: []
+  commands: []
+testing:
+  frameworks: []
+  commands: []
+automation:
+  local: []
+  hosted: []
+standards:
+  coding: []
+  architecture: []
+  testing: []
+constraints:
+  platforms: []
+  security: []
+  compliance: []
+  dependencies: []
+  network: []
+unknowns: []
+conflicts: []
+provenance_records: []
+notes:
+  - This file describes the target repository and application, not the Flywheel operating tools.
