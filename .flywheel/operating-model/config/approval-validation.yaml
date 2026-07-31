@@ -1,0 +1,69 @@
+version: 1
+schema_routing:
+  evidence_decision_finding: .flywheel/operating-model/schemas/record.schema.yaml
+  approval: .flywheel/operating-model/schemas/approval-record.schema.yaml
+  prohibit_legacy_approval_shape_for_new_records: true
+  prohibit_dual_validation_against_conflicting_approval_shapes: true
+approval_contract:
+  guidance: .flywheel/operating-model/guidance/approval-boundaries.md
+  governance: .flywheel/operating-model/config/governance.yaml
+  schema: .flywheel/operating-model/schemas/approval-record.schema.yaml
+  require_registered_authority: true
+  require_exact_identity_match: true
+  require_durable_before_action: true
+  require_applied_persistence_plan: true
+  require_schema_validation: true
+  require_reference_validation: true
+  require_exact_scope_match: true
+  require_active_mission_match: true
+  require_active_goal_match: true
+  require_active_execution_match_when_scoped: true
+  require_exact_action_match: true
+  require_complete_target_coverage: true
+  require_constraint_compliance: true
+  require_approved_decision: true
+  require_effective_time: true
+  require_unexpired_approval: true
+  require_action_after_approval_commit: true
+  require_valid_delegation_for_delegate: true
+  require_create_only_history: true
+  prohibit_superseded_approval: true
+  prohibit_revoked_approval: true
+  prohibit_chat_only_approval: true
+  prohibit_operator_self_approval: true
+  prohibit_wildcard_or_implied_scope: true
+  prohibit_cross_action_reuse: true
+  prohibit_cross_execution_reuse: true
+  finding_and_approval_requires_both: true
+  ambiguity_action: block-and-request-direction
+  semantic_rule_ids:
+    - APPROVAL-AUTHORITY-001
+    - APPROVAL-DELEGATION-001
+    - APPROVAL-DURABLE-001
+    - APPROVAL-SCOPE-001
+    - APPROVAL-DECISION-001
+    - APPROVAL-TIME-001
+    - APPROVAL-REFERENCE-001
+    - APPROVAL-STATUS-001
+    - APPROVAL-HISTORY-001
+    - APPROVAL-REVOCATION-001
+    - APPROVAL-FINDING-001
+    - APPROVAL-CHAT-001
+    - APPROVAL-UNSPECIFIED-001
+approval_status_consistency:
+  approved:
+    required_record_status: accepted
+  rejected:
+    required_record_status: rejected
+  deferred:
+    required_record_status: closed
+revocation:
+  required_action: revoke_approval
+  require_authority_equal_or_higher: true
+  require_effective_record: true
+  original_approval_becomes_inactive: true
+delegation:
+  required_action: delegate_approval_authority
+  require_owner_or_delegable_authority: true
+  require_scope_containment: true
+  require_current_effective_delegation: true
