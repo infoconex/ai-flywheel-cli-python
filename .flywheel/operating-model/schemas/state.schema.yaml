@@ -1,0 +1,65 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: state.schema.yaml
+type: object
+additionalProperties: false
+required: [schema_version, phase, readiness, status, active_mission, active_goal, active_execution, lifecycle_stage, implementation_available, application_missions_allowed, blockers, last_durable_update]
+properties:
+  schema_version: {type: integer, const: 1}
+  phase: {type: string, enum: [onboarding, operating, upgrading, suspended]}
+  readiness: {type: string, enum: [not-ready-for-missions, ready-for-missions, degraded]}
+  status: {type: string, enum: [ready, active, blocked, suspended]}
+  active_mission: {type: [string, 'null'], minLength: 1}
+  active_goal: {type: [string, 'null'], minLength: 1}
+  active_execution: {type: [string, 'null'], minLength: 1}
+  lifecycle_stage: {type: [string, 'null'], enum: [execute, observe, evaluate, classify, adapt, validate, persist, reuse, null]}
+  implementation_available: {type: boolean}
+  application_missions_allowed: {type: boolean}
+  blockers:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
+  last_durable_update:
+    type: object
+    additionalProperties: false
+    required: [at, by, reason]
+    properties:
+      at: {type: string, format: date-time}
+      by: {type: string, minLength: 1}
+      reason: {type: string, minLength: 1}
+allOf:
+  - if:
+      properties: {active_execution: {type: string}}
+      required: [active_execution]
+    then:
+      properties:
+        status: {enum: [active, blocked]}
+        active_mission: {type: string, minLength: 1}
+        active_goal: {type: string, minLength: 1}
+        lifecycle_stage: {type: string}
+  - if:
+      properties: {active_execution: {type: 'null'}}
+      required: [active_execution]
+    then:
+      properties: {lifecycle_stage: {type: 'null'}}
+  - if:
+      properties: {active_goal: {type: string}}
+      required: [active_goal]
+    then:
+      properties: {active_mission: {type: string, minLength: 1}}
+  - if:
+      properties: {status: {const: active}}
+      required: [status]
+    then:
+      properties: {active_execution: {type: string, minLength: 1}}
+  - if:
+      properties: {readiness: {const: ready-for-missions}}
+      required: [readiness]
+    then:
+      properties: {application_missions_allowed: {const: true}}
+    else:
+      properties: {application_missions_allowed: {const: false}}
+  - if:
+      properties: {status: {const: blocked}}
+      required: [status]
+    then:
+      properties: {blockers: {minItems: 1}}
