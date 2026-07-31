@@ -1,0 +1,37 @@
+schema_version: 1
+id: 002-reconcile-and-approve-operating-context
+mission_id: establish-ai-flywheel-operations
+title: Reconcile and Approve Operating Context
+status: blocked
+blocked_by:
+  - 001-discover-repository-and-gather-context
+objective: Reconcile discovered repository facts, human-provided context, inferences, defaults, and deferred unknowns into an approved operating context.
+procedure:
+  - Review discovery evidence and onboarding answers.
+  - Compare conflicting or incomplete values by provenance and evidence.
+  - Ask focused questions only for material conflicts or approval needs.
+  - Resolve, approve, reject, or explicitly defer each material conflict or inference.
+  - Validate that repository and Flywheel contexts remain separate.
+  - Confirm that governance, capabilities, and validation are sufficient for implementation design.
+acceptance_criteria:
+  - id: AC-001
+    statement: Material conflicts are resolved or explicitly deferred with rationale and authority.
+  - id: AC-002
+    statement: Repository context accurately reflects confirmed repository reality.
+  - id: AC-003
+    statement: Flywheel context contains only operating-environment requirements and approved constraints, not an unapproved implementation selection.
+  - id: AC-004
+    statement: Governance, validation, capabilities, and provenance are internally consistent and approved where required.
+  - id: AC-005
+    statement: Remaining deferred items do not prevent implementation design or are recorded as blockers.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [reconciliation decisions]
+  - criterion_id: AC-002
+    artifacts: [.flywheel/operating-model/config/repository-context.yaml]
+  - criterion_id: AC-003
+    artifacts: [.flywheel/operating-model/config/flywheel-context.yaml]
+  - criterion_id: AC-004
+    artifacts: [.flywheel/operating-model/config/governance.yaml, .flywheel/operating-model/config/validation.yaml, .flywheel/operating-model/config/capabilities.yaml]
+  - criterion_id: AC-005
+    artifacts: [deferred items and blockers list]
