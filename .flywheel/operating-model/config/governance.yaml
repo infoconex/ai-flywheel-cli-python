@@ -1,0 +1,79 @@
+schema_version: 1
+human_authority:
+  required_for:
+    - implementation language and runtime
+    - architecture and source location
+    - dependency additions
+    - scope changes
+    - acceptance of unresolved risk
+    - mission completion
+    - destructive repository actions
+    - governance changes
+    - validation weakening or removal
+approval_authority:
+  repository_owner:
+    authority_id: AUTH-GITHUB-INFOCONEX
+    identity: github:infoconex
+    display_name: Infoconex
+    authorization_basis: repository-ownership
+    evidence_ref: repository:Infoconex/ai-flywheel-framework
+  delegates: []
+  guidance: .flywheel/operating-model/guidance/approval-boundaries.md
+  schema: .flywheel/operating-model/schemas/approval-record.schema.yaml
+operator_authority:
+  may:
+    - inspect repository content
+    - read operating artifacts and records
+    - create and update execution records
+    - ask onboarding questions
+    - populate confirmed answers
+    - record discovered facts with evidence
+    - propose implementation options
+    - run non-destructive discovery and validation commands
+    - execute approved goals
+    - update state to reflect an authorized execution
+  may_not:
+    - silently choose material repository standards
+    - begin implementation before required approval
+    - mark goals complete without evidence
+    - perform work outside an active mission and goal
+    - weaken validation or governance to obtain success
+    - fabricate or reconstruct unsupported evidence
+    - modify the operating model without a recorded execution finding and required approval
+actions:
+  inspect_repository: allowed
+  read_files: allowed
+  create_execution_record: allowed
+  update_execution_record: allowed
+  update_state_for_active_execution: allowed
+  record_discovered_context: allowed
+  update_human_confirmed_context: allowed
+  ask_onboarding_question: allowed
+  run_non_destructive_command: allowed
+  run_validation: allowed
+  propose_goal: allowed
+  create_goal: approval_required
+  change_goal_scope: approval_required
+  select_flywheel_implementation_stack: approval_required
+  add_dependency: approval_required
+  create_branch: approval_required
+  commit_changes: approval_required
+  push_changes: approval_required
+  create_pull_request: approval_required
+  delegate_approval_authority: approval_required
+  revoke_approval: approval_required
+  modify_operating_model: finding_and_approval_required
+  modify_governance: finding_and_approval_required
+  modify_validation: finding_and_approval_required
+  delete_repository_file: approval_required
+  run_destructive_command: approval_required
+  access_external_service: approval_required
+  accept_unresolved_risk: approval_required
+  complete_goal: evidence_and_rules_required
+  complete_mission: approval_required
+interpretation:
+  allowed: action may proceed within the active goal
+  approval_required: exact durable approval is required before action
+  finding_and_approval_required: a durable finding and exact durable approval are required before action
+  evidence_and_rules_required: action may proceed only when completion rules are satisfied
+  unspecified_action: stop_and_request_direction
