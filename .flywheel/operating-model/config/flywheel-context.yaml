@@ -1,0 +1,44 @@
+schema_version: 1
+implementation:
+  language:
+    value: null
+    status: candidate
+    origin: null
+  runtime:
+    value: null
+    status: candidate
+    origin: null
+  architecture:
+    value: null
+    status: candidate
+    origin: null
+  test_framework:
+    value: null
+    status: candidate
+    origin: null
+  command_interface:
+    value: null
+    status: candidate
+    origin: null
+  location:
+    value: .flywheel/tools
+    status: defaulted
+    origin: defaulted
+  storage:
+    value: repository-files
+    status: defaulted
+    origin: defaulted
+  logging:
+    sinks: []
+    structure: null
+  dependencies:
+    allowed: []
+    prohibited: []
+  supported_platforms: []
+capability_implementation: []
+manual_fallbacks: []
+known_limitations: []
+decisions: []
+notes:
+  - Flywheel implementation choices are independent from target application technologies.
+  - Material selections remain candidates until the required approval is recorded.
