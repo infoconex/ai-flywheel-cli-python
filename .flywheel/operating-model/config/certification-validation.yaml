@@ -1,0 +1,96 @@
+version: 1
+certification:
+  guidance: .flywheel/operating-model/guidance/certification.md
+  schema: .flywheel/operating-model/schemas/certification-record.schema.yaml
+  canonical_path: .flywheel/operations/records/<mission-id>/<goal-id>/certification/<certification-record-id>.yaml
+  required_scenarios:
+    - id: 1
+      name: context-free-startup
+    - id: 2
+      name: first-execution
+    - id: 3
+      name: resume
+    - id: 4
+      name: missing-artifact-recovery
+    - id: 5
+      name: broken-reference-recovery
+    - id: 6
+      name: approval-boundary
+    - id: 7
+      name: lifecycle-completeness
+    - id: 8
+      name: evidence-completeness
+    - id: 9
+      name: proving-mission
+    - id: 10
+      name: self-hosting
+  require_exact_scenario_set: true
+  require_evidence_revision_per_scenario: true
+  require_tested_framework_revision_for_passed_scenario: true
+  allow_null_tested_framework_revision_for_failed_or_not_run_scenario: true
+  prohibit_evidence_revision_as_tested_framework_revision: true
+  require_fixture_definition_refs: true
+  require_evidence_for_completed_scenario: true
+  require_validator_identity: true
+  require_known_limitations: true
+  require_findings_and_corrective_actions: true
+  require_self_hosting_references: true
+  require_human_approval_for_pass: true
+  ready_for_approval_requires:
+    all_scenarios: passed
+    blocking_defects: none
+    approval_status: pending
+    overall_result: pending-approval
+  passed_requires:
+    all_scenarios: passed
+    approval_status: approved
+    approval_ref: required
+    authority_id: required
+    overall_result: passed
+  prohibit_chat_history_as_evidence: true
+  prohibit_assumed_approval: true
+  prohibit_readiness_transition_while_pending: true
+  semantic_rule_ids:
+    - CERT-SCENARIO-001
+    - CERT-EVIDENCE-001
+    - CERT-REVISION-001
+    - CERT-VALIDATOR-001
+    - CERT-SELF-HOST-001
+    - CERT-APPROVAL-001
+    - CERT-RESULT-001
+readiness_validation:
+  guidance: .flywheel/operating-model/guidance/readiness.md
+  schema: .flywheel/operating-model/schemas/readiness-validation.schema.yaml
+  canonical_path: .flywheel/operations/records/<mission-id>/<goal-id>/readiness/<readiness-validation-id>.yaml
+  require_gate_evidence: true
+  require_certification_reference: true
+  require_blockers_when_pending_or_failed: true
+  pending_requires:
+    pending_gate: true
+    blocker: true
+    approval_ref: null
+    proposed_state: null
+  passed_requires:
+    all_gates: passed
+    blockers: none
+    approval_ref: required
+    proposed_state: ready-for-missions
+  failed_requires:
+    failed_gate: true
+    blocker: true
+    proposed_state: null
+  transition_requires:
+    certification_status: approved
+    certification_result: passed
+    readiness_validation_status: passed
+    onboarding_mission_status: completed
+    onboarding_goal_status: completed
+    human_approval: durable-and-current
+    persistence_plan: terminal-applied
+    state_written_last: true
+  semantic_rule_ids:
+    - READINESS-RECORD-001
+    - READINESS-GATE-001
+    - READINESS-APPROVAL-001
+    - READINESS-PERSIST-001
+    - READINESS-STATE-001
