@@ -1,0 +1,40 @@
+schema_version: 1
+id: EX-20000101T000000Z-001
+mission_id: example-mission
+goal_id: example-goal
+status: in-progress
+intended_outcome: Replace with the active goal objective.
+acceptance_criteria:
+  - AC-001
+started_at: "2000-01-01T00:00:00Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2000-01-01T00:00:00Z"
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions: []
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
