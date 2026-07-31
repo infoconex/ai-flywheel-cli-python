@@ -1,0 +1,123 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: readiness-validation.schema.yaml
+type: object
+additionalProperties: false
+required:
+  - schema_version
+  - id
+  - framework_revision
+  - created_at
+  - created_by
+  - mission_id
+  - goal_id
+  - execution_id
+  - certification_ref
+  - status
+  - gates
+  - blockers
+  - approval_ref
+  - proposed_state
+properties:
+  schema_version: {type: integer, const: 1}
+  id: {type: string, pattern: '^READINESS-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+  framework_revision: {type: string, pattern: '^[0-9a-f]{40}$'}
+  created_at:
+    type: string
+    format: date-time
+    pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$'
+  created_by: {type: string, minLength: 1}
+  mission_id: {type: string, minLength: 1}
+  goal_id: {type: string, minLength: 1}
+  execution_id: {type: string, pattern: '^EX-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+  certification_ref: {type: string, pattern: '^CERT-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+  status: {type: string, enum: [pending, passed, failed]}
+  gates:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      additionalProperties: false
+      required: [id, statement, result, evidence_refs, limitations]
+      properties:
+        id: {type: string, pattern: '^RG-[0-9]{3,}$'}
+        statement: {type: string, minLength: 1}
+        result: {type: string, enum: [passed, failed, pending]}
+        evidence_refs:
+          type: array
+          uniqueItems: true
+          items: {type: string, minLength: 1}
+        limitations:
+          type: array
+          items: {type: string, minLength: 1}
+      allOf:
+        - if:
+            properties: {result: {enum: [passed, failed]}}
+            required: [result]
+          then:
+            properties: {evidence_refs: {minItems: 1}}
+  blockers:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
+  approval_ref: {type: [string, 'null'], pattern: '^APPROVAL-[0-9]{3,}$'}
+  proposed_state:
+    oneOf:
+      - type: 'null'
+      - type: object
+        additionalProperties: false
+        required:
+          - phase
+          - readiness
+          - status
+          - active_mission
+          - active_goal
+          - active_execution
+          - lifecycle_stage
+          - application_missions_allowed
+        properties:
+          phase: {type: string, const: operating}
+          readiness: {type: string, const: ready-for-missions}
+          status: {type: string, const: ready}
+          active_mission: {type: 'null'}
+          active_goal: {type: 'null'}
+          active_execution: {type: 'null'}
+          lifecycle_stage: {type: 'null'}
+          application_missions_allowed: {type: boolean, const: true}
+allOf:
+  - if:
+      properties: {status: {const: pending}}
+      required: [status]
+    then:
+      properties:
+        gates:
+          contains:
+            properties: {result: {const: pending}}
+            required: [result]
+          minContains: 1
+        blockers: {minItems: 1}
+        approval_ref: {type: 'null'}
+        proposed_state: {type: 'null'}
+  - if:
+      properties: {status: {const: passed}}
+      required: [status]
+    then:
+      properties:
+        gates:
+          items:
+            properties: {result: {const: passed}}
+        blockers: {maxItems: 0}
+        approval_ref: {type: string, pattern: '^APPROVAL-[0-9]{3,}$'}
+        proposed_state: {type: object}
+  - if:
+      properties: {status: {const: failed}}
+      required: [status]
+    then:
+      properties:
+        gates:
+          contains:
+            properties: {result: {const: failed}}
+            required: [result]
+          minContains: 1
+        blockers: {minItems: 1}
+        proposed_state: {type: 'null'}
