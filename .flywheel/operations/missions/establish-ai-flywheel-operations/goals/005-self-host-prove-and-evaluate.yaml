@@ -1,0 +1,43 @@
+schema_version: 1
+id: 005-self-host-prove-and-evaluate
+mission_id: establish-ai-flywheel-operations
+title: Self-Host, Prove, and Evaluate
+status: blocked
+blocked_by:
+  - 004-build-and-validate-operating-tools
+objective: Transition from manual bootstrap to tool-managed operation, prove the implementation through a real mission and context-free cold start, and capture framework learning.
+procedure:
+  - Use the new tools to manage the remaining bootstrap records.
+  - Run the configured artifact, schema, reference, and state-consistency validation.
+  - Start a context-free AI session with only repository access and the configured cold-start prompt.
+  - Confirm that the session discovers the entrypoint, produces the required opening report, creates or resumes the correct execution, and follows all lifecycle stages.
+  - Create and execute a small proving mission through the complete lifecycle.
+  - Evaluate onboarding questions, guidance, schemas, governance, implementation assumptions, and cold-start behavior.
+  - Persist defects, findings, decisions, improvements, risks, and reusable learning.
+  - Obtain human approval before changing readiness to ready-for-missions.
+acceptance_criteria:
+  - id: AC-001
+    statement: The tools successfully manage Flywheel records, references, lifecycle stages, and state transitions.
+  - id: AC-002
+    statement: All operating artifacts pass schema, required-file, reference, filename-to-ID, and state-consistency validation.
+  - id: AC-003
+    statement: A context-free AI session independently follows the startup protocol without inventing artifacts, skipping stages, or performing unauthorized work.
+  - id: AC-004
+    statement: A proving mission completes with evidence, validation, and all lifecycle stages recorded.
+  - id: AC-005
+    statement: Framework gaps and onboarding improvements are classified and persisted.
+  - id: AC-006
+    statement: Human authority explicitly approves operational readiness.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [tool-managed execution and state records]
+  - criterion_id: AC-002
+    artifacts: [artifact validation report]
+  - criterion_id: AC-003
+    artifacts: [cold-start transcript and evaluation record]
+  - criterion_id: AC-004
+    artifacts: [completed proving mission and evidence map]
+  - criterion_id: AC-005
+    artifacts: [persisted findings and learning records]
+  - criterion_id: AC-006
+    artifacts: [readiness approval record]
