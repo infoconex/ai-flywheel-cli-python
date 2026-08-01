@@ -32,7 +32,10 @@ implementation:
     sinks: []
     structure: null
   dependencies:
-    allowed: []
+    allowed:
+      - uv
+      - pipx
+      - Python virtual environment
     prohibited: []
   supported_platforms:
     - Windows
@@ -42,8 +45,10 @@ capability_implementation: []
 manual_fallbacks:
   - Detect required runtime and tool dependencies before attempting operations.
   - Report missing or incompatible dependencies with actionable remediation rather than failing ambiguously.
+  - When neither uv nor pipx is available, offer to install a supported tool or use a managed virtual environment.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
+  - Non-interactive installer selection behavior remains to be defined.
 decisions:
   - id: INSTALL-PREFERENCE-001
     status: candidate
@@ -60,6 +65,14 @@ decisions:
     origin: provided
     statement: Expose the CLI using the command name flywheel.
     evidence_ref: EVIDENCE-007
+  - id: BOOTSTRAP-INSTALLER-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Bootstrap scripts detect uv and pipx, ask the user to choose when both are
+      available, and offer installation or a managed virtual environment when
+      neither is available.
+    evidence_ref: EVIDENCE-008
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -68,3 +81,4 @@ notes:
   - Implementation must follow established Python industry standards and engineering best practices.
   - The bootstrap entry points should detect prerequisites, install or invoke the CLI through the selected package mechanism, verify the installation, and avoid modifying a target repository until checks pass.
   - Documentation should provide both the one-command form and a download-inspect-run alternative.
+  - Interactive installation should preserve user choice instead of silently preferring one detected installer.
