@@ -1,15 +1,15 @@
 schema_version: 1
 phase: onboarding
 readiness: not-ready-for-missions
-status: ready
+status: active
 active_mission: establish-ai-flywheel-operations
 active_goal: 005-self-host-prove-and-evaluate
-active_execution: null
-lifecycle_stage: null
+active_execution: EX-20260801T144200Z-005
+lifecycle_stage: execute
 implementation_available: true
 application_missions_allowed: false
 blockers: []
 last_durable_update:
-  at: "2026-08-01T14:37:00Z"
+  at: "2026-08-01T14:42:00Z"
   by: chatgpt-session
-  reason: Completed Goal 004 under the approved pre-release validation deferral and prepared Goal 005 for kickoff without changing readiness.
+  reason: Recorded Goal 005 kickoff approval and started self-hosting execution EX-20260801T144200Z-005 without changing readiness.
