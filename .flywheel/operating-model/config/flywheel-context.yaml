@@ -47,6 +47,7 @@ manual_fallbacks:
   - Report missing or incompatible dependencies with actionable remediation rather than failing ambiguously.
   - When neither uv nor pipx is available, offer to install a supported tool or use a managed virtual environment.
   - In non-interactive environments, use uv when available, otherwise pipx, otherwise a managed virtual environment.
+  - If .flywheel already exists, refuse installation and direct the user to the explicit upgrade command.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
 decisions:
@@ -80,6 +81,13 @@ decisions:
       In non-interactive environments, prefer uv, then pipx, then a managed
       Python virtual environment without prompting.
     evidence_ref: EVIDENCE-009
+  - id: EXISTING-INSTALLATION-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      The install command refuses when .flywheel already exists and requires the
+      user to invoke a separate explicit upgrade command.
+    evidence_ref: EVIDENCE-010
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -90,3 +98,4 @@ notes:
   - Documentation should provide both the one-command form and a download-inspect-run alternative.
   - Interactive installation should preserve user choice instead of silently preferring one detected installer.
   - Non-interactive installation must be deterministic and must not block waiting for user input.
+  - Installation and upgrade are separate operations; installation must never replace an existing Flywheel installation.
