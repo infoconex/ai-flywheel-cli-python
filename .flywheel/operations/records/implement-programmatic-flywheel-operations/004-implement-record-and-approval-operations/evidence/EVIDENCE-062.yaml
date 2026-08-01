@@ -38,6 +38,6 @@ details:
     passed: true
     issue_count: 0
   compatibility:
-    established failed-validation error wording preserved
+    established_failed_validation_error_wording_preserved: true
     github_actions_enabled: false
 recorded_at: "2026-08-01T18:05:00Z"
