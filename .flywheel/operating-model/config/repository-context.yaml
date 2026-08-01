@@ -44,7 +44,9 @@ constraints:
     - Windows
     - macOS
     - Linux
-  security: []
+  security:
+    - Bootstrap scripts must not modify a target repository until dependency and installation verification succeeds.
+    - Provide an inspect-before-run alternative to direct remote-script execution.
   compliance: []
   dependencies:
     - Detect required dependencies and compatibility before executing dependent operations.
@@ -54,7 +56,8 @@ constraints:
     - Do not depend on GitHub Actions or other hosted execution during bootstrap unless explicitly approved.
 unknowns:
   - Supported Python versions are not yet selected.
-  - Packaging, installation, offline operation, and standalone distribution constraints are not yet confirmed.
+  - Exact package installation mechanism used behind the bootstrap scripts remains to be selected.
+  - Offline operation and standalone distribution constraints are not yet confirmed.
   - Exact CLI command surface, architecture, persistence behavior, logging, and test framework are not yet selected.
   - Branch, pull request, review, and merge policy beyond using a goal branch requires confirmation.
 conflicts: []
@@ -131,9 +134,19 @@ provenance_records:
     rationale: The Python project must follow established industry standards and best practices.
     recorded_at: "2026-08-01T04:48:00Z"
     recorded_by: chatgpt-session
+  - id: PROV-009
+    key: installation.bootstrap_entrypoints
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-004
+    rationale: The human selected two small bootstrap entry points as the preferred one-command installation experience.
+    recorded_at: "2026-08-01T04:57:00Z"
+    recorded_by: chatgpt-session
 notes:
   - This file describes the target repository and application, not the Flywheel operating tools.
   - No README, Python package metadata, source tree, tests, or automation were present during initial discovery.
   - The CLI must support installation into both empty repositories and repositories containing an existing project.
   - This repository is also the proving example for creating the CLI itself through the Flywheel mission and goal lifecycle.
   - After installation, the CLI should programmatically assist with lifecycle execution rather than serving only as an installer.
+  - Preferred installation uses a shell bootstrap entry point for macOS and Linux and a PowerShell bootstrap entry point for Windows.
