@@ -24,3 +24,8 @@ repository_defined:
   - assist programmatically with all eight Flywheel lifecycle stages after installation
   - allow capabilities and dependency requirements to evolve over time
   - follow established Python engineering, testing, packaging, and maintainability practices
+  - provide consumer-focused installation and quick-start documentation
+  - provide a complete command reference with options, exit behavior, and examples
+  - document common workflows for empty and existing repositories
+  - document configuration, upgrades, compatibility, troubleshooting, recovery, and safe-operation behavior
+  - keep documentation synchronized with released CLI behavior and installation entry points
