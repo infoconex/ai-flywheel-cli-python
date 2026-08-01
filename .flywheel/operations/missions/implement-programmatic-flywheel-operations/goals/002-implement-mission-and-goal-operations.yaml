@@ -1,37 +1,43 @@
 schema_version: 1
 id: 002-implement-mission-and-goal-operations
 mission_id: implement-programmatic-flywheel-operations
-title: Implement Mission and Goal Operations
-status: proposed
-objective: Add schema-valid programmatic commands for creating, reading, updating, listing, filtering, activating, blocking, completing, cancelling, and validating missions and goals.
+title: Evaluate and Select Deterministic Operation Candidates
+status: completed
+objective: Evaluate repeated Flywheel operating activities and select only the mission, goal, execution, lifecycle, record, or validation operations where deterministic tooling provides clear value over direct AI execution.
 depends_on:
   - 001-align-cross-repository-operations-contract
 procedure:
-  - Implement command-neutral service operations before CLI presentation logic.
-  - Add mission create, update, show, list, activate, block, complete, and cancel operations.
-  - Add goal create, update, show, list, activate, block, complete, and cancel operations.
-  - Support deterministic filters for status, mission, blocked state, and dependency state.
-  - Enforce schema, identity, parent, dependency, approval, and active-state invariants.
-  - Add dry-run and deterministic JSON output for mutations.
+  - Inventory operating activities performed during onboarding and Goal 001.
+  - Evaluate each candidate for repetition, stability, error risk, validation sensitivity, cost, and reuse potential.
+  - Identify activities that should remain AI-executed because they require judgment, interpretation, or adaptation.
+  - Prioritize a minimal first set of deterministic operations with measurable expected benefits.
+  - Define intended inputs, outputs, boundaries, AI fallback behavior, and validation expectations for each selected candidate.
+  - Obtain human approval of the selected implementation scope before coding begins.
 acceptance_criteria:
   - id: AC-001
-    statement: Mission CRUD and lifecycle-status operations are available programmatically and preserve all schema invariants.
+    statement: A complete candidate inventory distinguishes AI-executed work from deterministic-tool candidates.
   - id: AC-002
-    statement: Goal CRUD and lifecycle-status operations are available programmatically and preserve parent and dependency invariants.
+    statement: Every selected candidate has an evidence-based value rationale and measurable expected benefit.
   - id: AC-003
-    statement: Mission and goal list operations support deterministic filtering and ordering.
+    statement: The selected scope is intentionally minimal and does not imply that unsupported operations are incomplete Flywheel capabilities.
   - id: AC-004
-    statement: Invalid, unauthorized, or conflicting changes fail without partial mutation.
+    statement: AI fallback behavior and human approval boundaries are defined for each selected candidate.
   - id: AC-005
-    statement: Positive and negative automated tests cover every supported mission and goal operation.
+    statement: Human authority approves the deterministic implementation scope before implementation begins.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [mission operation source, mission operation tests]
+    artifacts: [candidate inventory]
   - criterion_id: AC-002
-    artifacts: [goal operation source, goal operation tests]
+    artifacts: [determinism value assessment]
   - criterion_id: AC-003
-    artifacts: [list and filter tests]
+    artifacts: [selected scope decision]
   - criterion_id: AC-004
-    artifacts: [negative mutation and rollback tests]
+    artifacts: [operation boundary and fallback definitions]
   - criterion_id: AC-005
-    artifacts: [test and coverage report]
+    artifacts: [scope approval record]
+approvals_required:
+  - Approval of selected deterministic implementation scope
+completion:
+  completed_at: "2026-08-01T16:52:00Z"
+  outcome: Approved option 1 as the minimal deterministic implementation scope: execution start, lifecycle transitions, and shared validate-before-persist mutation safety.
+  evidence_refs: [EVIDENCE-058, EVIDENCE-059]

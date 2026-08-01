@@ -1,0 +1,23 @@
+schema_version: 1
+id: APPROVAL-006-FINAL
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 006-self-host-and-certify-programmatic-operations
+execution_id: EX-20260801T183700Z-006
+authority_id: AUTH-REPOSITORY-OWNER
+status: approved
+approved_action: Approve the final deterministic tooling assessment, complete Goal 006, and keep the mission open for a subsequent goal or closure decision.
+assessment_disposition:
+  retain_deterministic_operations:
+    - start-execution
+    - advance-lifecycle
+    - shared validated mutation safety
+  retain_governed_ai_operations:
+    - mission design
+    - goal decomposition
+    - evidence interpretation
+    - evaluation and classification
+    - adaptation decisions
+    - completion sufficiency
+  expand_determinism_boundary: false
+authorization_basis: Explicit repository-owner selection of option 2 in the active ChatGPT session.
+approved_at: "2026-08-01T18:43:00Z"

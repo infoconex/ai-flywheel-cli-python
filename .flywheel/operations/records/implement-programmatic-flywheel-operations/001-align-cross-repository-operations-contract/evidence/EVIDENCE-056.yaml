@@ -1,0 +1,45 @@
+schema_version: 1
+id: EVIDENCE-056
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 001-align-cross-repository-operations-contract
+execution_id: EX-20260801T154900Z-001
+type: cross-repository-contract-draft
+summary: Prepared coordinated specification, framework, capability, and testing contract changes that distinguish artifact-governed readiness from programmatic operations.
+details:
+  specification:
+    repository: Infoconex/ai-flywheel-spec
+    branch: feature/programmatic-operations-contract
+    revision: 39d260e56016b420a8d22a483de0c66ec52c4401
+    artifacts:
+      - docs/specification/programmatic-operations.md
+    outcomes:
+      - Defines artifact-governed and programmatic-operations capability levels.
+      - Defines normative operation metadata, atomicity, recovery, capability claims, and certification boundaries.
+  framework:
+    repository: Infoconex/ai-flywheel-framework
+    branch: feature/programmatic-operations-contract
+    revision: baef0abb0eb146a5b4599c24a312c9dac9631021
+    artifacts:
+      - .flywheel/operating-model/guidance/programmatic-operations.md
+      - .flywheel/operating-model/schemas/programmatic-capabilities.schema.yaml
+      - .flywheel/operating-model/config/programmatic-capabilities.yaml
+      - .flywheel/manifest.yaml
+    outcomes:
+      - Defines command-neutral operation preconditions, postconditions, approval, validation, atomicity, idempotency, and recovery rules.
+      - Adds machine-readable capability declarations.
+      - Registers the contract artifacts as required framework files.
+  testing:
+    repository: Infoconex/ai-flywheel-framework-testing
+    branch: feature/programmatic-operations-contract
+    revision: 84a60d9aa5ecee08b060aa82e1c27010e1fbfafc
+    artifacts:
+      - test/contracts/programmatic-operations-scenarios.yaml
+      - test/ai/prompts/018-programmatic-operations-contract.md
+    outcomes:
+      - Defines eleven positive and negative scenarios.
+      - Requires end-to-end mission execution through the declared machine interface.
+      - Rejects overstated capability claims and manual artifact editing as programmatic evidence.
+  implementation_started: false
+  merge_performed: false
+  approval_required_before_next_goal: true
+recorded_at: "2026-08-01T15:58:00Z"

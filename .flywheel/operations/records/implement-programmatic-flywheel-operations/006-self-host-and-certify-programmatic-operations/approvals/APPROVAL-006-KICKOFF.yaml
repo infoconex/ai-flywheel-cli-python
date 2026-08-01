@@ -1,0 +1,13 @@
+schema_version: 1
+id: APPROVAL-006-KICKOFF
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 006-self-host-and-certify-programmatic-operations
+execution_id: EX-20260801T183700Z-006
+authority_id: AUTH-REPOSITORY-OWNER
+status: approved
+approved_action: Start Goal 006 and its representative hybrid mission proving scenario.
+known_limitations:
+  - Approval does not authorize expansion of the deterministic operation set.
+  - Final deterministic tooling assessment requires separate human approval.
+authorization_basis: Explicit repository-owner approval in the active ChatGPT session.
+approved_at: "2026-08-01T18:37:00Z"

@@ -1,0 +1,27 @@
+schema_version: 1
+id: EVIDENCE-058
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 002-implement-mission-and-goal-operations
+execution_id: EX-20260801T164900Z-002
+type: determinism-candidate-assessment
+summary: Evaluated repeated Flywheel activities and proposed a minimal deterministic tooling scope focused on coordinated execution and lifecycle mutations rather than broad programmatic CRUD.
+details:
+  assessment: .flywheel/operations/records/implement-programmatic-flywheel-operations/002-implement-mission-and-goal-operations/deterministic-operation-candidate-assessment.md
+  selected_candidates:
+    - start-execution-and-synchronize-active-references
+    - transition-lifecycle-stage-and-synchronize-state
+    - shared-validate-before-persist-mutation-service
+  retained_ai_responsibilities:
+    - mission design
+    - goal decomposition
+    - evaluation
+    - classification
+    - adaptation
+    - reuse judgment
+  deferred_candidates:
+    - typed-record-creation
+    - general-list-and-filter-operations
+    - broad-mission-goal-execution-crud
+  implementation_started: false
+  approval_required_before_implementation: true
+recorded_at: "2026-08-01T16:58:00Z"

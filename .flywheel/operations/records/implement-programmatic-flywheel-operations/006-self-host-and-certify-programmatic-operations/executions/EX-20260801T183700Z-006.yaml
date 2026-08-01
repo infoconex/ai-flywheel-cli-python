@@ -1,0 +1,131 @@
+schema_version: 1
+id: EX-20260801T183700Z-006
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 006-self-host-and-certify-programmatic-operations
+status: completed
+intended_outcome: Prove the hybrid AI and deterministic operating model and obtain human approval of the final deterministic tooling assessment.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006]
+started_at: "2026-08-01T18:37:00Z"
+completed_at: "2026-08-01T18:43:00Z"
+lifecycle:
+  execute:
+    status: completed
+    started_at: "2026-08-01T18:37:00Z"
+    completed_at: "2026-08-01T18:39:00Z"
+    summary: Created and ran the representative hybrid proving scenario with AI-led design and selective deterministic delegation.
+    refs: [EVIDENCE-064]
+    reason: null
+  observe:
+    status: completed
+    started_at: "2026-08-01T18:39:00Z"
+    completed_at: "2026-08-01T18:40:00Z"
+    summary: Observed seven coordinated artifact writes across three deterministic commands, safe negative rejection, governed AI fallback, and preserved human authority.
+    refs: [EVIDENCE-064]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T18:40:00Z"
+    completed_at: "2026-08-01T18:41:00Z"
+    summary: Evaluated reliability, consistency, coordination effort, reuse, limitations, and the absence of defensible monetary cost evidence.
+    refs: [EVIDENCE-064]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T18:41:00Z"
+    completed_at: "2026-08-01T18:42:00Z"
+    summary: Classified the implemented operations as validated deterministic tooling and retained judgment-heavy work as governed AI execution.
+    refs: [EVIDENCE-064]
+    reason: null
+  adapt:
+    status: completed
+    started_at: "2026-08-01T18:42:00Z"
+    completed_at: "2026-08-01T18:43:00Z"
+    summary: Human authority approved retaining the current deterministic boundary without expansion and directed that the mission remain open.
+    refs: [APPROVAL-006-FINAL]
+    reason: null
+  validate:
+    status: completed
+    started_at: "2026-08-01T18:43:00Z"
+    completed_at: "2026-08-01T18:43:00Z"
+    summary: Confirmed all six acceptance criteria are satisfied by proving evidence, automated tests, repository validation, and final human approval.
+    refs: [EVIDENCE-064, EVIDENCE-063, APPROVAL-006-FINAL]
+    reason: null
+  persist:
+    status: completed
+    started_at: "2026-08-01T18:43:00Z"
+    completed_at: "2026-08-01T18:43:00Z"
+    summary: Persisted the final approval, completed execution record, completed goal state, and ready repository state while retaining the active mission.
+    refs: [APPROVAL-006-FINAL]
+    reason: null
+  reuse:
+    status: completed
+    started_at: "2026-08-01T18:43:00Z"
+    completed_at: "2026-08-01T18:43:00Z"
+    summary: Established the bounded hybrid operation model as reusable mission guidance without broadening deterministic coverage.
+    refs: [EVIDENCE-064, APPROVAL-006-FINAL]
+    reason: null
+actions:
+  - Recorded representative mission kickoff approval.
+  - Designed the representative proving mission through governed AI execution.
+  - Invoked start-execution and two lifecycle transitions within their declared deterministic boundaries.
+  - Exercised duplicate-start and lifecycle-replay rejection.
+  - Reused Goal 005 interruption, rollback, retry, and idempotency evidence.
+  - Ran the full automated suite and repository validation.
+  - Persisted the proving result and deterministic value evaluation.
+  - Recorded final human approval of the assessment.
+  - Completed Goal 006 while keeping the mission open.
+observations:
+  - id: OBS-006
+    statement: Three deterministic commands safely delegated seven coordinated canonical artifact writes while AI retained design, interpretation, evidence, evaluation, and fallback responsibilities.
+    type: quantitative
+    status: complete
+    observed_at: "2026-08-01T18:40:00Z"
+    source_or_method: Representative hybrid mission execution and result inspection.
+    evidence_refs: [EVIDENCE-064]
+    uncertainty: null
+    conflicts_with: []
+evaluations:
+  - id: EVAL-006
+    statement: The implemented deterministic boundary improves reliability, consistency, and coordination effort without replacing AI judgment or human authority.
+    result: supports
+    observation_refs: [OBS-006]
+    evidence_refs: [EVIDENCE-064]
+    criterion_refs: [AC-001, AC-002, AC-003, AC-004, AC-005]
+    rule_refs: [human-authority, moving-determinism-boundary]
+    limitations:
+      - The proving run does not establish a monetary cost-savings figure.
+      - Safety claims apply only to start-execution, advance-lifecycle, and the shared mutation boundary.
+    rationale: Positive, negative, interruption, retry, fallback, test-suite, and repository-validation evidence all support the bounded hybrid model.
+classifications:
+  - id: CLASS-006
+    type: validated-learning
+    statement: Retain the current deterministic operation set and do not expand the boundary without new repeated operational evidence.
+    evaluation_refs: [EVAL-006]
+    evidence_refs: [EVIDENCE-064]
+    rationale: The current operations demonstrate measurable reliability and consistency value while excluded activities remain judgment-heavy.
+    certainty: confirmed
+    uncertainty: null
+    conflicts_with: []
+    related_classification_refs: []
+    decision_ref: APPROVAL-006-FINAL
+    finding_ref: null
+    validation_refs: [VAL-006]
+adaptations:
+  - id: ADAPT-006
+    disposition: approved
+    statement: Retain the validated deterministic boundary, do not expand it in this mission, and keep the mission open for a subsequent goal or closure decision.
+    refs: [APPROVAL-006-FINAL]
+blockers: []
+approval_refs: [APPROVAL-006-KICKOFF, APPROVAL-006-FINAL]
+evidence_refs: [EVIDENCE-064, EVIDENCE-063]
+decision_refs: [APPROVAL-006-FINAL]
+finding_refs: []
+validation_results:
+  - id: VAL-006
+    status: passed
+    statement: The representative scenario, 40-test suite, repository validation, and final approval satisfy all Goal 006 acceptance criteria.
+    refs: [EVIDENCE-064, EVIDENCE-063, APPROVAL-006-FINAL]
+outcome: The bounded hybrid model is approved. The current deterministic operations are retained, expansion is deferred pending new evidence, and the mission remains open.
+completion:
+  disposition: completed
+  rationale: All acceptance criteria are satisfied, including final human approval, while mission closure was explicitly deferred.

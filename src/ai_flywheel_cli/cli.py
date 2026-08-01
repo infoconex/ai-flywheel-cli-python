@@ -6,6 +6,11 @@ from pathlib import Path
 import typer
 
 from ai_flywheel_cli import __version__
+from ai_flywheel_cli.deterministic_operations import (
+    UnsupportedDeterministicOperationError,
+    advance_lifecycle,
+    start_execution,
+)
 from ai_flywheel_cli.operations import (
     LockContentionError,
     OperationError,
@@ -18,7 +23,7 @@ from ai_flywheel_cli.validation import validate_repository
 
 app = typer.Typer(
     name="flywheel",
-    help="Install, inspect, validate, and upgrade AI Flywheel repository artifacts.",
+    help="Install, inspect, validate, upgrade, and safely operate AI Flywheel artifacts.",
     no_args_is_help=True,
     invoke_without_command=True,
 )
@@ -36,6 +41,9 @@ def _operation_exit(error: OperationError, *, command: str, as_json: bool) -> No
     if isinstance(error, LockContentionError):
         code = 5
         category = "lock-contention"
+    elif isinstance(error, UnsupportedDeterministicOperationError):
+        code = 6
+        category = "ai-fallback-required"
     elif isinstance(error, RepositoryConflictError):
         code = 4
         category = "repository-conflict"
@@ -123,6 +131,56 @@ def validate(
     _emit(payload, as_json=json_output)
     if not result.passed:
         raise typer.Exit(code=2)
+
+
+@app.command("start-execution")
+def start_execution_command(
+    mission_id: str = typer.Argument(...),
+    goal_id: str = typer.Argument(...),
+    execution_id: str = typer.Argument(...),
+    intended_outcome: str = typer.Option(..., "--intended-outcome"),
+    repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Create and activate an execution with synchronized goal and state artifacts."""
+    try:
+        result = start_execution(
+            repository,
+            mission_id,
+            goal_id,
+            execution_id,
+            intended_outcome,
+        )
+    except OperationError as error:
+        _operation_exit(error, command="start-execution", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
+
+
+@app.command("advance-lifecycle")
+def advance_lifecycle_command(
+    summary: str = typer.Option(..., "--summary"),
+    ref: list[str] | None = typer.Option(None, "--ref"),
+    expected_stage: str | None = typer.Option(
+        None,
+        "--expected-stage",
+        help="Reject a retry when the active lifecycle stage has already changed.",
+    ),
+    repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Complete the active lifecycle stage and start the next stage atomically."""
+    try:
+        result = advance_lifecycle(
+            repository,
+            summary,
+            tuple(ref or ()),
+            expected_stage=expected_stage,
+        )
+    except OperationError as error:
+        _operation_exit(error, command="advance-lifecycle", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
 
 
 @app.command()

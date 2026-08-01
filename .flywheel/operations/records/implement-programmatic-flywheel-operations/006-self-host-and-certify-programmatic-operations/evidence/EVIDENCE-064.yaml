@@ -1,0 +1,29 @@
+schema_version: 1
+id: EVIDENCE-064
+kind: evidence
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 006-self-host-and-certify-programmatic-operations
+execution_id: EX-20260801T183700Z-006
+created_at: "2026-08-01T18:42:00Z"
+created_by: chatgpt-session
+summary: A representative hybrid mission exercised the supported deterministic operations while AI retained mission design, interpretation, evidence authoring, evaluation, and fallback responsibility.
+status: accepted
+classification: hybrid-proving-result
+criterion_ids: [AC-001, AC-002, AC-003, AC-004, AC-005]
+source_refs:
+  - representative-run:2026-08-01T18:31:00Z
+  - EVIDENCE-063
+artifact_refs:
+  - .flywheel/operations/records/implement-programmatic-flywheel-operations/006-self-host-and-certify-programmatic-operations/proving-mission/hybrid-proving-result.yaml
+  - .flywheel/operations/records/implement-programmatic-flywheel-operations/006-self-host-and-certify-programmatic-operations/deterministic-value-evaluation.md
+  - .flywheel/operations/records/implement-programmatic-flywheel-operations/005-implement-atomic-transitions-and-recovery/supported-operation-safety-matrix.md
+evidence:
+  evidence_type: representative-hybrid-mission
+  supported_claim: Selective deterministic delegation improved consistency and reduced coordinated mutation effort without replacing AI judgment or human authority.
+  source_or_method: Executed start-execution and two lifecycle transitions in a representative repository; exercised duplicate-start rejection, lifecycle-replay rejection, governed AI fallback, interruption tests, the full test suite, and repository validation.
+  actual_result: Three deterministic commands performed seven coordinated canonical artifact writes; two negative replays were rejected without changes; unsupported mission creation remained governed AI work; 40 tests passed and repository validation reported zero issues.
+  observed_at: "2026-08-01T18:42:00Z"
+  storage_location: .flywheel/operations/records/implement-programmatic-flywheel-operations/006-self-host-and-certify-programmatic-operations/evidence/EVIDENCE-064.yaml
+decision: null
+finding: null
+approval: null

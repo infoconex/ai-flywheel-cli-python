@@ -1,37 +1,37 @@
 schema_version: 1
 id: 004-implement-record-and-approval-operations
 mission_id: implement-programmatic-flywheel-operations
-title: Implement Record and Approval Operations
-status: proposed
-objective: Add programmatic creation, validation, lookup, and linking of evidence, findings, decisions, approvals, observations, evaluations, classifications, adaptations, and reusable knowledge records.
+title: Harden Shared Validation and Mutation Safety
+status: completed
+objective: Refactor and strengthen only the shared validation and persistence protections demonstrated by the implemented start-execution and advance-lifecycle operations.
 depends_on:
   - 003-implement-execution-and-lifecycle-operations
 procedure:
-  - Implement typed record creation using authoritative schemas and placement rules.
-  - Generate or validate deterministic record identifiers and filenames.
-  - Link records to missions, goals, executions, lifecycle stages, criteria, and other records.
-  - Implement approval creation and verification without allowing the operator to self-authorize restricted transitions.
-  - Add record show and list operations with type, mission, goal, execution, status, and criterion filters.
-  - Prevent broken, duplicate, cross-scope, or unauthorized references.
+  - Extract and reuse only the artifact loading, schema, identity, canonical placement, reference, and state-consistency checks demonstrated by the selected operations.
+  - Strengthen staged repository validation, atomic persistence, rollback, and stale or conflicting mutation protection.
+  - Preserve actionable structured errors that allow the AI operator to understand and recover from rejected operations.
+  - Reject a transition when existing governance identifies a required approval and no matching durable human authorization is available; do not create, infer, or broaden authority.
+  - Avoid general approval-verification services, evidence or record CRUD, and abstractions intended for operation families outside the approved scope.
+  - Add focused positive and negative tests for malformed input, identity mismatch, broken references, invalid proposed state, stale mutation, failed validation, and rollback.
 acceptance_criteria:
   - id: AC-001
-    statement: All supported record types can be created programmatically in their canonical locations.
+    statement: Start-execution and advance-lifecycle reuse shared validation for demonstrated critical governance and consistency rules.
   - id: AC-002
-    statement: Record identifiers, filenames, parent references, and cross-references are validated before persistence.
+    statement: Identity, canonical placement, references, and affected state are validated before persistence.
   - id: AC-003
-    statement: Approval records preserve human authority and cannot be fabricated by the transition being approved.
+    statement: Proposed mutations are validated as a complete set and are applied atomically or restored without partial canonical changes.
   - id: AC-004
-    statement: Record list and lookup operations support deterministic filtering and ordering.
+    statement: Stale, conflicting, malformed, or governance-restricted operations are rejected with actionable structured results.
   - id: AC-005
-    statement: Automated tests cover valid records, malformed records, broken references, duplicate identifiers, and approval misuse.
+    statement: Shared services remain limited to demonstrated needs and are covered by positive and negative automated tests.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [record operation source, record creation tests]
+    artifacts: [shared validation source, operation reuse mapping]
   - criterion_id: AC-002
-    artifacts: [identity and reference validation tests]
+    artifacts: [identity placement reference and state validation tests]
   - criterion_id: AC-003
-    artifacts: [approval boundary tests]
+    artifacts: [staged validation atomic persistence and rollback tests]
   - criterion_id: AC-004
-    artifacts: [record query tests]
+    artifacts: [structured rejection and recovery tests]
   - criterion_id: AC-005
-    artifacts: [negative record operation report]
+    artifacts: [scope review and complete test report]

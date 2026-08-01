@@ -1,36 +1,40 @@
 schema_version: 1
 id: 003-implement-execution-and-lifecycle-operations
 mission_id: implement-programmatic-flywheel-operations
-title: Implement Execution and Lifecycle Operations
-status: proposed
-objective: Add programmatic execution creation, resume, block, abandon, complete, and all eight lifecycle-stage transition operations with enforced ordering and state consistency.
+title: Implement Selected Deterministic Operations
+status: completed
+objective: Implement the approved high-value deterministic operations while preserving AI as the operator and retaining governed AI execution for activities outside the selected scope.
 depends_on:
   - 002-implement-mission-and-goal-operations
 procedure:
-  - Implement execution create, show, list, resume, block, complete, fail, and abandon operations.
-  - Implement start, complete, block, fail, and mark-not-applicable operations for each lifecycle stage.
-  - Enforce one active execution, one in-progress stage, legal stage order, and durable state synchronization.
-  - Require summaries, references, reasons, and completion data where the schemas and lifecycle rules require them.
-  - Support idempotent retries and deterministic error categories.
+  - Implement only the operations approved by Goal 002.
+  - Keep domain logic separate from CLI presentation where that improves reuse and testing.
+  - Preserve canonical schemas, references, lifecycle rules, evidence requirements, and approval boundaries.
+  - Provide deterministic machine-readable results for supported operations.
+  - Clearly report unsupported operations and allow the AI operator to continue through governed artifact execution.
+  - Add positive and negative automated tests for every implemented operation.
+  - Continue without renewed approval through implementation, test execution, correction, repository validation, evidence persistence, lifecycle completion, and the goal completion summary.
+  - Treat progress updates as non-blocking; continue immediately after each update unless a documented approval boundary, blocker, required scope expansion, or human-disposition failure exists.
+  - Before stopping while the goal remains active, verify whether the goal is complete, a blocker is documented, an approval boundary exists, or scope expansion is required; continue when all are false.
 acceptance_criteria:
   - id: AC-001
-    statement: Executions can be created and resumed without duplicate identity or active-state conflicts.
+    statement: Every operation approved by Goal 002 is implemented and no unapproved blanket operation scope is introduced.
   - id: AC-002
-    statement: All eight lifecycle stages can be transitioned programmatically under the normative ordering and completion rules.
+    statement: Supported operations preserve the same governance and validation rules as direct AI-operated execution.
   - id: AC-003
-    statement: Execution and state artifacts remain synchronized after every successful transition.
+    statement: Unsupported operations are reported accurately and remain available through governed AI execution.
   - id: AC-004
-    statement: Illegal, skipped, duplicate, or unauthorized transitions are rejected without partial mutation.
+    statement: Successful operations produce deterministic outputs and schema-valid artifacts.
   - id: AC-005
-    statement: Automated tests cover success, failure, retry, resume, and terminal execution paths.
+    statement: Positive and negative automated tests cover every implemented operation and its declared boundaries.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [execution operation source, execution tests]
+    artifacts: [approved scope mapping, operation source]
   - criterion_id: AC-002
-    artifacts: [lifecycle transition source, stage transition tests]
+    artifacts: [governance and validation tests]
   - criterion_id: AC-003
-    artifacts: [state synchronization tests]
+    artifacts: [unsupported-operation and AI-fallback tests]
   - criterion_id: AC-004
-    artifacts: [negative transition tests]
+    artifacts: [deterministic output and artifact validation tests]
   - criterion_id: AC-005
-    artifacts: [end-to-end execution test report]
+    artifacts: [test and coverage report]

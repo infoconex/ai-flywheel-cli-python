@@ -1,38 +1,38 @@
 schema_version: 1
 id: 001-align-cross-repository-operations-contract
 mission_id: implement-programmatic-flywheel-operations
-title: Align Cross-Repository Operations Contract
-status: active
-objective: Define and approve the specification, framework, capability, transition, and certification contracts required for programmatic Flywheel operations before implementing repository-specific commands.
+title: Reconcile Determinism Boundary and Repository Scope
+status: completed
+objective: Review the completed onboarding evidence against the full AI Flywheel specification, determine whether programmatic execution is required for conformance, and limit cross-repository changes to genuine specification, framework, or testing gaps.
 blocked_by: []
 procedure:
   - Review the persisted onboarding programmatic-operations assessment.
-  - Define artifact-governed and programmatic-operations readiness distinctions in the specification.
-  - Add command-neutral operation and transition contracts to the framework.
-  - Define machine-readable capability declarations and certification expectations.
-  - Add or update testing prompts and fixtures for the approved contract.
-  - Record immutable revisions and human approval before implementation begins.
+  - Read the complete specification structure and all normative specification files.
+  - Compare the proposed programmatic requirement with AI as Operator and Moving Determinism Boundary.
+  - Determine whether specification, framework, or testing changes are actually required.
+  - Remove drafts that incorrectly make deterministic tooling a conformance requirement.
+  - Reframe the implementation mission as optional deterministic optimization under AI governance.
 acceptance_criteria:
   - id: AC-001
-    statement: The specification explicitly distinguishes artifact-governed readiness from programmatic-operations readiness.
+    statement: The relationship between AI-operated execution and deterministic tooling is resolved against the complete specification context.
   - id: AC-002
-    statement: The framework defines required operations, preconditions, postconditions, approval boundaries, atomicity, idempotency, and recovery behavior.
+    statement: The specification does not require programmatic implementation for Flywheel conformance or readiness.
   - id: AC-003
-    statement: Machine-readable capability claims are defined and cannot overstate implementation support.
+    statement: Cross-repository drafts that incorrectly introduce programmatic conformance are removed or rejected.
   - id: AC-004
-    statement: Testing scenarios cover the approved programmatic operations contract.
+    statement: The active mission is reframed around moving suitable repeated operations across the determinism boundary.
   - id: AC-005
-    statement: Exact cross-repository revisions and explicit human approval are recorded before implementation goals begin.
+    statement: Human agreement with the corrected interpretation and mission direction is recorded.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [specification change set]
+    artifacts: [specification repository review]
   - criterion_id: AC-002
-    artifacts: [framework operation and transition contracts]
+    artifacts: [determinism-boundary decision]
   - criterion_id: AC-003
-    artifacts: [capability schema and validation rules]
+    artifacts: [reverted cross-repository branches]
   - criterion_id: AC-004
-    artifacts: [testing prompts and fixtures]
+    artifacts: [revised mission]
   - criterion_id: AC-005
-    artifacts: [revision record, approval record]
+    artifacts: [human agreement record]
 approvals_required:
-  - Approval of cross-repository contract changes
+  - Human agreement with corrected determinism-boundary interpretation

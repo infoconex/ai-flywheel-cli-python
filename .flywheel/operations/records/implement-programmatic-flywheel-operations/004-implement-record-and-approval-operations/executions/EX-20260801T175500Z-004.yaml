@@ -1,0 +1,111 @@
+schema_version: 1
+id: EX-20260801T175500Z-004
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 004-implement-record-and-approval-operations
+status: completed
+intended_outcome: Harden the shared validation and mutation-safety boundary used by start-execution and advance-lifecycle without expanding operation scope.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T17:55:00Z"
+completed_at: "2026-08-01T18:06:00Z"
+lifecycle:
+  execute:
+    status: completed
+    started_at: "2026-08-01T17:55:00Z"
+    completed_at: "2026-08-01T17:59:00Z"
+    summary: Extracted shared artifact loading, staged validation, stale-revision detection, atomic persistence, rollback, and structured mutation failures.
+    refs: [EVIDENCE-062]
+    reason: null
+  observe:
+    status: completed
+    started_at: "2026-08-01T17:59:00Z"
+    completed_at: "2026-08-01T18:00:00Z"
+    summary: The initial test run found one public error-message compatibility mismatch while all mutation-safety behavior operated as intended.
+    refs: [EVIDENCE-062]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T18:00:00Z"
+    completed_at: "2026-08-01T18:01:00Z"
+    summary: Preserving established error wording while adding structured failure details provides hardening without breaking existing callers or tests.
+    refs: [EVIDENCE-062]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T18:01:00Z"
+    completed_at: "2026-08-01T18:02:00Z"
+    summary: Classified the message mismatch as a compatibility defect and the shared mutation service as an approved implementation improvement.
+    refs: [EVIDENCE-062]
+    reason: null
+  adapt:
+    status: completed
+    started_at: "2026-08-01T18:02:00Z"
+    completed_at: "2026-08-01T18:03:00Z"
+    summary: Restored the established failed-validation wording and retained structured failures, stale-source checks, locking, validation, and rollback.
+    refs: [EVIDENCE-062]
+    reason: null
+  validate:
+    status: completed
+    started_at: "2026-08-01T18:03:00Z"
+    completed_at: "2026-08-01T18:04:00Z"
+    summary: The complete test suite passed 37 tests and repository validation passed with zero issues.
+    refs: [EVIDENCE-062]
+    reason: null
+  persist:
+    status: completed
+    started_at: "2026-08-01T18:04:00Z"
+    completed_at: "2026-08-01T18:05:00Z"
+    summary: Persisted the shared mutation service, operation reuse, focused tests, and validation evidence on the mission branch.
+    refs: [EVIDENCE-062]
+    reason: null
+  reuse:
+    status: completed
+    started_at: "2026-08-01T18:05:00Z"
+    completed_at: "2026-08-01T18:06:00Z"
+    summary: Reused the validated mutation boundary across both selected deterministic operations without introducing broader approval or record services.
+    refs: [EVIDENCE-062]
+    reason: null
+actions:
+  - Recorded human approval to start Goal 004.
+  - Added a shared mutation-safety module.
+  - Refactored start-execution and advance-lifecycle to use shared validation and persistence.
+  - Added retained-digest stale-source checks.
+  - Added structured mutation failures and focused tests.
+  - Corrected an error-message compatibility failure.
+  - Ran the complete test suite and repository validation.
+observations:
+  - id: OBS-004-001
+    statement: Shared mutation safety removed duplicated persistence logic from both selected deterministic operations.
+    refs: [EVIDENCE-062]
+  - id: OBS-004-002
+    statement: The first full test run detected a compatibility mismatch in failed-validation wording.
+    refs: [EVIDENCE-062]
+evaluations:
+  - id: EVAL-004-001
+    statement: Structured failures can be added without changing established human-readable error contracts.
+    refs: [EVIDENCE-062]
+classifications:
+  - id: CLASS-004-001
+    category: implementation-improvement
+    statement: Shared staged validation, stale detection, atomic persistence, and rollback are demonstrated reusable needs.
+  - id: CLASS-004-002
+    category: compatibility-defect
+    statement: Changing established failed-validation wording would unnecessarily break existing tests and callers.
+adaptations:
+  - id: ADAPT-004-001
+    disposition: approved
+    statement: Use the shared mutation service for both selected operations while preserving existing public error wording.
+    refs: [EVIDENCE-062]
+blockers: []
+approval_refs: []
+evidence_refs: [EVIDENCE-062]
+decision_refs: []
+finding_refs: []
+validation_results:
+  - id: VAL-004-001
+    status: passed
+    statement: All 37 tests passed and repository validation reported zero issues.
+    refs: [EVIDENCE-062]
+outcome: Shared validation and mutation safety are hardened and reused by both selected deterministic operations without expanding into general approval or record services.
+completion:
+  disposition: completed
+  rationale: All acceptance criteria are satisfied by shared implementation, structured rejection behavior, stale-source protection, atomic persistence, rollback, complete tests, and repository validation.

@@ -2,41 +2,104 @@ schema_version: 1
 id: EX-20260801T154900Z-001
 mission_id: implement-programmatic-flywheel-operations
 goal_id: 001-align-cross-repository-operations-contract
-status: in-progress
-intended_outcome: Produce and approve aligned specification, framework, capability, transition, certification, and testing contracts for complete programmatic Flywheel operations.
+status: completed
+intended_outcome: Resolve whether deterministic programmatic tooling is required by the AI Flywheel specification and align the mission and repositories with the correct determinism-boundary interpretation.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
 started_at: "2026-08-01T15:49:00Z"
-completed_at: null
+completed_at: "2026-08-01T16:28:00Z"
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: "2026-08-01T15:49:00Z"
-    completed_at: null
-    summary: Review onboarding learning and prepare coordinated cross-repository contract changes before repository-specific implementation begins.
-    refs: [EVIDENCE-055, .flywheel/operations/knowledge/onboarding-programmatic-operations-assessment.yaml]
+    completed_at: "2026-08-01T15:58:00Z"
+    summary: Prepared initial cross-repository drafts and then expanded review to the complete specification context.
+    refs: [EVIDENCE-055, EVIDENCE-056]
     reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  observe:
+    status: completed
+    started_at: "2026-08-01T15:58:00Z"
+    completed_at: "2026-08-01T16:12:00Z"
+    summary: Observed that the specification already defines AI as operator and code as a moving determinism boundary rather than a mandatory execution layer.
+    refs: [EVIDENCE-057]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T16:12:00Z"
+    completed_at: "2026-08-01T16:16:00Z"
+    summary: Determined that programmatic execution is optional optimization and must not become a separate conformance or readiness requirement.
+    refs: [EVIDENCE-057]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T16:16:00Z"
+    completed_at: "2026-08-01T16:18:00Z"
+    summary: Classified the initial drafts as an incorrect specification expansion caused by conflating deterministic optimization with Flywheel completeness.
+    refs: [EVIDENCE-057]
+    reason: null
+  adapt:
+    status: completed
+    started_at: "2026-08-01T16:18:00Z"
+    completed_at: "2026-08-01T16:24:00Z"
+    summary: Removed the cross-repository drafts and reframed the mission around optional deterministic tooling under AI governance.
+    refs: [EVIDENCE-057]
+    reason: null
+  validate:
+    status: completed
+    started_at: "2026-08-01T16:24:00Z"
+    completed_at: "2026-08-01T16:26:00Z"
+    summary: Confirmed that no specification, framework, or testing PR is required and that the revised mission no longer treats code as a conformance prerequisite.
+    refs: [EVIDENCE-057]
+    reason: null
+  persist:
+    status: completed
+    started_at: "2026-08-01T16:26:00Z"
+    completed_at: "2026-08-01T16:27:00Z"
+    summary: Persisted the corrected mission, completed goal, reversal revisions, and determinism-boundary decision.
+    refs: [EVIDENCE-057]
+    reason: null
+  reuse:
+    status: completed
+    started_at: "2026-08-01T16:27:00Z"
+    completed_at: "2026-08-01T16:28:00Z"
+    summary: Established reusable guidance that future tooling missions must optimize suitable work without redefining Flywheel conformance.
+    refs: [EVIDENCE-057]
+    reason: null
 actions:
   - Recorded explicit mission and Goal 001 kickoff approval.
-  - Activated the programmatic operations mission.
-  - Activated Goal 001 for cross-repository contract alignment.
-observations: []
-evaluations: []
-classifications: []
-adaptations: []
+  - Prepared initial cross-repository drafts.
+  - Reviewed the complete specification structure and normative content.
+  - Rejected the assumption that programmatic implementation is required.
+  - Removed specification, framework, and testing drafts.
+  - Reframed the mission around deterministic optimization under AI governance.
+observations:
+  - id: OBS-001-001
+    statement: AI can operate the complete Flywheel lifecycle without dedicated lifecycle commands.
+    refs: [EVIDENCE-057]
+  - id: OBS-001-002
+    statement: Deterministic tools are valuable when repeated work crosses the moving determinism boundary.
+    refs: [EVIDENCE-057]
+evaluations:
+  - id: EVAL-001-001
+    statement: Programmatic implementation is not required for specification conformance or ready-for-missions status.
+    refs: [EVIDENCE-057]
+classifications:
+  - id: CLASS-001-001
+    category: specification-scope-correction
+    statement: The proposed programmatic conformance layer exceeded the specification's intended scope.
+adaptations:
+  - id: ADAPT-001-001
+    statement: Reframe the mission as deterministic tooling optimization and preserve governed AI fallback.
+    status: completed
 blockers: []
-approval_refs: [EVIDENCE-055]
-evidence_refs: [EVIDENCE-055]
-decision_refs: []
+approval_refs: [EVIDENCE-055, EVIDENCE-057]
+evidence_refs: [EVIDENCE-055, EVIDENCE-056, EVIDENCE-057]
+decision_refs: [EVIDENCE-057]
 finding_refs: []
-validation_results: []
-outcome: null
+validation_results:
+  - id: VAL-001-001
+    status: passed
+    summary: Cross-repository drafts removed and revised mission aligned with AI as Operator and Moving Determinism Boundary.
+outcome: Determinism-boundary interpretation corrected; no cross-repository contract changes are required before optional deterministic tooling work continues.
 completion:
-  disposition: null
-  rationale: null
+  disposition: completed
+  rationale: All revised acceptance criteria are satisfied and the repository owner agreed with the corrected interpretation.

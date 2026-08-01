@@ -1,44 +1,44 @@
 schema_version: 1
 id: 006-self-host-and-certify-programmatic-operations
 mission_id: implement-programmatic-flywheel-operations
-title: Self-Host and Certify Programmatic Operations
-status: proposed
-objective: Use the completed CLI operations to govern and complete a representative mission without manual canonical artifact editing, then certify the claimed programmatic operations capability.
+title: Prove Hybrid AI and Deterministic Operation
+status: completed
+objective: Complete a representative mission with AI as the operator, using deterministic tools for the operations selected in Goal 002 and governed AI execution for the remaining activities, then evaluate whether the tools delivered measurable value.
 depends_on:
   - 005-implement-atomic-transitions-and-recovery
 procedure:
-  - Declare the exact programmatic operations capability profile implemented by the CLI.
-  - Start a representative mission using only supported CLI operations after kickoff approval.
-  - Create and manage goals, executions, all lifecycle stages, records, approvals, and completion through the CLI.
-  - Exercise negative approval, invalid transition, interruption, conflict, retry, and recovery scenarios.
-  - Run repository validation after every durable transition and at final completion.
-  - Persist certification evidence and obtain human approval before broadening any capability or readiness claim.
+  - Record the exact deterministic operations implemented and the activities intentionally left AI-executed.
+  - Start a representative mission after kickoff approval.
+  - Have the AI operator invoke deterministic tools where supported and use governed artifact execution elsewhere.
+  - Exercise positive, negative, approval, conflict, retry, interruption, and recovery scenarios for supported operations.
+  - Compare reliability, effort, consistency, and reuse against the prior AI-only operating evidence where comparison is meaningful.
+  - Persist conclusions about which operations should remain deterministic, be expanded, be revised, or return to AI execution.
 acceptance_criteria:
   - id: AC-001
-    statement: A representative mission is completed without manual canonical artifact editing.
+    statement: A representative mission completes with AI visibly retaining operator responsibility and human authority preserved.
   - id: AC-002
-    statement: Mission, goal, execution, lifecycle, record, approval, state, and recovery operations are all exercised successfully.
+    statement: Every supported deterministic operation is exercised successfully within its declared boundary.
   - id: AC-003
-    statement: Negative and interruption scenarios prove approval, validation, atomicity, idempotency, and recovery boundaries.
+    statement: Activities outside the deterministic scope are completed through governed AI execution without being treated as implementation gaps.
   - id: AC-004
-    statement: Machine-readable capability claims exactly match the implemented and tested commands.
+    statement: Negative and interruption tests prove the safety claims made for supported operations.
   - id: AC-005
-    statement: Final repository validation passes and certification reaches ready-for-approval before any claim is broadened.
+    statement: The evaluation measures whether deterministic tooling improved reliability, consistency, effort, cost, or reuse.
   - id: AC-006
-    statement: Human authority explicitly approves the programmatic operations certification result.
+    statement: Human authority approves the final assessment and any recommendation to expand the determinism boundary.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [self-hosted mission transcript and records]
+    artifacts: [hybrid mission transcript and records]
   - criterion_id: AC-002
-    artifacts: [operation coverage map]
+    artifacts: [supported-operation coverage map]
   - criterion_id: AC-003
-    artifacts: [negative and recovery scenario results]
+    artifacts: [AI-executed activity record]
   - criterion_id: AC-004
-    artifacts: [capability declaration and validation result]
+    artifacts: [negative interruption and recovery results]
   - criterion_id: AC-005
-    artifacts: [final validation and certification record]
+    artifacts: [deterministic value evaluation]
   - criterion_id: AC-006
-    artifacts: [human certification approval]
+    artifacts: [human assessment approval]
 approvals_required:
   - Representative mission kickoff approval
-  - Programmatic operations certification approval
+  - Final deterministic tooling assessment approval
