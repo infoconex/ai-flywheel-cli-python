@@ -1,0 +1,40 @@
+schema_version: 1
+id: EX-20260801T061800Z-002
+mission_id: establish-ai-flywheel-operations
+goal_id: 002-reconcile-and-approve-operating-context
+status: in-progress
+intended_outcome: Reconcile discovered facts, provided decisions, defaults, and deferred items into an internally consistent operating context ready for implementation design.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T06:18:00Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2026-08-01T06:18:00Z"
+    completed_at: null
+    summary: Review all onboarding context, decisions, provenance, deferred items, and approval requirements for consistency.
+    refs: [EVIDENCE-029, EVIDENCE-030, EVIDENCE-031]
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions:
+  - Activated Goal 002 after successful completion of Goal 001.
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: [EVIDENCE-029, EVIDENCE-030, EVIDENCE-031]
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
