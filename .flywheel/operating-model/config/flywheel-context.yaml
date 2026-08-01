@@ -12,6 +12,13 @@ implementation:
     value: evolvable command-line tooling with dependency detection
     status: candidate
     origin: provided
+  packaging:
+    configuration: pyproject.toml
+    layout: src
+    scaffold_must_be_executable: true
+    validate_after_creation: true
+    status: confirmed
+    origin: provided
   test_framework:
     value: pytest
     status: confirmed
@@ -157,6 +164,13 @@ decisions:
       Expose cross-platform project tasks through a small Python module invoked
       with python -m tools, including individual checks and a complete validate task.
     evidence_ref: EVIDENCE-018
+  - id: PACKAGING-LAYOUT-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Use pyproject.toml with a src layout, and require onboarding to create,
+      prepare, and validate an immediately executable project scaffold.
+    evidence_ref: EVIDENCE-019
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -172,3 +186,4 @@ notes:
   - Planning and validation are read-only; repository changes occur only after the explicit application boundary is satisfied.
   - Coverage enforcement begins at 80 percent and may be raised later through an approved project-standard change.
   - Project validation commands must be convenient to execute immediately after repository onboarding and must not depend on platform-specific shell tooling.
+  - Onboarding is incomplete until the generated package, tools module, tests, and development dependencies are prepared and python -m tools validate has been executed successfully.
