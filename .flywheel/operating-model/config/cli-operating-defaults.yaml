@@ -1,0 +1,80 @@
+schema_version: 1
+status: confirmed
+origin: delegated-recommendation
+evidence_ref: EVIDENCE-027
+runtime:
+  directory: .flywheel/.runtime
+  version_controlled: false
+  contents:
+    - locks
+    - staging
+    - rollback
+    - temporary-downloads
+output:
+  default: human-readable
+  automation_format: json
+  automation_option: --json
+  deterministic: true
+exit_codes:
+  stable_and_documented: true
+  categories:
+    - success
+    - validation-failure
+    - usage-error
+    - dependency-failure
+    - conflict
+    - lock-contention
+    - network-failure
+    - internal-failure
+configuration:
+  format: YAML
+  versioned_schema_validation: required
+  unknown_required_semantics: reject
+network:
+  bounded_timeouts: required
+  retries:
+    limited: true
+    backoff: true
+    idempotent_reads_only: true
+    implicit_mutation_retry: prohibited
+archive_security:
+  reject_path_traversal: true
+  reject_absolute_paths: true
+  reject_unsafe_links: true
+  reject_duplicate_destinations: true
+  release_manifest_match: required
+compatibility:
+  versioning: semantic-versioning
+  unsupported_major_upgrade: block
+  breaking_change_migration: explicit
+testing:
+  unit: core-logic
+  integration:
+    - filesystem
+    - command-behavior
+  fixture_end_to_end:
+    - install
+    - validate
+    - status
+    - upgrade
+logging:
+  normal_output: concise
+  verbose_diagnostics: explicit
+  redact_secrets_and_tokens: true
+  persistent_logs: configured-or-recovery-only
+documentation:
+  release_requirements:
+    - installation
+    - quick-start
+    - command-reference
+    - configuration
+    - upgrade
+    - troubleshooting
+    - recovery
+    - safe-operation
+release:
+  local_validation: required
+  versioned_artifacts: required
+  checksums: required
+  release_notes: required
+  github_actions: prohibited-without-explicit-human-approval
