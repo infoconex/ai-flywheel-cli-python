@@ -1,0 +1,33 @@
+schema_version: 1
+id: EVIDENCE-041
+mission_id: establish-ai-flywheel-operations
+goal_id: 004-build-and-validate-operating-tools
+execution_id: EX-20260801T134200Z-004
+type: implementation-progress
+summary: Implemented the first machine-readable Flywheel artifact validator and negative-path test fixtures.
+details:
+  implemented:
+    - manifest and state required-file checks
+    - required manifest file existence checks
+    - state required-field checks
+    - active execution and lifecycle-stage consistency checks
+    - readiness and application-mission permission consistency checks
+    - blocked-state blocker enforcement
+    - active mission, goal, and execution reference checks
+    - execution filename-to-ID and parent-reference checks
+    - eight-stage lifecycle completeness checks
+    - active lifecycle-stage status checks
+    - deterministic structured validation errors
+  cli_integration:
+    command: flywheel validate
+    failure_exit_code: 2
+    structured_output: supported
+  tests_added:
+    - valid idle state
+    - lifecycle stage without active execution
+    - readiness permission mismatch
+    - blocked state without blocker
+    - broken active mission, goal, and execution references
+  validation_status: not-executed
+  statement: Source and tests are durable, but passing test evidence has not yet been produced in an executable Python environment.
+recorded_at: 2026-08-01T13:56:00Z
