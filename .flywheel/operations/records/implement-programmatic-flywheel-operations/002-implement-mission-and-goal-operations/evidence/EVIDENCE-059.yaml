@@ -1,0 +1,24 @@
+schema_version: 1
+id: EVIDENCE-059
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 002-implement-mission-and-goal-operations
+execution_id: EX-20260801T164900Z-002
+type: human-scope-approval
+summary: Human authority approved option 1, the recommended minimal deterministic implementation scope.
+details:
+  decision: approved
+  selected_option: 1
+  approved_scope:
+    - Start an execution and synchronize goal and state references.
+    - Transition lifecycle stages and synchronize execution and state.
+    - Build a shared validate-before-persist mutation service.
+  explicitly_deferred:
+    - Broad mission and goal CRUD.
+    - Typed evidence creation.
+    - General list and filter operations.
+    - Deterministic replacement of AI-led mission design, goal decomposition, evaluation, classification, adaptation, and reuse.
+  operating_boundary:
+    - AI remains the operator and selects when to invoke deterministic tools.
+    - Unsupported operations continue through governed AI execution.
+    - Human approval boundaries remain authoritative.
+recorded_at: "2026-08-01T16:52:00Z"
