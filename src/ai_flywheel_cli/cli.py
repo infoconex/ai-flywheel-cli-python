@@ -12,8 +12,8 @@ from ai_flywheel_cli.operations import (
     RepositoryConflictError,
     install_from_archive,
     plan_install,
-    upgrade_from_archive,
 )
+from ai_flywheel_cli.upgrade import upgrade_from_archive
 from ai_flywheel_cli.validation import validate_repository
 
 app = typer.Typer(
