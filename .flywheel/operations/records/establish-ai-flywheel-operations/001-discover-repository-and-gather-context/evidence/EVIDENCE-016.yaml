@@ -1,0 +1,15 @@
+schema_version: 1
+id: EVIDENCE-016
+type: human-confirmed-context
+summary: Test coverage is enforced from the first release with an initial minimum threshold of 80 percent.
+details:
+  tooling:
+    - pytest-cov
+    - coverage.py
+  minimum_coverage_percent: 80
+  enforcement: fail validation when measured coverage is below the configured threshold
+  evolution: the threshold may be raised as the codebase matures through an approved change
+source:
+  kind: human-direction
+  recorded_at: "2026-08-01T05:22:00Z"
+  recorded_by: chatgpt-session
