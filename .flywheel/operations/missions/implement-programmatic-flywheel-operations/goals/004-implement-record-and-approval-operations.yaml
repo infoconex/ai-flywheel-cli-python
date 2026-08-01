@@ -2,7 +2,7 @@ schema_version: 1
 id: 004-implement-record-and-approval-operations
 mission_id: implement-programmatic-flywheel-operations
 title: Harden Shared Validation and Mutation Safety
-status: proposed
+status: active
 objective: Refactor and strengthen only the shared validation and persistence protections demonstrated by the implemented start-execution and advance-lifecycle operations.
 depends_on:
   - 003-implement-execution-and-lifecycle-operations
