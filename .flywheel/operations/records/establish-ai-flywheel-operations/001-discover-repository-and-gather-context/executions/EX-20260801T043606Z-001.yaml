@@ -1,0 +1,45 @@
+schema_version: 1
+id: EX-20260801T043606Z-001
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+status: in-progress
+intended_outcome: Inspect the target repository, identify known facts and material unknowns, ask only the questions needed to gather onboarding context, and persist the confirmed operating context required before reconciliation and Flywheel implementation design.
+acceptance_criteria:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+started_at: "2026-08-01T04:36:06Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2026-08-01T04:36:06Z"
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions: []
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
