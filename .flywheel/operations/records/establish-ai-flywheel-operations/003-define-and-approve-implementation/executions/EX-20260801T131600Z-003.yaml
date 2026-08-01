@@ -2,39 +2,97 @@ schema_version: 1
 id: EX-20260801T131600Z-003
 mission_id: establish-ai-flywheel-operations
 goal_id: 003-define-and-approve-implementation
-status: in-progress
+status: blocked
 intended_outcome: Define a complete repository-specific implementation proposal from the approved operating baseline and obtain explicit human approval before implementation begins.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004]
 started_at: "2026-08-01T13:16:00Z"
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: "2026-08-01T13:16:00Z"
-    completed_at: null
-    summary: Build the implementation proposal from the reconciled repository, Flywheel, governance, validation, and capability context.
-    refs: [EVIDENCE-032, EVIDENCE-033, EVIDENCE-034, EVIDENCE-035]
+    completed_at: "2026-08-01T13:18:00Z"
+    summary: Created the complete implementation proposal from the approved operating baseline.
+    refs: [EVIDENCE-036, .flywheel/operations/records/establish-ai-flywheel-operations/003-define-and-approve-implementation/implementation-proposal.md]
     reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  observe:
+    status: completed
+    started_at: "2026-08-01T13:18:00Z"
+    completed_at: "2026-08-01T13:18:30Z"
+    summary: The proposal covers all required implementation dimensions and preserves the approved first-release scope and deferred capabilities.
+    refs: [EVIDENCE-036]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T13:18:30Z"
+    completed_at: "2026-08-01T13:19:00Z"
+    summary: AC-001 through AC-003 pass; AC-004 requires explicit human approval.
+    refs: [EVIDENCE-036]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T13:19:00Z"
+    completed_at: "2026-08-01T13:19:15Z"
+    summary: Classified the remaining condition as a required human approval boundary, not an implementation defect.
+    refs: [EVIDENCE-036]
+    reason: null
+  adapt:
+    status: completed
+    started_at: "2026-08-01T13:19:15Z"
+    completed_at: "2026-08-01T13:19:30Z"
+    summary: No proposal adaptation is required before approval.
+    refs: [EVIDENCE-036]
+    reason: null
+  validate:
+    status: blocked
+    started_at: "2026-08-01T13:19:30Z"
+    completed_at: null
+    summary: Proposal completeness and consistency passed; final validation is blocked until explicit human approval is recorded.
+    refs: [EVIDENCE-036]
+    reason: explicit-human-approval-required
   persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
   reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
 actions:
   - Activated Goal 003 after successful completion of Goal 002.
-observations: []
-evaluations: []
-classifications: []
-adaptations: []
-blockers: []
+  - Created the durable implementation proposal.
+  - Classified initial, deferred, and rejected capabilities.
+  - Evaluated proposal completeness and technology independence.
+  - Stopped at the explicit implementation approval boundary.
+observations:
+  - id: OBS-003-001
+    statement: The approved onboarding decisions are sufficient to define an incremental implementation sequence.
+    refs: [EVIDENCE-036]
+evaluations:
+  - id: EVAL-003-001
+    statement: AC-001 through AC-003 passed; AC-004 remains pending explicit approval.
+    refs: [EVIDENCE-036]
+classifications:
+  - id: CLASS-003-001
+    type: approval-boundary
+    blocking: true
+    statement: Implementation cannot begin until the repository owner explicitly approves the proposal.
+    refs: [EVIDENCE-036]
+adaptations:
+  - id: ADAPT-003-001
+    disposition: not-required
+    statement: No proposal changes are required before approval.
+    refs: [EVIDENCE-036]
+blockers:
+  - id: BLOCKER-003-001
+    type: required-approval
+    statement: Explicit human approval of the implementation proposal is required.
 approval_refs: []
-evidence_refs: [EVIDENCE-032, EVIDENCE-033, EVIDENCE-034, EVIDENCE-035]
+evidence_refs: [EVIDENCE-032, EVIDENCE-033, EVIDENCE-034, EVIDENCE-035, EVIDENCE-036]
 decision_refs: []
 finding_refs: []
-validation_results: []
-outcome: null
+validation_results:
+  - id: VAL-003-001
+    result: passed
+    statement: Proposal completeness, approved-scope alignment, and technology independence passed.
+  - id: VAL-003-002
+    result: blocked
+    statement: Explicit human approval has not yet been recorded.
+outcome: pending-approval
 completion:
   disposition: null
   rationale: null
