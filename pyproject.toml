@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-flywheel-cli"
+version = "0.1.0"
+description = "Repository-local CLI for installing, validating, inspecting, and upgrading AI Flywheel operating artifacts."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Infoconex" }]
+dependencies = [
+  "typer>=0.12,<1.0",
+  "PyYAML>=6.0,<7.0",
+  "jsonschema>=4.23,<5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.11,<2.0",
+  "pytest>=8.3,<9.0",
+  "pytest-cov>=5.0,<7.0",
+  "ruff>=0.6,<1.0",
+  "types-PyYAML>=6.0.12",
+]
+
+[project.scripts]
+flywheel = "ai_flywheel_cli.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_flywheel_cli"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --strict-config"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["ai_flywheel_cli"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests", "tools"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+mypy_path = "src"
+packages = ["ai_flywheel_cli", "tools"]

@@ -1,0 +1,129 @@
+schema_version: 1
+id: EX-20260801T134200Z-004
+mission_id: establish-ai-flywheel-operations
+goal_id: 004-build-and-validate-operating-tools
+status: completed
+intended_outcome: Implement and locally validate the approved minimum Python CLI and repository-specific AI Flywheel operating tools.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T13:42:00Z"
+completed_at: "2026-08-01T14:37:00Z"
+lifecycle:
+  execute:
+    status: completed
+    started_at: "2026-08-01T13:42:00Z"
+    completed_at: "2026-08-01T14:18:00Z"
+    summary: Implemented the Python CLI, artifact validator, transactional install and upgrade services, tests, task runner, implementation manifest, and consumer documentation.
+    refs: [EVIDENCE-040, EVIDENCE-041, EVIDENCE-042]
+    reason: null
+  observe:
+    status: completed
+    started_at: "2026-08-01T14:18:00Z"
+    completed_at: "2026-08-01T14:22:00Z"
+    summary: Local execution exposed version-option, obsolete-test, duplicate-upgrade, module-entrypoint, and coverage defects.
+    refs: [EVIDENCE-043]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T14:22:00Z"
+    completed_at: "2026-08-01T14:25:00Z"
+    summary: Classified the findings as implementation defects and an external dependency-availability limitation.
+    refs: [EVIDENCE-043, EVIDENCE-044]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T14:25:00Z"
+    completed_at: "2026-08-01T14:27:00Z"
+    summary: Implementation defects required correction; unavailable Ruff, mypy, and Hatchling validation required an explicit approval boundary.
+    refs: [EVIDENCE-043, EVIDENCE-044]
+    reason: null
+  adapt:
+    status: completed
+    started_at: "2026-08-01T14:27:00Z"
+    completed_at: "2026-08-01T14:31:00Z"
+    summary: Corrected all discovered implementation defects, removed duplicate upgrade logic, expanded tests, and restored coverage above the required threshold.
+    refs: [EVIDENCE-043]
+    reason: null
+  validate:
+    status: completed
+    started_at: "2026-08-01T14:31:00Z"
+    completed_at: "2026-08-01T14:37:00Z"
+    summary: Functional validation passed; Ruff, mypy, and Hatchling checks were explicitly deferred by repository-owner approval until pre-release readiness validation.
+    refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045]
+    reason: null
+  persist:
+    status: completed
+    started_at: "2026-08-01T14:37:00Z"
+    completed_at: "2026-08-01T14:37:00Z"
+    summary: Persisted implementation, test evidence, environment limitation, approved deferral, and completion state.
+    refs: [EVIDENCE-042, EVIDENCE-043, EVIDENCE-044, EVIDENCE-045]
+    reason: null
+  reuse:
+    status: completed
+    started_at: "2026-08-01T14:37:00Z"
+    completed_at: "2026-08-01T14:37:00Z"
+    summary: The implementation and validation command are available for Goal 005 self-hosting, with deferred checks retained as a readiness gate.
+    refs: [.flywheel/implementation-manifest.yaml, EVIDENCE-045]
+    reason: null
+actions:
+  - Created the Python project, Typer CLI, task runner, and development configuration.
+  - Implemented doctor, install, validate, status, and upgrade commands.
+  - Implemented schema and reference validation plus transactional mutation safeguards.
+  - Added automated positive and negative tests.
+  - Corrected defects discovered during local execution.
+  - Recorded explicit approval to defer Ruff, mypy, and Hatchling validation until pre-release readiness validation.
+observations:
+  - id: OBS-004-001
+    statement: The repository did not contain an existing Python project scaffold.
+    refs: [EVIDENCE-040]
+  - id: OBS-004-002
+    statement: Local functional validation passed after correcting defects discovered by execution.
+    refs: [EVIDENCE-043]
+  - id: OBS-004-003
+    statement: The sandbox could not resolve Ruff, mypy, or Hatchling dependencies.
+    refs: [EVIDENCE-044]
+evaluations:
+  - id: EVAL-004-001
+    statement: The approved minimum implementation is usable for self-host proving, subject to the explicit pre-release validation deferral.
+    refs: [EVIDENCE-043, EVIDENCE-045]
+classifications:
+  - id: CLASS-004-001
+    type: implementation-defects-corrected
+    refs: [EVIDENCE-043]
+  - id: CLASS-004-002
+    type: approved-validation-deferral
+    refs: [EVIDENCE-044, EVIDENCE-045]
+adaptations:
+  - id: ADAPT-004-001
+    statement: Fixed the CLI version option, obsolete tests, duplicate upgrade implementation, missing module entry point, and insufficient coverage.
+    refs: [EVIDENCE-043]
+blockers: []
+approval_refs: [EVIDENCE-039, EVIDENCE-045]
+evidence_refs: [EVIDENCE-037, EVIDENCE-038, EVIDENCE-039, EVIDENCE-040, EVIDENCE-041, EVIDENCE-042, EVIDENCE-043, EVIDENCE-044, EVIDENCE-045]
+decision_refs: []
+finding_refs: []
+validation_results:
+  - check: automated-tests
+    status: passed
+    result: 24 passed, 0 failed
+    refs: [EVIDENCE-043]
+  - check: branch-coverage
+    status: passed
+    result: 80.23 percent
+    refs: [EVIDENCE-043]
+  - check: bytecode-compilation
+    status: passed
+    refs: [EVIDENCE-043]
+  - check: module-entrypoint
+    status: passed
+    refs: [EVIDENCE-043]
+  - check: repository-self-validation
+    status: passed
+    result: zero errors
+    refs: [EVIDENCE-043]
+  - check: ruff-mypy-hatchling
+    status: deferred-approved
+    refs: [EVIDENCE-044, EVIDENCE-045]
+outcome: achieved-with-approved-deferral
+completion:
+  disposition: completed
+  rationale: All implementation and functional validation requirements passed. Ruff, mypy, and Hatchling validation remain a mandatory pre-release readiness gate under explicit repository-owner approval.

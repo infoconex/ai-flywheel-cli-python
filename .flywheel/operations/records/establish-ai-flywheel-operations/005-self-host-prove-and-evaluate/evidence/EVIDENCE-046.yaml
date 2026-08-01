@@ -1,0 +1,15 @@
+schema_version: 1
+id: EVIDENCE-046
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: null
+type: approval
+summary: Human authority approved starting Goal 005.
+details:
+  statement: Go
+  interpretation: Approves kickoff of Goal 005 Self-Host, Prove, and Evaluate.
+  boundaries:
+    - Does not approve ready-for-missions transition.
+    - Does not approve merging the mission branch.
+    - Does not waive deferred pre-release Ruff, mypy, and Hatchling validation.
+recorded_at: "2026-08-01T14:42:00Z"

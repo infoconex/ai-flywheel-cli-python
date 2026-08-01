@@ -1,0 +1,19 @@
+schema_version: 1
+id: EVIDENCE-008
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+type: human-provided-context
+summary: >-
+  The bootstrap scripts should detect uv and pipx, let the user choose when both
+  are available, and when neither is available offer to install one or use a
+  managed virtual environment.
+source:
+  kind: human-direction
+  actor: repository-owner
+observations:
+  - Prefer existing supported package tools rather than forcing one installer.
+  - Prompt the user to choose between uv and pipx when both are detected.
+  - When neither tool is found, offer installation of a supported tool or creation of a managed virtual environment.
+  - Non-interactive environments will require an explicit option or deterministic default during implementation design.
+recorded_at: "2026-08-01T05:08:00Z"
+recorded_by: chatgpt-session

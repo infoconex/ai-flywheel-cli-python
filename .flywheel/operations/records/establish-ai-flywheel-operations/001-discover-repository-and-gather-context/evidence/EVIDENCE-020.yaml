@@ -1,0 +1,14 @@
+schema_version: 1
+id: EVIDENCE-020
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+summary: Selected Typer as the CLI framework while keeping command handlers thin and core behavior framework-independent.
+source:
+  kind: human-input
+  detail: User selected option 1 for the CLI framework decision.
+observed_at: 2026-08-01T05:36:00Z
+claims:
+  - Typer is the confirmed CLI framework.
+  - CLI command handlers must remain thin adapters over framework-independent application logic.

@@ -2,9 +2,8 @@ schema_version: 1
 id: 004-build-and-validate-operating-tools
 mission_id: establish-ai-flywheel-operations
 title: Build and Validate Operating Tools
-status: blocked
-blocked_by:
-  - 003-define-and-approve-implementation
+status: completed
+blocked_by: []
 objective: Build the approved minimum repository-specific tools required to operate the AI Flywheel.
 procedure:
   - Implement only approved capabilities using the approved Flywheel language, architecture, standards, and dependencies.
@@ -34,3 +33,8 @@ evidence_required:
     artifacts: [test results, validation results]
   - criterion_id: AC-005
     artifacts: [implementation manifest]
+completed_at: "2026-08-01T14:37:00Z"
+completion_evidence: [EVIDENCE-042, EVIDENCE-043, EVIDENCE-044, EVIDENCE-045]
+approval_refs: [EVIDENCE-039, EVIDENCE-045]
+limitations:
+  - Ruff, mypy, and Hatchling validation are deferred until pre-release readiness validation and remain required before ready-for-missions.

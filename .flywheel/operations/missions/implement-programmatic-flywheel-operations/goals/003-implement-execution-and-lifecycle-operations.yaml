@@ -1,0 +1,36 @@
+schema_version: 1
+id: 003-implement-execution-and-lifecycle-operations
+mission_id: implement-programmatic-flywheel-operations
+title: Implement Execution and Lifecycle Operations
+status: proposed
+objective: Add programmatic execution creation, resume, block, abandon, complete, and all eight lifecycle-stage transition operations with enforced ordering and state consistency.
+depends_on:
+  - 002-implement-mission-and-goal-operations
+procedure:
+  - Implement execution create, show, list, resume, block, complete, fail, and abandon operations.
+  - Implement start, complete, block, fail, and mark-not-applicable operations for each lifecycle stage.
+  - Enforce one active execution, one in-progress stage, legal stage order, and durable state synchronization.
+  - Require summaries, references, reasons, and completion data where the schemas and lifecycle rules require them.
+  - Support idempotent retries and deterministic error categories.
+acceptance_criteria:
+  - id: AC-001
+    statement: Executions can be created and resumed without duplicate identity or active-state conflicts.
+  - id: AC-002
+    statement: All eight lifecycle stages can be transitioned programmatically under the normative ordering and completion rules.
+  - id: AC-003
+    statement: Execution and state artifacts remain synchronized after every successful transition.
+  - id: AC-004
+    statement: Illegal, skipped, duplicate, or unauthorized transitions are rejected without partial mutation.
+  - id: AC-005
+    statement: Automated tests cover success, failure, retry, resume, and terminal execution paths.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [execution operation source, execution tests]
+  - criterion_id: AC-002
+    artifacts: [lifecycle transition source, stage transition tests]
+  - criterion_id: AC-003
+    artifacts: [state synchronization tests]
+  - criterion_id: AC-004
+    artifacts: [negative transition tests]
+  - criterion_id: AC-005
+    artifacts: [end-to-end execution test report]

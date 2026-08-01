@@ -1,0 +1,28 @@
+schema_version: 1
+id: EVIDENCE-002
+kind: evidence
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+created_at: "2026-08-01T04:44:00Z"
+created_by: chatgpt-session
+summary: Human-provided purpose and operating scope for the AI Flywheel Python CLI.
+status: accepted
+classification: repository-context
+criterion_ids:
+  - AC-001
+  - AC-004
+source_refs:
+  - human-direction:2026-08-01T04:44:00Z
+artifact_refs:
+  - .flywheel/operating-model/config/repository-context.yaml
+evidence:
+  evidence_type: human-approval
+  supported_claim: The CLI installs the Flywheel into empty or existing repositories, demonstrates building the CLI through Flywheel missions and goals, and assists with lifecycle execution after installation.
+  source_or_method: Direct human-provided onboarding answer in the active repository discovery execution.
+  actual_result: The repository purpose, target repository scenarios, proving-example role, and post-installation lifecycle role were explicitly defined.
+  observed_at: "2026-08-01T04:44:00Z"
+  storage_location: .flywheel/operations/records/establish-ai-flywheel-operations/001-discover-repository-and-gather-context/evidence/EVIDENCE-002.yaml
+decision: null
+finding: null
+approval: null

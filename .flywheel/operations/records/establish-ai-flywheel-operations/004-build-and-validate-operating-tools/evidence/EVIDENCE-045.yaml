@@ -1,0 +1,25 @@
+schema_version: 1
+id: EVIDENCE-045
+mission_id: establish-ai-flywheel-operations
+goal_id: 004-build-and-validate-operating-tools
+execution_id: EX-20260801T134200Z-004
+type: approval-and-deferral
+summary: Repository owner explicitly approved deferring Ruff, mypy, and Hatchling validation until pre-release readiness validation.
+details:
+  approval_statement: Approved to defer Ruff, mypy, and Hatchling validation until pre-release readiness validation
+  approved_by: repository-owner
+  approved_at: "2026-08-01T14:37:00Z"
+  deferred_checks:
+    - Ruff lint and formatting validation
+    - mypy strict type validation
+    - Hatchling package-build validation
+  completed_checks:
+    - 24 automated tests passed
+    - branch coverage 80.23 percent passed the 80 percent requirement
+    - Python bytecode compilation passed
+    - module entry point passed
+    - repository self-validation passed with zero errors
+  boundary:
+    - Goal 004 may complete with the approved deferral.
+    - Goal 005 may begin.
+    - Readiness must not transition to ready-for-missions until the deferred checks pass during pre-release readiness validation.

@@ -2,9 +2,8 @@ schema_version: 1
 id: 003-define-and-approve-implementation
 mission_id: establish-ai-flywheel-operations
 title: Define and Approve Implementation
-status: blocked
-blocked_by:
-  - 002-reconcile-and-approve-operating-context
+status: completed
+blocked_by: []
 objective: Select capabilities and propose the repository-specific Flywheel implementation for human approval.
 procedure:
   - Classify capabilities as required, selected, deferred, rejected, or repository-defined.

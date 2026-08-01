@@ -1,0 +1,12 @@
+schema_version: 1
+id: EVIDENCE-010
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: human-provided-context
+summary: Existing Flywheel installations must not be replaced by the install command.
+details:
+  - If .flywheel already exists, the install command must refuse to proceed.
+  - The user must invoke a separate explicit upgrade command for an existing installation.
+recorded_at: "2026-08-01T05:13:00Z"
+recorded_by: chatgpt-session

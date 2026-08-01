@@ -1,0 +1,37 @@
+schema_version: 1
+id: 005-implement-atomic-transitions-and-recovery
+mission_id: implement-programmatic-flywheel-operations
+title: Implement Atomic Transitions and Recovery
+status: proposed
+objective: Ensure every multi-artifact operation is atomic or durably recoverable under interruption, conflict, validation failure, and retry.
+depends_on:
+  - 004-implement-record-and-approval-operations
+procedure:
+  - Define the transaction boundary and write ordering for each mutating operation.
+  - Add repository locking and stale-lock handling consistent with the framework contract.
+  - Stage all writes, validate the complete proposed state, and commit atomically where the filesystem permits.
+  - Persist transition intent and recovery metadata when atomic replacement cannot cover the full operation.
+  - Implement recovery inspection, resume, rollback, and abandon operations.
+  - Add interruption and conflict injection tests at every durable transition point.
+acceptance_criteria:
+  - id: AC-001
+    statement: No supported operation leaves silently inconsistent partial state after an injected interruption.
+  - id: AC-002
+    statement: Conflicting concurrent mutations are detected before canonical state is overwritten.
+  - id: AC-003
+    statement: Failed validation prevents all canonical mutations or triggers deterministic recovery.
+  - id: AC-004
+    statement: Recovery commands can inspect and resolve every persisted partial-transition state.
+  - id: AC-005
+    statement: Retry behavior is idempotent and preserves record and execution identity.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [interruption injection tests]
+  - criterion_id: AC-002
+    artifacts: [concurrency and conflict tests]
+  - criterion_id: AC-003
+    artifacts: [validation rollback tests]
+  - criterion_id: AC-004
+    artifacts: [recovery command tests]
+  - criterion_id: AC-005
+    artifacts: [idempotency test report]

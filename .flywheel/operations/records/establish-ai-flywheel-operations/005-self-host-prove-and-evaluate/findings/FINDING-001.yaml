@@ -1,0 +1,30 @@
+schema_version: 1
+id: FINDING-001
+kind: finding
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+created_at: "2026-08-01T14:56:00Z"
+created_by: chatgpt-session
+summary: Certification validation coverage was narrower than the normative certification contract.
+status: resolved
+classification: implementation-defect
+criterion_ids: [AC-001, AC-002, AC-004, AC-005]
+source_refs:
+  - .flywheel/operating-model/guidance/certification.md
+  - .flywheel/operating-model/schemas/record.schema.yaml
+  - src/ai_flywheel_cli/validation.py
+  - src/ai_flywheel_cli/schema_validation.py
+artifact_refs:
+  - .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/certification/scenario-review.md
+  - .flywheel/operations/records/establish-ai-flywheel-operations/006-close-certification-validation-gaps/evidence/EVIDENCE-052.yaml
+evidence: null
+decision: null
+finding:
+  finding_type: certification-validation-gap
+  description: The original validator did not enforce the full certification validation contract.
+  impact: Certification could not proceed until schema, evidence, reference, placement, and completion validation were implemented.
+  discovered_at: "2026-08-01T14:56:00Z"
+  disposition: resolved
+  transition_recovery: Goal 006 implemented schema-backed validation, bounded historical compatibility, corrective fixtures, and restored missing EVIDENCE-007. Thirty-three tests and full repository validation passed with zero errors.
+approval: null

@@ -1,0 +1,22 @@
+schema_version: 1
+transactional_installation:
+  status: confirmed
+  origin: provided
+  evidence_ref: EVIDENCE-025
+  stage_before_write: true
+  validate_before_write: true
+  approval_required_before_write: true
+  rollback_on_write_failure: true
+  rollback_on_post_install_validation_failure: true
+  preserve_original_repository_state: true
+  installation_metadata_written_last: true
+  rollback_failure:
+    distinct_error: true
+    actionable_recovery_details: required
+requirements:
+  - Download, checksum verification, extraction, planning, and validation occur before target repository writes.
+  - Capture the original contents and metadata of every existing path that could be changed.
+  - Track every newly created file and directory so rollback can remove it.
+  - Apply installation metadata only after all target files and post-installation validation succeed.
+  - If application or validation fails, restore the repository to its pre-installation state.
+  - If complete restoration fails, preserve recovery evidence and report the remaining differences explicitly.

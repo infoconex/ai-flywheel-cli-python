@@ -1,0 +1,39 @@
+schema_version: 1
+id: 007-evaluate-development-and-release-quality-tooling
+mission_id: establish-ai-flywheel-operations
+title: Evaluate Development and Release Quality Tooling
+status: deferred
+blocked_by: []
+objective: Decide whether Ruff, mypy, Hatchling, package publication, or other development and release quality controls should be adopted as optional or required policy.
+procedure:
+  - Evaluate each tool against an explicit repository need and expected maintenance value.
+  - Distinguish repository-local operation from distributable package and publication requirements.
+  - Compare alternatives where appropriate.
+  - Record adoption, rejection, or deferral decisions with rationale.
+  - Add required gates only after explicit human approval.
+acceptance_criteria:
+  - id: AC-001
+    statement: Ruff adoption is evaluated independently from runtime functionality.
+  - id: AC-002
+    statement: mypy adoption is evaluated independently from runtime functionality.
+  - id: AC-003
+    statement: Hatchling or another build backend is evaluated only against an approved packaging and distribution requirement.
+  - id: AC-004
+    statement: Any adopted requirement has documented value, commands, maintenance ownership, and human approval.
+  - id: AC-005
+    statement: Rejected or deferred tools remain nonblocking for operational readiness.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [tool evaluation]
+  - criterion_id: AC-002
+    artifacts: [tool evaluation]
+  - criterion_id: AC-003
+    artifacts: [packaging decision]
+  - criterion_id: AC-004
+    artifacts: [approved policy record]
+  - criterion_id: AC-005
+    artifacts: [nonblocking disposition]
+optional: true
+deferral:
+  reason: Future optional evaluation is not required for onboarding completion or operational readiness.
+  decision_ref: EVIDENCE-054

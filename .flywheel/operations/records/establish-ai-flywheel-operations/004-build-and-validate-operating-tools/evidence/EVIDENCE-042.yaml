@@ -1,0 +1,49 @@
+schema_version: 1
+id: EVIDENCE-042
+mission_id: establish-ai-flywheel-operations
+goal_id: 004-build-and-validate-operating-tools
+execution_id: EX-20260801T134200Z-004
+type: implementation-progress
+summary: Completed the planned Goal 004 source implementation and prepared it for runtime validation from an uploaded checkout.
+details:
+  commands_implemented:
+    - doctor
+    - install
+    - validate
+    - status
+    - upgrade
+  validation_implemented:
+    - required manifest and state files
+    - manifest-declared required files
+    - state field and invariant checks
+    - active mission, goal, and execution references
+    - execution filename, identity, parentage, lifecycle, and active-stage checks
+  mutation_safety:
+    - plan-before-apply behavior
+    - SHA-256 archive verification
+    - ZIP path and symbolic-link safety
+    - repository-level atomic lock file
+    - staged writes and rollback on write failure
+    - installation metadata and framework-owned checksums
+    - upgrade conflict detection
+    - preservation of mutable operating records during upgrade
+    - unsupported major-version upgrade rejection
+  tests_created:
+    - CLI read-only and failure behavior
+    - state and broken-reference negative fixtures
+    - checksum validation
+    - archive traversal and root validation
+    - lock contention
+    - install refusal and installation metadata
+    - local-modification conflict detection
+    - mutable record preservation during upgrade
+  documentation:
+    - README.md
+    - .flywheel/implementation-manifest.yaml
+    - .gitignore runtime exclusions
+  runtime_validation:
+    status: pending-uploaded-checkout
+    authoritative_command: python -m tools validate
+    reason: The GitHub connector cannot provide a complete local checkout to the Python execution environment.
+  completion_statement: Source implementation is complete, but Goal 004 acceptance criteria remain pending until the uploaded ZIP passes lint, format, type, test, coverage, packaging, and repository validation.
+recorded_at: 2026-08-01T14:12:00Z

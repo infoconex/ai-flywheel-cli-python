@@ -1,0 +1,21 @@
+schema_version: 1
+id: EVIDENCE-028
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: reconciliation
+summary: Previously listed repository-context unknowns were reconciled against durable onboarding decisions.
+details:
+  resolved:
+    - Python 3.11 and newer is the supported runtime baseline.
+    - Bootstrap installation selects uv, pipx, or a managed virtual environment according to the confirmed interactive and non-interactive rules.
+    - Initial installation requires network access; routine installed operation is local unless a command explicitly requires an external service.
+    - The CLI command surface, Typer adapter, src packaging layout, repository-file persistence, output, logging, testing, validation, upgrade, and release policies are confirmed in flywheel-context.yaml.
+    - Source control uses one mission branch, goal-scoped commits, one pull request at mission completion, and human approval before merge.
+  remaining_material_unknowns: []
+  scope_note: >-
+    Implementation-policy decisions captured during discovery are inputs to later
+    reconciliation and implementation goals; no application implementation was
+    performed by goal 001.
+status: confirmed
+recorded_at: 2026-08-01T06:06:00Z

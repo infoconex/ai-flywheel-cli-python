@@ -1,0 +1,31 @@
+schema_version: 1
+id: KNOWLEDGE-001-programmatic-operations-assessment
+kind: reusable-learning
+created_at: "2026-08-01T15:44:00Z"
+created_by: chatgpt-session
+source_mission_id: establish-ai-flywheel-operations
+summary: The onboarding mission proved artifact-governed operation and certification, but not complete programmatic lifecycle operation through the CLI.
+observations:
+  - The CLI currently supports doctor, status, validate, install, and upgrade.
+  - Mission, goal, execution, lifecycle, record, approval, and readiness transitions were performed through governed artifact updates rather than dedicated CLI commands.
+  - Certification treated schema-valid artifact-managed operation as sufficient for ready-for-missions.
+  - The framework defines lifecycle, records, invariants, approvals, persistence, and transition recovery, but does not define a minimum programmatic operations capability profile for an implementation claiming full operational tooling.
+conclusions:
+  - Ready-for-missions remains valid because repository work can be governed through artifacts and validation.
+  - The CLI is not yet a complete programmatic Flywheel execution engine.
+  - The distinction between artifact-governed readiness and programmatic-operations readiness should be made explicit across the specification, framework, and certification tests.
+recommended_cross_repository_changes:
+  specification:
+    - Define readiness capability levels or clearly distinguish artifact-governed operation from programmatic operation.
+    - Define the normative operations expected for missions, goals, executions, lifecycle stages, records, approvals, and state transitions.
+    - Clarify which operations require atomic multi-artifact mutation and human approval.
+  framework:
+    - Add an operations capability contract and machine-readable capability declarations.
+    - Add command-neutral transition contracts for create, update, list, start, resume, block, complete, cancel, approve, and recover operations.
+    - Add validation rules for operation preconditions, postconditions, idempotency, atomicity, and rollback.
+    - Update certification guidance so programmatic readiness cannot be inferred solely from artifact validity.
+  testing:
+    - Add tests that distinguish artifact-only implementations from programmatic implementations.
+    - Add positive and negative scenarios for mission and goal CRUD, execution creation and resume, all lifecycle transitions, record creation, approvals, atomic rollback, and partial-transition recovery.
+    - Add capability-claim tests that reject unsupported or overstated implementation declarations.
+disposition: Persist these changes before or alongside implementation of the next mission so the CLI is built against an explicit cross-repository contract.

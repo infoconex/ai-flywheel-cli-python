@@ -1,0 +1,21 @@
+schema_version: 1
+id: EVIDENCE-023
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+summary: Upgrade must preserve locally modified framework-owned files and stop with a conflict report.
+details:
+  decision_id: UPGRADE-CONFLICT-SAFETY-001
+  status: confirmed
+  origin: provided
+  statement: >-
+    The upgrade command detects locally modified framework-owned files, preserves
+    them unchanged, and stops with a clear conflict report instead of silently
+    overwriting local modifications.
+  implications:
+    - Framework-owned files must be identifiable from installed-version metadata.
+    - Upgrade planning must compare installed baselines, local contents, and target release contents.
+    - Operational records and normal mutable state must not be treated as framework-file conflicts.
+    - No conflicting file may be changed until the user resolves or explicitly handles the conflict.
+recorded_at: 2026-08-01T05:42:00Z

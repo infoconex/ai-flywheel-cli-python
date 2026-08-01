@@ -1,0 +1,62 @@
+schema_version: 1
+id: EVIDENCE-032
+mission_id: establish-ai-flywheel-operations
+goal_id: 002-reconcile-and-approve-operating-context
+execution_id: EX-20260801T061800Z-002
+type: reconciliation
+summary: Reconciled approved implementation selections, phased capabilities, and deferred constraints into one operating baseline.
+details:
+  result: passed
+  resolutions:
+    - id: RECONCILE-001
+      subject: implementation-selection-status
+      disposition: approved
+      statement: >-
+        Python, Python 3.11+, an evolvable command-line architecture, the two
+        bootstrap entry points, Typer, pytest, Ruff, mypy, pyproject.toml, and
+        the src layout are approved implementation constraints, not candidates.
+      basis:
+        - EVIDENCE-004
+        - EVIDENCE-006
+        - EVIDENCE-014
+        - EVIDENCE-015
+        - EVIDENCE-019
+        - EVIDENCE-020
+    - id: RECONCILE-002
+      subject: capability-phasing
+      disposition: approved
+      statement: >-
+        The initial release implements doctor, install, validate, status, and
+        upgrade. Mission, goal, execution, and full lifecycle commands remain
+        required product-direction capabilities but are deferred beyond the
+        initial release and do not block initial implementation design.
+      basis:
+        - EVIDENCE-013
+        - EVIDENCE-027
+    - id: RECONCILE-003
+      subject: offline-distribution
+      disposition: deferred
+      statement: >-
+        Initial installation may require network access. Routine installed
+        operations should work locally, while downloadable offline bundles and
+        standalone distribution remain deferred and do not block design.
+      basis:
+        - EVIDENCE-011
+    - id: RECONCILE-004
+      subject: hosted-execution
+      disposition: prohibited-without-new-approval
+      statement: >-
+        GitHub Actions and other hosted execution are outside the approved
+        bootstrap scope and must not be enabled without separate human approval.
+      basis:
+        - EVIDENCE-027
+    - id: RECONCILE-005
+      subject: context-separation
+      disposition: approved
+      statement: >-
+        Repository context describes the Python CLI product and its consumers;
+        Flywheel context describes the approved operating-tool implementation.
+        No target-repository technology was used as an automatic tool choice.
+  remaining_blockers: []
+  readiness_for_implementation_design: true
+recorded_at: 2026-08-01T06:23:00Z

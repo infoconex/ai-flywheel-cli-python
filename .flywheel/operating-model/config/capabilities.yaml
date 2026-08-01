@@ -1,5 +1,5 @@
 schema_version: 1
-required:
+product_direction_required:
   - read and validate Flywheel configuration
   - associate work with an active mission and goal
   - create and update mission, goal, and execution records
@@ -11,7 +11,41 @@ recommended:
   - structured logging
   - human-readable status reporting
   - reusable validation commands
-selected: []
-deferred: []
+initial_release:
+  selected:
+    - flywheel doctor
+    - flywheel install
+    - flywheel validate
+    - flywheel status
+    - flywheel upgrade
+  deferred_without_blocking_initial_design:
+    - mission record commands
+    - goal record commands
+    - execution record commands
+    - full lifecycle assistance
+  rationale: >-
+    The first release establishes safe installation, diagnosis, validation,
+    status, and upgrade foundations. Record-management and full lifecycle
+    assistance remain required product-direction capabilities for later goals.
 rejected: []
-repository_defined: []
+repository_defined:
+  - install the Flywheel into an empty repository
+  - install the Flywheel into an existing repository without overwriting unrelated project content
+  - detect runtime and tool dependencies before dependent operations
+  - report actionable remediation for missing or incompatible dependencies
+  - support Windows, macOS, and Linux
+  - operate in local developer and AI execution environments
+  - assist programmatically with all eight Flywheel lifecycle stages after installation
+  - allow capabilities and dependency requirements to evolve over time
+  - follow established Python engineering, testing, packaging, and maintainability practices
+  - provide consumer-focused installation and quick-start documentation
+  - provide a complete command reference with options, exit behavior, and examples
+  - document common workflows for empty and existing repositories
+  - document configuration, upgrades, compatibility, troubleshooting, recovery, and safe-operation behavior
+  - keep documentation synchronized with released CLI behavior and installation entry points
+  - provide simple cross-platform commands for running tests, coverage, linting, formatting checks, type checking, and the complete validation suite immediately after onboarding
+  - hide tool-specific invocation details behind consistent project-level commands suitable for both humans and AI execution environments
+reconciliation:
+  status: confirmed
+  evidence_ref: EVIDENCE-032
+  blockers: []

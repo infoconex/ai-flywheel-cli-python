@@ -1,7 +1,7 @@
 schema_version: 1
 id: establish-ai-flywheel-operations
 title: Onboard Repository to AI Flywheel
-status: active
+status: completed
 objective: >-
   Establish the repository's AI Flywheel operating environment so later
   missions can safely address application or other repository work. This
@@ -36,3 +36,10 @@ goals:
   - 003-define-and-approve-implementation
   - 004-build-and-validate-operating-tools
   - 005-self-host-prove-and-evaluate
+  - 006-close-certification-validation-gaps
+  - 007-evaluate-development-and-release-quality-tooling
+completion:
+  disposition: succeeded
+  certification_record: CERT-20260801T152700Z-001
+  approval_ref: APPROVAL-001
+  summary: The repository operating model, implementation, validation, self-hosting proof, and readiness approval are complete. Optional Goal 007 remains deferred and nonblocking.

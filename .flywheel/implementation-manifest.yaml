@@ -1,0 +1,59 @@
+schema_version: 1
+implementation:
+  name: ai-flywheel-cli
+  version: 0.1.0-development
+  status: implemented-pending-runtime-validation
+  language: Python
+  minimum_runtime: "3.11"
+  packaging: pyproject.toml
+  source_root: src/ai_flywheel_cli
+  console_entrypoint: flywheel
+  task_entrypoint: python -m tools
+architecture:
+  style: ports-and-adapters
+  presentation: src/ai_flywheel_cli/cli.py
+  validation: src/ai_flywheel_cli/validation.py
+  repository_operations: src/ai_flywheel_cli/operations.py
+  upgrade_policy: src/ai_flywheel_cli/upgrade.py
+commands:
+  - doctor
+  - install
+  - validate
+  - status
+  - upgrade
+runtime_dependencies:
+  - typer
+  - PyYAML
+development_dependencies:
+  - pytest
+  - pytest-cov
+  - ruff
+  - mypy
+  - types-PyYAML
+validation:
+  authoritative_command: python -m tools validate
+  required_checks:
+    - ruff-check
+    - ruff-format-check
+    - mypy
+    - pytest-with-coverage
+  minimum_coverage_percent: 80
+  hosted_execution_enabled: false
+safety:
+  plan_before_apply: true
+  sha256_verification: true
+  archive_path_validation: true
+  repository_locking: true
+  staged_writes: true
+  rollback_on_write_failure: true
+  local_modification_conflict_detection: true
+  mutable_operating_records_preserved_on_upgrade: true
+limitations:
+  - Framework release archives must currently be downloaded separately and supplied with an expected checksum.
+  - Post-install artifact validation requires the installed framework archive to contain a valid operating model.
+  - Mission, goal, execution, and lifecycle-management commands are deferred.
+  - Offline bundles, standalone executables, hosted CI, and stale-lock recovery commands are deferred.
+completion_gate:
+  source_complete: true
+  runtime_validation_complete: false
+  required_external_input: ZIP checkout of the mission branch for local execution

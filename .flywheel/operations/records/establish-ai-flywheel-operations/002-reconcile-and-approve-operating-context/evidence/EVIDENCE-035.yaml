@@ -1,0 +1,23 @@
+schema_version: 1
+id: EVIDENCE-035
+mission_id: establish-ai-flywheel-operations
+goal_id: 002-reconcile-and-approve-operating-context
+execution_id: EX-20260801T061800Z-002
+type: persistence-and-reuse
+summary: The approved operating baseline is durably persisted and ready to guide implementation definition.
+details:
+  persistence:
+    result: passed
+    durable_artifacts:
+      - .flywheel/operating-model/config/repository-context.yaml
+      - .flywheel/operating-model/config/flywheel-context.yaml
+      - .flywheel/operating-model/config/governance.yaml
+      - .flywheel/operating-model/config/validation.yaml
+      - .flywheel/operating-model/config/capabilities.yaml
+      - .flywheel/operations/records/establish-ai-flywheel-operations/002-reconcile-and-approve-operating-context/evidence/
+  reuse:
+    result: passed
+    disposition: use-as-implementation-design-baseline
+    statement: Goal 003 must use the reconciled operating context as its authoritative design input.
+  blockers: []
+recorded_at: "2026-08-01T13:14:00Z"

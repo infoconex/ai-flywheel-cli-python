@@ -1,0 +1,16 @@
+schema_version: 1
+id: EVIDENCE-049
+mission_id: establish-ai-flywheel-operations
+goal_id: 006-close-certification-validation-gaps
+execution_id: EX-20260801T150100Z-006
+type: human-approval
+summary: Repository owner approved starting Goal 006 to close the certification validation gaps identified by FINDING-001.
+details:
+  approval: approved
+  approved_action: Start Goal 006 and suspend Goal 005 until the corrective validation work passes.
+  authorization_limits:
+    - Do not transition readiness.
+    - Do not merge the mission branch.
+    - Preserve the pre-release Ruff, mypy, and Hatchling gates.
+  source: User message approving Goal 006.
+recorded_at: 2026-08-01T15:01:00Z

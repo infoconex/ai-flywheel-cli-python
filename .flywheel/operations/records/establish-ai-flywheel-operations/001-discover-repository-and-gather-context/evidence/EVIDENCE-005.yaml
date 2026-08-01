@@ -1,0 +1,29 @@
+schema_version: 1
+id: EVIDENCE-005
+kind: evidence
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+created_at: "2026-08-01T04:59:00Z"
+created_by: chatgpt-session
+summary: Consumer-facing documentation is a required capability of the CLI project.
+status: accepted
+classification: provided-context
+criterion_ids:
+  - AC-001
+  - AC-003
+  - AC-004
+source_refs:
+  - human-response:consumer-documentation-requirement
+artifact_refs:
+  - .flywheel/operating-model/config/capabilities.yaml
+evidence:
+  evidence_type: human-provided-requirement
+  supported_claim: The CLI must be well documented from a consumer perspective.
+  source_or_method: Direct human onboarding response.
+  actual_result: Consumer documentation must cover installation, quick start, common workflows, command reference, examples, configuration, upgrades, troubleshooting, recovery, and safe operation in existing repositories.
+  observed_at: "2026-08-01T04:59:00Z"
+  storage_location: .flywheel/operations/records/establish-ai-flywheel-operations/001-discover-repository-and-gather-context/evidence/EVIDENCE-005.yaml
+decision: null
+finding: null
+approval: null

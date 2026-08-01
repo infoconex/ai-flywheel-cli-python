@@ -1,0 +1,17 @@
+schema_version: 1
+id: EVIDENCE-021
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+summary: Framework version selection for installation was confirmed.
+source:
+  kind: human-input
+  description: The user selected option 1 for framework version selection.
+observation: >-
+  flywheel install should resolve and install the latest stable framework release
+  by default while allowing callers to select a specific release with --version.
+conclusion: >-
+  The default path remains convenient for normal users, while explicit version
+  pinning supports repeatable onboarding, testing, and controlled deployments.
+status: accepted

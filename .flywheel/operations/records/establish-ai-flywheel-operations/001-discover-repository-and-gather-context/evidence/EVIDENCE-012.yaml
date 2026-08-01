@@ -1,0 +1,18 @@
+schema_version: 1
+id: EVIDENCE-012
+kind: human-confirmed-context
+summary: Install operations require an explicit review and application boundary before repository files are written.
+details:
+  interactive:
+    - Show the complete planned repository changes before writing files.
+    - Require explicit user confirmation before applying the plan.
+  non_interactive:
+    - Show or emit the planned changes.
+    - Require an explicit --yes or --apply flag before writing files.
+  safety:
+    - Validation and planning alone must not modify the target repository.
+source:
+  type: human-direction
+  session: chatgpt
+recorded_at: "2026-08-01T05:16:00Z"
+recorded_by: chatgpt-session

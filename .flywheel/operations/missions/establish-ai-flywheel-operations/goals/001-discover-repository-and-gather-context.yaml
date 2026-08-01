@@ -2,7 +2,7 @@ schema_version: 1
 id: 001-discover-repository-and-gather-context
 mission_id: establish-ai-flywheel-operations
 title: Discover Repository and Gather Context
-status: active
+status: completed
 objective: >-
   Inspect the target repository, identify known facts and material unknowns,
   ask only the questions needed to gather onboarding context, and persist the
@@ -43,3 +43,8 @@ evidence_required:
     artifacts: [repository discovery evidence]
   - criterion_id: AC-006
     artifacts: [unresolved and deferred unknowns list]
+completion:
+  execution_id: EX-20260801T043606Z-001
+  outcome: passed
+  completed_at: "2026-08-01T06:17:00Z"
+  evidence_refs: [EVIDENCE-029, EVIDENCE-030, EVIDENCE-031]

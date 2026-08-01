@@ -1,0 +1,22 @@
+schema_version: 1
+id: EVIDENCE-048
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+type: certification-scenario
+summary: Independent context-free startup certification passed against the pinned repository revision.
+details:
+  scenario: context-free-startup
+  result: passed
+  tested_framework_revision: 21ca40b7e63106bf525f0f334bb81328f38d3cff
+  prompt_ref: .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/cold-start/cold-start-prompt.md
+  result_ref: .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/cold-start/context-free-startup-result.md
+  verified_behaviors:
+    - discovered the canonical startup chain
+    - identified the correct active mission, goal, execution, lifecycle stage, and readiness
+    - selected resume rather than creating a duplicate execution
+    - preserved approval and readiness boundaries
+    - performed no repository mutation
+    - stopped at the next-authorized-action boundary
+  readiness_changed: false
+recorded_at: 2026-08-01T14:54:00Z

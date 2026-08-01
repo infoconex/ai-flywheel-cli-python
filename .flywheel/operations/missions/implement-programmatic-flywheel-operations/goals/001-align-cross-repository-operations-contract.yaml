@@ -1,0 +1,38 @@
+schema_version: 1
+id: 001-align-cross-repository-operations-contract
+mission_id: implement-programmatic-flywheel-operations
+title: Align Cross-Repository Operations Contract
+status: active
+objective: Define and approve the specification, framework, capability, transition, and certification contracts required for programmatic Flywheel operations before implementing repository-specific commands.
+blocked_by: []
+procedure:
+  - Review the persisted onboarding programmatic-operations assessment.
+  - Define artifact-governed and programmatic-operations readiness distinctions in the specification.
+  - Add command-neutral operation and transition contracts to the framework.
+  - Define machine-readable capability declarations and certification expectations.
+  - Add or update testing prompts and fixtures for the approved contract.
+  - Record immutable revisions and human approval before implementation begins.
+acceptance_criteria:
+  - id: AC-001
+    statement: The specification explicitly distinguishes artifact-governed readiness from programmatic-operations readiness.
+  - id: AC-002
+    statement: The framework defines required operations, preconditions, postconditions, approval boundaries, atomicity, idempotency, and recovery behavior.
+  - id: AC-003
+    statement: Machine-readable capability claims are defined and cannot overstate implementation support.
+  - id: AC-004
+    statement: Testing scenarios cover the approved programmatic operations contract.
+  - id: AC-005
+    statement: Exact cross-repository revisions and explicit human approval are recorded before implementation goals begin.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [specification change set]
+  - criterion_id: AC-002
+    artifacts: [framework operation and transition contracts]
+  - criterion_id: AC-003
+    artifacts: [capability schema and validation rules]
+  - criterion_id: AC-004
+    artifacts: [testing prompts and fixtures]
+  - criterion_id: AC-005
+    artifacts: [revision record, approval record]
+approvals_required:
+  - Approval of cross-repository contract changes

@@ -1,0 +1,22 @@
+schema_version: 1
+evidence_id: EVIDENCE-018
+evidence_type: decision
+captured_at: 2026-08-01T05:29:00Z
+source: human-confirmed onboarding response
+summary: >-
+  The project will expose convenient cross-platform development and validation
+  tasks through a small Python module invoked with python -m.
+details:
+  decision: Use a Python task runner invoked through python -m.
+  intended_commands:
+    - python -m tools test
+    - python -m tools lint
+    - python -m tools format
+    - python -m tools typecheck
+    - python -m tools coverage
+    - python -m tools validate
+  constraints:
+    - Must work on Windows, macOS, and Linux.
+    - Must work in local developer and AI execution environments.
+    - Must hide tool-specific command syntax behind stable project-level tasks.
+status: accepted

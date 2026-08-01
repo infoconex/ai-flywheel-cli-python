@@ -1,0 +1,107 @@
+schema_version: 1
+id: EX-20260801T131600Z-003
+mission_id: establish-ai-flywheel-operations
+goal_id: 003-define-and-approve-implementation
+status: completed
+intended_outcome: Define a complete repository-specific implementation proposal from the approved operating baseline and obtain explicit human approval before implementation begins.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004]
+started_at: "2026-08-01T13:16:00Z"
+completed_at: "2026-08-01T13:38:00Z"
+lifecycle:
+  execute:
+    status: completed
+    started_at: "2026-08-01T13:16:00Z"
+    completed_at: "2026-08-01T13:18:00Z"
+    summary: Created the complete implementation proposal from the approved operating baseline.
+    refs: [EVIDENCE-036, .flywheel/operations/records/establish-ai-flywheel-operations/003-define-and-approve-implementation/implementation-proposal.md]
+    reason: null
+  observe:
+    status: completed
+    started_at: "2026-08-01T13:18:00Z"
+    completed_at: "2026-08-01T13:18:30Z"
+    summary: The proposal covers all required implementation dimensions and preserves the approved first-release scope and deferred capabilities.
+    refs: [EVIDENCE-036]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T13:18:30Z"
+    completed_at: "2026-08-01T13:36:00Z"
+    summary: AC-001 through AC-004 passed after explicit repository-owner approval.
+    refs: [EVIDENCE-036, EVIDENCE-037, EVIDENCE-038]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T13:19:00Z"
+    completed_at: "2026-08-01T13:36:15Z"
+    summary: The approval boundary was satisfied; no remaining implementation-definition blocker exists.
+    refs: [EVIDENCE-037]
+    reason: null
+  adapt:
+    status: completed
+    started_at: "2026-08-01T13:19:15Z"
+    completed_at: "2026-08-01T13:36:30Z"
+    summary: No proposal adaptation was required after approval.
+    refs: [EVIDENCE-037]
+    reason: null
+  validate:
+    status: completed
+    started_at: "2026-08-01T13:19:30Z"
+    completed_at: "2026-08-01T13:37:00Z"
+    summary: Proposal completeness, approved-scope alignment, technology independence, and explicit approval passed.
+    refs: [EVIDENCE-038]
+    reason: null
+  persist:
+    status: completed
+    started_at: "2026-08-01T13:37:00Z"
+    completed_at: "2026-08-01T13:37:30Z"
+    summary: The approved proposal, approval record, and validation evidence are durable.
+    refs: [EVIDENCE-037, EVIDENCE-038, .flywheel/operations/records/establish-ai-flywheel-operations/003-define-and-approve-implementation/implementation-proposal.md]
+    reason: null
+  reuse:
+    status: completed
+    started_at: "2026-08-01T13:37:30Z"
+    completed_at: "2026-08-01T13:38:00Z"
+    summary: The approved proposal is the authoritative implementation baseline for Goal 004.
+    refs: [.flywheel/operations/records/establish-ai-flywheel-operations/003-define-and-approve-implementation/implementation-proposal.md]
+    reason: null
+actions:
+  - Created the durable implementation proposal.
+  - Classified initial, deferred, and rejected capabilities.
+  - Evaluated proposal completeness and technology independence.
+  - Recorded explicit repository-owner approval.
+  - Validated and persisted the approved implementation baseline.
+observations:
+  - id: OBS-003-001
+    statement: The approved onboarding decisions are sufficient to define an incremental implementation sequence.
+    refs: [EVIDENCE-036]
+evaluations:
+  - id: EVAL-003-001
+    statement: AC-001 through AC-004 passed.
+    refs: [EVIDENCE-036, EVIDENCE-037, EVIDENCE-038]
+classifications:
+  - id: CLASS-003-001
+    type: approval-boundary-satisfied
+    blocking: false
+    statement: The repository owner approved the implementation proposal.
+    refs: [EVIDENCE-037]
+adaptations:
+  - id: ADAPT-003-001
+    disposition: not-required
+    statement: No proposal changes were required after approval.
+    refs: [EVIDENCE-037]
+blockers: []
+approval_refs: [EVIDENCE-037]
+evidence_refs: [EVIDENCE-032, EVIDENCE-033, EVIDENCE-034, EVIDENCE-035, EVIDENCE-036, EVIDENCE-037, EVIDENCE-038]
+decision_refs: []
+finding_refs: []
+validation_results:
+  - id: VAL-003-001
+    result: passed
+    statement: Proposal completeness, approved-scope alignment, and technology independence passed.
+  - id: VAL-003-002
+    result: passed
+    statement: Explicit human approval was recorded.
+outcome: completed
+completion:
+  disposition: completed
+  rationale: All acceptance criteria passed and the approved proposal is durable for Goal 004.

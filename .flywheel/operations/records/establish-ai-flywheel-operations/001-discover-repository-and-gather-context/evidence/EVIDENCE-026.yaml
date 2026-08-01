@@ -1,0 +1,21 @@
+schema_version: 1
+id: EVIDENCE-026
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+summary: Mutating Flywheel operations require a repository-level operation lock.
+details:
+  decision_id: REPOSITORY-OPERATION-LOCK-001
+  status: confirmed
+  origin: provided
+  statement: >-
+    Use a repository-level operation lock so only one mutating Flywheel operation
+    can run at a time, while read-only commands may continue when they can do so safely.
+  implications:
+    - Install, upgrade, and future lifecycle mutations must acquire the lock before changing repository state.
+    - Lock metadata must identify the operation, process, host, and acquisition time.
+    - Stale locks must be detected and reported with an explicit safe recovery path.
+    - Lock acquisition must be atomic and cross-platform.
+    - Read-only commands must not bypass consistency checks when a mutation is in progress.
+recorded_at: 2026-08-01T05:48:00Z

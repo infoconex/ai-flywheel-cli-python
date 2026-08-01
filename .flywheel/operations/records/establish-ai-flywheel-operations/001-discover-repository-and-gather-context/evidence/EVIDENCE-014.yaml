@@ -1,0 +1,13 @@
+schema_version: 1
+id: EVIDENCE-014
+type: human-confirmed-context
+summary: pytest selected as the project's initial automated test framework.
+source:
+  kind: human-direction
+  conversation_date: "2026-08-01"
+claims:
+  - key: implementation.test_framework
+    value: pytest
+    status: confirmed
+recorded_by: chatgpt-session
+recorded_at: "2026-08-01T05:20:00Z"
