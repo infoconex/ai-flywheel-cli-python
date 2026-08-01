@@ -1,25 +1,25 @@
 schema_version: 1
 implementation:
   language:
-    value: null
+    value: Python
     status: candidate
-    origin: null
+    origin: provided
   runtime:
     value: null
     status: candidate
     origin: null
   architecture:
-    value: null
+    value: evolvable command-line tooling with dependency detection
     status: candidate
-    origin: null
+    origin: provided
   test_framework:
     value: null
     status: candidate
     origin: null
   command_interface:
-    value: null
+    value: cross-platform CLI
     status: candidate
-    origin: null
+    origin: provided
   location:
     value: .flywheel/tools
     status: defaulted
@@ -34,11 +34,20 @@ implementation:
   dependencies:
     allowed: []
     prohibited: []
-  supported_platforms: []
+  supported_platforms:
+    - Windows
+    - macOS
+    - Linux
 capability_implementation: []
-manual_fallbacks: []
-known_limitations: []
+manual_fallbacks:
+  - Detect required runtime and tool dependencies before attempting operations.
+  - Report missing or incompatible dependencies with actionable remediation rather than failing ambiguously.
+known_limitations:
+  - Exact supported Python versions, packaging approach, and standalone distribution strategy remain unresolved.
 decisions: []
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
+  - The CLI must run in both local developer environments and AI execution environments.
+  - Tooling should be designed to evolve as Flywheel capabilities and dependency requirements change.
+  - Implementation must follow established Python industry standards and engineering best practices.
