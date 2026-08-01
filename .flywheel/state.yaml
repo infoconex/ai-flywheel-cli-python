@@ -1,16 +1,15 @@
 schema_version: 1
 phase: onboarding
 readiness: not-ready-for-missions
-status: blocked
+status: ready
 active_mission: establish-ai-flywheel-operations
-active_goal: 004-build-and-validate-operating-tools
-active_execution: EX-20260801T134200Z-004
-lifecycle_stage: validate
-implementation_available: false
+active_goal: 005-self-host-prove-and-evaluate
+active_execution: null
+lifecycle_stage: null
+implementation_available: true
 application_missions_allowed: false
-blockers:
-  - Run python -m tools validate in an environment able to install PyYAML, Ruff, mypy, Hatchling, and the declared development dependencies.
+blockers: []
 last_durable_update:
-  at: "2026-08-01T14:32:00Z"
+  at: "2026-08-01T14:37:00Z"
   by: chatgpt-session
-  reason: Functional validation passed, but Goal 004 remains blocked because the sandbox package registry cannot provision the full approved development toolchain.
+  reason: Completed Goal 004 under the approved pre-release validation deferral and prepared Goal 005 for kickoff without changing readiness.
