@@ -43,11 +43,18 @@ manual_fallbacks:
   - Detect required runtime and tool dependencies before attempting operations.
   - Report missing or incompatible dependencies with actionable remediation rather than failing ambiguously.
 known_limitations:
-  - Exact supported Python versions, packaging approach, and standalone distribution strategy remain unresolved.
-decisions: []
+  - Exact supported Python versions and standalone distribution strategy remain unresolved.
+decisions:
+  - id: INSTALL-PREFERENCE-001
+    status: candidate
+    origin: provided
+    statement: Provide two small one-command bootstrap entry points, one for macOS and Linux and one for Windows PowerShell.
+    evidence_ref: EVIDENCE-004
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
   - The CLI must run in both local developer environments and AI execution environments.
   - Tooling should be designed to evolve as Flywheel capabilities and dependency requirements change.
   - Implementation must follow established Python industry standards and engineering best practices.
+  - The bootstrap entry points should detect prerequisites, install or invoke the CLI through the selected package mechanism, verify the installation, and avoid modifying a target repository until checks pass.
+  - Documentation should provide both the one-command form and a download-inspect-run alternative.
