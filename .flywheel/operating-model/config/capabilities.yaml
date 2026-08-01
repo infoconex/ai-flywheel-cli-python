@@ -14,4 +14,13 @@ recommended:
 selected: []
 deferred: []
 rejected: []
-repository_defined: []
+repository_defined:
+  - install the Flywheel into an empty repository
+  - install the Flywheel into an existing repository without overwriting unrelated project content
+  - detect runtime and tool dependencies before dependent operations
+  - report actionable remediation for missing or incompatible dependencies
+  - support Windows, macOS, and Linux
+  - operate in local developer and AI execution environments
+  - assist programmatically with all eight Flywheel lifecycle stages after installation
+  - allow capabilities and dependency requirements to evolve over time
+  - follow established Python engineering, testing, packaging, and maintainability practices
