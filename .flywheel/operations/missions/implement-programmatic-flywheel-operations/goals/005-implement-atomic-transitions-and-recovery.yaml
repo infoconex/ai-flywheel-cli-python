@@ -1,37 +1,37 @@
 schema_version: 1
 id: 005-implement-atomic-transitions-and-recovery
 mission_id: implement-programmatic-flywheel-operations
-title: Harden Deterministic Mutation and Recovery
+title: Prove Interruption, Retry, and Idempotency Safety
 status: proposed
-objective: Ensure each implemented mutating operation is conflict-safe, retry-safe, and either atomic or durably recoverable, while leaving nonimplemented activities under governed AI control.
+objective: Prove deterministic interruption recovery, retry behavior, and idempotency for start-execution and advance-lifecycle without expanding the supported operation set.
 depends_on:
   - 004-implement-record-and-approval-operations
 procedure:
-  - Define the transaction boundary and write ordering for each implemented mutating operation.
-  - Detect stale revisions and conflicting concurrent changes before canonical state is overwritten.
-  - Stage and validate complete proposed changes before commit where practical.
-  - Use the framework persistence and transition-recovery rules when a mutation spans multiple artifacts.
-  - Define deterministic retry, resume, rollback, and conflict behavior for each supported mutation.
-  - Add interruption and conflict injection tests only for the implemented mutation paths.
+  - Define observable interruption points only for start-execution, advance-lifecycle, and their shared mutation boundary.
+  - Add injected interruption tests that verify canonical artifacts are restored or remain unchanged after partial write attempts.
+  - Define deterministic retry behavior for validation rejection, stale-source rejection, and interrupted persistence.
+  - Prove repeated equivalent requests do not create duplicate executions, duplicate transitions, or silently divergent state.
+  - Document the exact safety guarantees and unsupported cases for each implemented operation.
+  - Do not add new operation families, general recovery services, or blanket programmatic safety claims.
 acceptance_criteria:
   - id: AC-001
-    statement: No implemented operation leaves silently inconsistent partial state after an injected interruption.
+    statement: Injected interruption tests prove that start-execution and advance-lifecycle do not leave silently inconsistent partial canonical state.
   - id: AC-002
-    statement: Conflicting mutations are rejected before canonical state is overwritten.
+    statement: Retry behavior after validation rejection, stale-source rejection, and interrupted persistence is deterministic and documented.
   - id: AC-003
-    statement: Validation failure prevents durable mutation or results in a governed recoverable state.
+    statement: Repeated equivalent requests are idempotent or are rejected with an explicit deterministic result without duplicate artifacts or transitions.
   - id: AC-004
-    statement: Retry and recovery behavior is deterministic for every implemented mutating operation.
+    statement: A supported-operation safety matrix states the tested guarantees, retry behavior, recovery behavior, and unsupported cases for each implemented operation.
   - id: AC-005
-    statement: Safety claims are limited to tested operations and do not imply blanket programmatic coverage.
+    statement: Full automated tests and repository validation pass, and safety claims remain limited to start-execution, advance-lifecycle, and their shared mutation boundary.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [interruption injection tests]
+    artifacts: [interruption injection tests, partial-write verification]
   - criterion_id: AC-002
-    artifacts: [conflict detection tests]
+    artifacts: [retry behavior tests, retry and recovery report]
   - criterion_id: AC-003
-    artifacts: [validation and recovery tests]
+    artifacts: [idempotency and duplicate-prevention tests]
   - criterion_id: AC-004
-    artifacts: [retry and idempotency report]
-  - criterion_id: AC-005
     artifacts: [supported-operation safety matrix]
+  - criterion_id: AC-005
+    artifacts: [complete test report, repository validation result, scope review]
