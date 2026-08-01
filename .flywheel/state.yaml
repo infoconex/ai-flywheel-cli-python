@@ -1,16 +1,15 @@
 schema_version: 1
 phase: operating
 readiness: ready-for-missions
-status: blocked
+status: ready
 active_mission: implement-programmatic-flywheel-operations
-active_goal: 006-self-host-and-certify-programmatic-operations
-active_execution: EX-20260801T183700Z-006
-lifecycle_stage: adapt
+active_goal: null
+active_execution: null
+lifecycle_stage: null
 implementation_available: true
 application_missions_allowed: true
-blockers:
-  - final-deterministic-tooling-assessment-approval-required
+blockers: []
 last_durable_update:
-  at: "2026-08-01T18:42:00Z"
+  at: "2026-08-01T18:43:00Z"
   by: chatgpt-session
-  reason: Goal 006 proving evidence and final deterministic tooling assessment are complete and awaiting required human approval.
+  reason: Goal 006 completed after final assessment approval; the mission remains open and ready for a subsequent goal or closure decision.
