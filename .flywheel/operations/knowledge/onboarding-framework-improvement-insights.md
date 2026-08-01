@@ -16,6 +16,7 @@ The onboarding process worked, but it exposed several places where the framework
 6. Introduce a dedicated implementation decision register.
 7. Expand conditional onboarding for tool-producing repositories.
 8. Define a practical stopping rule for onboarding.
+9. Add explicit mission and goal communication checkpoints.
 
 ## 1. Clarify onboarding as decision discovery
 
@@ -234,6 +235,47 @@ Onboarding should continue when a missing decision would materially change:
 
 Onboarding should stop when remaining choices are local implementation details that can be reversed and tested within a goal.
 
+## 9. Add mission and goal communication checkpoints
+
+The framework should require explicit operator communication at three points so the human understands the work before it begins and can evaluate the outcome when it finishes.
+
+### Mission kickoff
+
+Before activating the first goal of a mission, the operator should:
+
+1. State the mission title and purpose.
+2. Summarize the expected mission outcome.
+3. List the current goals in execution order, including each goal's intended outcome.
+4. Identify known approval boundaries, dependencies, and likely human-input points.
+5. Ask whether the human wants any adjustments, clarification, additions, removals, or reordering before the first goal starts.
+
+The first goal should not start until this kickoff has occurred and any requested changes are resolved.
+
+### Goal kickoff
+
+Before starting each goal, the operator should:
+
+1. State the goal identifier and title.
+2. Explain its purpose and expected outcome.
+3. Summarize its acceptance criteria and major boundaries.
+4. Identify required human input or approvals that are already known.
+5. Ask whether the human has any input, clarification, or adjustment before execution begins.
+
+When no input is required, the human may authorize automatic continuation through the goal until a real approval boundary, failure, or blocker occurs.
+
+### Goal completion summary
+
+When a goal completes, the operator should provide a concise completion summary containing:
+
+1. The goal title and final disposition.
+2. What was created, changed, validated, or decided.
+3. Acceptance-criteria results.
+4. Important findings, adaptations, deferrals, limitations, and unresolved risks.
+5. Evidence and validation outcomes.
+6. The effect on the mission and what goal comes next.
+
+A lifecycle-stage transition such as entering validation should not by itself require a conversational pause. The operator should continue automatically unless human input is required by governance, an approval boundary is reached, validation fails, or a blocker is discovered.
+
 ## Recommended framework change set
 
 Before implementing the Python CLI, the highest-value framework updates are:
@@ -244,6 +286,7 @@ Before implementing the Python CLI, the highest-value framework updates are:
 4. Dedicated implementation decision register
 5. Atomic answer and evidence persistence rules
 6. Explicit onboarding stopping rule
+7. Mission kickoff, goal kickoff, and goal completion communication requirements
 
 ## What should remain repository-specific
 
