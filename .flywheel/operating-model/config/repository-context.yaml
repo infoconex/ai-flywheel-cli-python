@@ -1,11 +1,15 @@
 schema_version: 1
 purpose:
-  value: null
-  origin: null
-  status: candidate
+  value: Provide a Python command-line implementation for operating the AI Flywheel framework in a repository.
+  origin: provided
+  status: confirmed
 repository:
-  type: null
-  primary_artifacts: []
+  type: bootstrap-cli-project
+  primary_artifacts:
+    - .flywheel/manifest.yaml
+    - .flywheel/state.yaml
+    - .flywheel/operating-model
+    - .flywheel/operations
 application:
   languages: []
   frameworks: []
@@ -29,9 +33,43 @@ constraints:
   security: []
   compliance: []
   dependencies: []
-  network: []
-unknowns: []
+  network:
+    - Do not depend on GitHub Actions or other hosted execution during bootstrap unless explicitly approved.
+unknowns:
+  - Intended CLI users and primary operating scenarios require confirmation.
+  - Supported Python versions and operating systems are not yet selected.
+  - Packaging, installation, offline operation, and dependency constraints are not yet confirmed.
+  - CLI command surface, architecture, persistence behavior, logging, and test framework are not yet selected.
+  - Branch, pull request, review, and merge policy beyond using a goal branch requires confirmation.
 conflicts: []
-provenance_records: []
+provenance_records:
+  - id: PROV-001
+    key: purpose.value
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: Human direction and repository name Infoconex/ai-flywheel-cli-python.
+    rationale: The repository was created to implement the AI Flywheel CLI in Python.
+    recorded_at: "2026-08-01T04:38:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-002
+    key: repository.type
+    origin: discovered
+    status: confirmed
+    confidence: high
+    source: EVIDENCE-001
+    rationale: The repository currently contains the installed Flywheel operating model but no application implementation files.
+    recorded_at: "2026-08-01T04:38:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-003
+    key: repository.primary_artifacts
+    origin: discovered
+    status: confirmed
+    confidence: high
+    source: EVIDENCE-001
+    rationale: The only confirmed artifacts are the installed Flywheel operating files and onboarding records.
+    recorded_at: "2026-08-01T04:38:00Z"
+    recorded_by: chatgpt-session
 notes:
   - This file describes the target repository and application, not the Flywheel operating tools.
+  - No README, Python package metadata, source tree, tests, or automation were present during initial discovery.
