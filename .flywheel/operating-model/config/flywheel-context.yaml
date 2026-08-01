@@ -29,6 +29,19 @@ implementation:
     checksum_verification: required
     status: confirmed
     origin: provided
+  installation_metadata:
+    resolved_framework_version: required
+    release_archive_checksum: required
+    framework_file_checksums: required
+    mutable_operational_content_excluded: true
+    status: confirmed
+    origin: provided
+  upgrade_conflict_handling:
+    detect_modified_framework_files: true
+    preserve_local_modifications: true
+    stop_with_conflict_report: true
+    status: confirmed
+    origin: provided
   cli_framework:
     value: Typer
     thin_adapter_required: true
@@ -102,6 +115,7 @@ manual_fallbacks:
   - In non-interactive environments, use uv when available, otherwise pipx, otherwise a managed virtual environment.
   - If .flywheel already exists, refuse installation and direct the user to the explicit upgrade command.
   - Before writing repository files, show the planned changes and require explicit confirmation or an apply flag.
+  - If framework-owned files were modified locally, preserve them and stop the upgrade with a conflict report.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
   - Initial installation requires network access; downloadable offline installation bundles are deferred.
@@ -208,6 +222,20 @@ decisions:
       Download framework contents from an immutable GitHub Release archive and
       verify the published checksum before installation.
     evidence_ref: EVIDENCE-022
+  - id: UPGRADE-CONFLICT-SAFETY-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Detect locally modified framework-owned files, preserve them unchanged, and
+      stop upgrade with a clear conflict report instead of overwriting them.
+    evidence_ref: EVIDENCE-023
+  - id: INSTALLATION-METADATA-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Record the resolved framework version, release archive checksum, and a
+      checksum for every framework-owned file in installation metadata.
+    evidence_ref: EVIDENCE-024
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -227,3 +255,5 @@ notes:
   - Typer is limited to parsing, help, terminal interaction, and command dispatch; domain and application logic must remain independently testable.
   - Every installation must record the resolved framework version so the generated repository remains reproducible even when latest stable changes later.
   - Release archive integrity must be verified before extraction or any repository changes.
+  - Framework-owned file checksums are the installed baseline for validation and three-way upgrade conflict detection.
+  - Mutable operational state and records are excluded from the framework-owned file checksum manifest.
