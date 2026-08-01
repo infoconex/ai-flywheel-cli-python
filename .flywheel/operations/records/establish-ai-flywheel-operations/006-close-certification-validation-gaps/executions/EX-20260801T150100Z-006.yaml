@@ -2,41 +2,55 @@ schema_version: 1
 id: EX-20260801T150100Z-006
 mission_id: establish-ai-flywheel-operations
 goal_id: 006-close-certification-validation-gaps
-status: in-progress
+status: succeeded
 intended_outcome: Expand validation coverage to satisfy the certification contract and resolve FINDING-001.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
 started_at: "2026-08-01T15:01:00Z"
-completed_at: null
+completed_at: "2026-08-01T15:13:00Z"
 lifecycle:
-  execute:
-    status: in-progress
-    started_at: "2026-08-01T15:01:00Z"
-    completed_at: null
-    summary: Implement schema-backed validation, record invariants, compatibility handling, and isolated certification fixtures.
-    refs: [EVIDENCE-049, FINDING-001]
-    reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  execute: {status: completed, started_at: "2026-08-01T15:01:00Z", completed_at: "2026-08-01T15:09:00Z", summary: Implemented schema-backed validation and bounded compatibility handling., refs: [EVIDENCE-049, EVIDENCE-050, EVIDENCE-051], reason: null}
+  observe: {status: completed, started_at: "2026-08-01T15:09:00Z", completed_at: "2026-08-01T15:10:00Z", summary: Full validation exposed a genuinely missing historical evidence artifact., refs: [EVIDENCE-052], reason: null}
+  evaluate: {status: completed, started_at: "2026-08-01T15:10:00Z", completed_at: "2026-08-01T15:10:30Z", summary: Determined the remaining failure was EVIDENCE-007 rather than a validator defect., refs: [EVIDENCE-052], reason: null}
+  classify: {status: completed, started_at: "2026-08-01T15:10:30Z", completed_at: "2026-08-01T15:11:00Z", summary: Classified the missing artifact as a historical persistence defect., refs: [FINDING-001], reason: null}
+  adapt: {status: completed, started_at: "2026-08-01T15:11:00Z", completed_at: "2026-08-01T15:11:30Z", summary: Restored EVIDENCE-007 without weakening validation rules., refs: [EVIDENCE-052], reason: null}
+  validate: {status: completed, started_at: "2026-08-01T15:11:30Z", completed_at: "2026-08-01T15:12:00Z", summary: Thirty-three tests and repository validation passed with zero errors., refs: [EVIDENCE-052], reason: null}
+  persist: {status: completed, started_at: "2026-08-01T15:12:00Z", completed_at: "2026-08-01T15:12:30Z", summary: Persisted compatibility approval, implementation, restored evidence, and finding resolution., refs: [EVIDENCE-050, EVIDENCE-052, FINDING-001], reason: null}
+  reuse: {status: completed, started_at: "2026-08-01T15:12:30Z", completed_at: "2026-08-01T15:13:00Z", summary: Expanded validator is reusable by resumed Goal 005 certification scenarios., refs: [EVIDENCE-052], reason: null}
 actions:
-  - Recorded explicit approval to start Goal 006.
-  - Added Goal 006 to the onboarding mission sequence.
-  - Suspended Goal 005 on the corrective dependency.
-observations: []
-evaluations: []
-classifications: []
-adaptations: []
+  - Implemented JSON Schema validation with format enforcement.
+  - Added placement, identity, parent, lifecycle, terminal completion, and evidence-reference checks.
+  - Applied the approved bounded historical onboarding compatibility profile.
+  - Added positive and negative regression fixtures.
+  - Restored missing EVIDENCE-007.
+observations:
+  - id: OBS-006-001
+    statement: The expanded validator exposed one genuine missing historical evidence artifact.
+    refs: [EVIDENCE-052]
+evaluations:
+  - id: EVAL-006-001
+    statement: Restoring the missing artifact was preferable to weakening evidence-reference enforcement.
+    refs: [EVIDENCE-052]
+classifications:
+  - id: CLASS-006-001
+    type: historical-persistence-defect
+    refs: [FINDING-001]
+adaptations:
+  - id: ADAPT-006-001
+    statement: Restored EVIDENCE-007 and retained strict evidence-reference validation.
+    refs: [EVIDENCE-052]
 blockers: []
-approval_refs: [EVIDENCE-049]
-evidence_refs: [EVIDENCE-049]
+approval_refs: [EVIDENCE-049, EVIDENCE-050]
+evidence_refs: [EVIDENCE-049, EVIDENCE-050, EVIDENCE-051, EVIDENCE-052]
 decision_refs: []
 finding_refs: [FINDING-001]
-validation_results: []
-outcome: null
+validation_results:
+  - command: PYTHONPATH=src python -m pytest -q
+    status: passed
+    result: 33 passed
+  - command: PYTHONPATH=src python -m ai_flywheel_cli validate . --json
+    status: passed
+    result: 0 errors
+outcome: Certification validation gaps closed and FINDING-001 resolved.
 completion:
-  disposition: null
-  rationale: null
+  disposition: succeeded
+  rationale: All acceptance criteria passed under the approved bounded compatibility profile.
