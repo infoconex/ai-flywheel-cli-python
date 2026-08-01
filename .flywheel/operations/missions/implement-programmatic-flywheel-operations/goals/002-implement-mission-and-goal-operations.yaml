@@ -2,7 +2,7 @@ schema_version: 1
 id: 002-implement-mission-and-goal-operations
 mission_id: implement-programmatic-flywheel-operations
 title: Evaluate and Select Deterministic Operation Candidates
-status: active
+status: completed
 objective: Evaluate repeated Flywheel operating activities and select only the mission, goal, execution, lifecycle, record, or validation operations where deterministic tooling provides clear value over direct AI execution.
 depends_on:
   - 001-align-cross-repository-operations-contract
@@ -37,3 +37,7 @@ evidence_required:
     artifacts: [scope approval record]
 approvals_required:
   - Approval of selected deterministic implementation scope
+completion:
+  completed_at: "2026-08-01T16:52:00Z"
+  outcome: Approved option 1 as the minimal deterministic implementation scope: execution start, lifecycle transitions, and shared validate-before-persist mutation safety.
+  evidence_refs: [EVIDENCE-058, EVIDENCE-059]
