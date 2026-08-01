@@ -19,7 +19,9 @@ lifecycle:
     started_at: "2026-08-01T04:36:06Z"
     completed_at: null
     summary: null
-    refs: []
+    refs:
+      - EVIDENCE-001
+      - .flywheel/operating-model/config/repository-context.yaml
     reason: null
   observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
   evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
@@ -28,14 +30,20 @@ lifecycle:
   validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
   persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
   reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-actions: []
+actions:
+  - Inspected repository metadata and default branch configuration.
+  - Searched for README, Python package metadata, source, tests, automation, and prior pull requests.
+  - Verified conventional top-level project files are absent.
+  - Persisted initial repository discovery evidence.
+  - Populated repository context with confirmed purpose, discovered bootstrap state, provenance, and unresolved onboarding questions.
 observations: []
 evaluations: []
 classifications: []
 adaptations: []
 blockers: []
 approval_refs: []
-evidence_refs: []
+evidence_refs:
+  - EVIDENCE-001
 decision_refs: []
 finding_refs: []
 validation_results: []
