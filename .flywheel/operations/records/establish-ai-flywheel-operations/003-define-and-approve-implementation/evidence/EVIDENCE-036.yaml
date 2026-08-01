@@ -1,0 +1,32 @@
+schema_version: 1
+id: EVIDENCE-036
+mission_id: establish-ai-flywheel-operations
+goal_id: 003-define-and-approve-implementation
+execution_id: EX-20260801T131600Z-003
+type: implementation-proposal
+summary: A complete repository-specific implementation proposal was created from the approved operating baseline.
+details:
+  artifact: .flywheel/operations/records/establish-ai-flywheel-operations/003-define-and-approve-implementation/implementation-proposal.md
+  covers:
+    - capability classification
+    - Python runtime and packaging
+    - layered ports-and-adapters architecture
+    - package and source layout
+    - CLI command behavior
+    - repository storage and installation metadata
+    - locking, staging, rollback, and conflict handling
+    - output and exit-code contracts
+    - logging and secret redaction
+    - network and archive security
+    - runtime and development dependencies
+    - unit, integration, and end-to-end testing
+    - local validation tooling
+    - documentation and release discipline
+    - implementation sequence
+    - alternatives, tradeoffs, and risks
+  independence_check:
+    result: passed
+    statement: The implementation follows approved Python CLI constraints and does not derive its architecture from an unrelated target application technology stack.
+  approval_required: true
+  implementation_authorized: false
+recorded_at: "2026-08-01T13:18:00Z"
