@@ -11,8 +11,17 @@ recommended:
   - structured logging
   - human-readable status reporting
   - reusable validation commands
-selected: []
-deferred: []
+selected:
+  - flywheel doctor
+  - flywheel install
+  - flywheel validate
+  - flywheel status
+  - flywheel upgrade
+deferred:
+  - mission record commands
+  - goal record commands
+  - execution record commands
+  - full lifecycle assistance
 rejected: []
 repository_defined:
   - install the Flywheel into an empty repository
