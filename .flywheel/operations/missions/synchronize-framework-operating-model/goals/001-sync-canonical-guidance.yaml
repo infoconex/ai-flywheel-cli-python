@@ -2,7 +2,7 @@ schema_version: 1
 id: 001-sync-canonical-guidance
 mission_id: synchronize-framework-operating-model
 title: Synchronize Canonical Guidance
-status: active
+status: completed
 objective: Update only the canonical framework-owned guidance files that differ from ai-flywheel-framework main commit 351f85c9a10a559edfc694904163d435eceae0af.
 procedure:
   - Compare the framework head commit with the embedded operating model.
@@ -32,3 +32,7 @@ evidence_required:
     artifacts: [repository validation result]
   - criterion_id: AC-005
     artifacts: [pull request]
+completion:
+  completed_at: "2026-08-01T19:14:00Z"
+  outcome: Canonical operator and SOP guidance synchronized to framework revision 351f85c9a10a559edfc694904163d435eceae0af and pull request 4 opened.
+  evidence_refs: [EVIDENCE-065]
