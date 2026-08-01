@@ -1,0 +1,25 @@
+schema_version: 1
+id: synchronize-framework-operating-model
+title: Synchronize Framework Operating Model
+status: completed
+objective: Synchronize canonical framework-owned operating-model guidance in the CLI repository with ai-flywheel-framework main while preserving repository-specific implementation, state, mission, record, and context artifacts.
+constraints:
+  - Use ai-flywheel-framework main commit 351f85c9a10a559edfc694904163d435eceae0af as the synchronization source.
+  - Change only canonical framework-owned files that differ from that revision.
+  - Preserve repository-specific manifest implementation declarations, state, configuration, missions, records, knowledge, and implementation artifacts.
+  - Do not merge without explicit human approval.
+success_criteria:
+  - id: MSC-001
+    statement: Canonical framework-owned guidance matches the pinned framework revision.
+  - id: MSC-002
+    statement: Repository-specific artifacts remain unchanged.
+  - id: MSC-003
+    statement: Repository validation and automated tests pass after synchronization.
+goals:
+  - 001-sync-canonical-guidance
+approvals_required:
+  - Approval before merging the synchronization pull request
+completion:
+  completed_at: "2026-08-01T19:14:00Z"
+  outcome: Canonical guidance synchronized, validated, and submitted in pull request 4 for merge approval.
+  evidence_refs: [EVIDENCE-065]

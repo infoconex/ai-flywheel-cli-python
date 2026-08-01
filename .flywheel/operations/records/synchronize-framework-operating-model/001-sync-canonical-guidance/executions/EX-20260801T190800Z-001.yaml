@@ -1,0 +1,78 @@
+schema_version: 1
+id: EX-20260801T190800Z-001
+mission_id: synchronize-framework-operating-model
+goal_id: 001-sync-canonical-guidance
+status: completed
+intended_outcome: Synchronize canonical framework-owned guidance to framework commit 351f85c9a10a559edfc694904163d435eceae0af while preserving repository-specific artifacts.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T19:08:00Z"
+completed_at: "2026-08-01T19:14:00Z"
+lifecycle:
+  execute: {status: completed, started_at: "2026-08-01T19:08:00Z", completed_at: "2026-08-01T19:10:00Z", summary: Replaced only operator.md and sop.md with their exact framework revision content., refs: [EVIDENCE-065], reason: null}
+  observe: {status: completed, started_at: "2026-08-01T19:10:00Z", completed_at: "2026-08-01T19:11:00Z", summary: Confirmed both target blob identities now equal the pinned framework source blobs., refs: [EVIDENCE-065], reason: null}
+  evaluate: {status: completed, started_at: "2026-08-01T19:11:00Z", completed_at: "2026-08-01T19:11:30Z", summary: Determined the remaining manifest difference is repository-specific and must be preserved rather than synchronized., refs: [EVIDENCE-065], reason: null}
+  classify: {status: completed, started_at: "2026-08-01T19:11:30Z", completed_at: "2026-08-01T19:12:00Z", summary: Classified the two guidance files as canonical drift and all preserved differences as repository-specific state., refs: [EVIDENCE-065], reason: null}
+  adapt: {status: completed, started_at: "2026-08-01T19:12:00Z", completed_at: "2026-08-01T19:12:30Z", summary: Limited synchronization to the exact files changed by the framework head commit., refs: [EVIDENCE-065], reason: null}
+  validate: {status: completed, started_at: "2026-08-01T19:12:30Z", completed_at: "2026-08-01T19:13:00Z", summary: Forty automated tests passed and repository validation reported zero issues., refs: [EVIDENCE-065], reason: null}
+  persist: {status: completed, started_at: "2026-08-01T19:13:00Z", completed_at: "2026-08-01T19:13:30Z", summary: Persisted synchronization evidence and opened pull request 4., refs: [EVIDENCE-065], reason: null}
+  reuse: {status: completed, started_at: "2026-08-01T19:13:30Z", completed_at: "2026-08-01T19:14:00Z", summary: Established a bounded pattern for future framework-to-repository synchronization., refs: [EVIDENCE-065], reason: null}
+actions:
+  - Recorded approval to synchronize the embedded operating model.
+  - Pinned ai-flywheel-framework main revision 351f85c9a10a559edfc694904163d435eceae0af.
+  - Synchronized operator.md and sop.md.
+  - Ran automated tests and repository validation.
+  - Opened pull request 4 for human review and merge approval.
+observations:
+  - id: OBS-065
+    statement: Only operator.md and sop.md had canonical drift from the framework head revision.
+    type: factual
+    status: complete
+    observed_at: "2026-08-01T19:11:00Z"
+    source_or_method: Framework commit review and Git blob comparison.
+    evidence_refs: [EVIDENCE-065]
+    uncertainty: null
+    conflicts_with: []
+evaluations:
+  - id: EVAL-065
+    statement: The bounded two-file synchronization restores canonical guidance parity without overwriting repository-specific operating state.
+    result: supports
+    observation_refs: [OBS-065]
+    evidence_refs: [EVIDENCE-065]
+    criterion_refs: [AC-001, AC-002, AC-003, AC-004, AC-005]
+    rule_refs: [preserve-repository-state]
+    limitations:
+      - Ruff was unavailable in the runtime, so the aggregate quality wrapper did not complete.
+    rationale: Exact source and target blobs match, tests passed, validation passed, and the PR scope is explicit.
+classifications:
+  - id: CLASS-065
+    type: maintenance
+    statement: Canonical framework guidance synchronized with repository-specific artifacts preserved.
+    evaluation_refs: [EVAL-065]
+    evidence_refs: [EVIDENCE-065]
+    rationale: The change corrects bounded framework drift without changing application behavior or determinism scope.
+    certainty: confirmed
+    uncertainty: null
+    conflicts_with: []
+    related_classification_refs: []
+    decision_ref: null
+    finding_ref: null
+    validation_refs: [VAL-065]
+adaptations:
+  - id: ADAPT-065
+    statement: Future synchronization should pin a framework revision and replace only changed canonical files after classifying repository-specific differences.
+    classification_refs: [CLASS-065]
+    evidence_refs: [EVIDENCE-065]
+blockers: []
+approval_refs: []
+evidence_refs: [EVIDENCE-065]
+decision_refs: []
+finding_refs: []
+validation_results:
+  - id: VAL-065
+    status: passed
+    statement: Forty tests and repository validation passed after synchronization.
+    refs: [EVIDENCE-065]
+outcome: Canonical guidance synchronized and pull request 4 prepared for merge approval.
+completion:
+  disposition: completed
+  rationale: All acceptance criteria are satisfied and the merge remains separately approval-gated.

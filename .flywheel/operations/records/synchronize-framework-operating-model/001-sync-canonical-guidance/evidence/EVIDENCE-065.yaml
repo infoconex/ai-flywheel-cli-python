@@ -1,0 +1,28 @@
+schema_version: 1
+id: EVIDENCE-065
+mission_id: synchronize-framework-operating-model
+goal_id: 001-sync-canonical-guidance
+execution_id: EX-20260801T190800Z-001
+type: framework-guidance-synchronization
+summary: Canonical operator and SOP guidance in the CLI repository were synchronized exactly to ai-flywheel-framework main revision 351f85c9a10a559edfc694904163d435eceae0af while repository-specific artifacts were preserved.
+details:
+  source_repository: Infoconex/ai-flywheel-framework
+  source_revision: 351f85c9a10a559edfc694904163d435eceae0af
+  synchronized_files:
+    - path: .flywheel/operating-model/guidance/operator.md
+      source_blob: 4e8517b241f222e2922f66faab57b4aa4632a2df
+      target_blob: 4e8517b241f222e2922f66faab57b4aa4632a2df
+    - path: .flywheel/operating-model/guidance/sop.md
+      source_blob: 3b427b91f158ef9c8939632b7bbe5a2091f8d673
+      target_blob: 3b427b91f158ef9c8939632b7bbe5a2091f8d673
+  preserved_scope:
+    - manifest implementation declarations
+    - state and repository context
+    - Python implementation manifest and source
+    - existing missions records evidence approvals and knowledge
+  validation:
+    automated_tests: 40 passed
+    repository_validation: passed with 0 issues
+    aggregate_quality_command: blocked because Ruff is not installed in the available runtime
+  pull_request: 4
+recorded_at: "2026-08-01T19:13:00Z"

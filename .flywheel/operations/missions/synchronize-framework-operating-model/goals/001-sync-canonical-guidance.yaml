@@ -1,0 +1,38 @@
+schema_version: 1
+id: 001-sync-canonical-guidance
+mission_id: synchronize-framework-operating-model
+title: Synchronize Canonical Guidance
+status: completed
+objective: Update only the canonical framework-owned guidance files that differ from ai-flywheel-framework main commit 351f85c9a10a559edfc694904163d435eceae0af.
+procedure:
+  - Compare the framework head commit with the embedded operating model.
+  - Replace only differing canonical framework-owned files.
+  - Verify repository-specific files remain unchanged.
+  - Run the full automated test suite and repository validation.
+  - Persist synchronization evidence and prepare a pull request.
+acceptance_criteria:
+  - id: AC-001
+    statement: operator.md and sop.md match the pinned framework revision exactly.
+  - id: AC-002
+    statement: No repository-specific manifest, state, implementation, configuration, mission, record, or knowledge content is overwritten by framework template content.
+  - id: AC-003
+    statement: Full automated tests pass.
+  - id: AC-004
+    statement: Repository validation passes with zero issues.
+  - id: AC-005
+    statement: The pull request identifies the pinned framework revision and exact synchronized files.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [source revision and blob comparison]
+  - criterion_id: AC-002
+    artifacts: [changed-file scope review]
+  - criterion_id: AC-003
+    artifacts: [complete test report]
+  - criterion_id: AC-004
+    artifacts: [repository validation result]
+  - criterion_id: AC-005
+    artifacts: [pull request]
+completion:
+  completed_at: "2026-08-01T19:14:00Z"
+  outcome: Canonical operator and SOP guidance synchronized to framework revision 351f85c9a10a559edfc694904163d435eceae0af and pull request 4 opened.
+  evidence_refs: [EVIDENCE-065]

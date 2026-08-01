@@ -10,6 +10,6 @@ implementation_available: true
 application_missions_allowed: true
 blockers: []
 last_durable_update:
-  at: "2026-08-01T18:52:00Z"
+  at: "2026-08-01T19:14:00Z"
   by: chatgpt-session
-  reason: The implement-programmatic-flywheel-operations mission was closed as completed after explicit repository-owner approval.
+  reason: Canonical framework guidance synchronization completed and pull request 4 opened for merge approval.
