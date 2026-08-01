@@ -161,12 +161,22 @@ def start_execution_command(
 def advance_lifecycle_command(
     summary: str = typer.Option(..., "--summary"),
     ref: list[str] | None = typer.Option(None, "--ref"),
+    expected_stage: str | None = typer.Option(
+        None,
+        "--expected-stage",
+        help="Reject a retry when the active lifecycle stage has already changed.",
+    ),
     repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
     json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
 ) -> None:
     """Complete the active lifecycle stage and start the next stage atomically."""
     try:
-        result = advance_lifecycle(repository, summary, tuple(ref or ()))
+        result = advance_lifecycle(
+            repository,
+            summary,
+            tuple(ref or ()),
+            expected_stage=expected_stage,
+        )
     except OperationError as error:
         _operation_exit(error, command="advance-lifecycle", as_json=json_output)
         return
