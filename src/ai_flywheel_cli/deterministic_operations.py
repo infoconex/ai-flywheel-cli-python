@@ -1,16 +1,18 @@
 from __future__ import annotations
 
-import shutil
-import tempfile
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
-import yaml
-
-from ai_flywheel_cli.operations import OperationError, RepositoryLock
-from ai_flywheel_cli.validation import LIFECYCLE_STAGES, validate_repository
+from ai_flywheel_cli.mutation import (
+    MutationRejectedError,
+    commit_validated_yaml,
+    load_yaml_mapping,
+    sha256_bytes,
+)
+from ai_flywheel_cli.operations import OperationError
+from ai_flywheel_cli.validation import LIFECYCLE_STAGES
 
 LIFECYCLE_ORDER = (
     "execute",
@@ -28,7 +30,7 @@ class UnsupportedDeterministicOperationError(OperationError):
     """Raised when work remains assigned to governed AI execution."""
 
 
-class TransitionRejectedError(OperationError):
+class TransitionRejectedError(MutationRejectedError):
     """Raised when a requested deterministic transition violates the operating model."""
 
 
@@ -51,12 +53,7 @@ class DeterministicOperationResult:
 
 
 def _load_mapping(path: Path) -> dict[str, Any]:
-    if not path.is_file():
-        raise TransitionRejectedError(f"Required artifact does not exist: {path}")
-    value = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise TransitionRejectedError(f"Artifact must be a YAML mapping: {path}")
-    return value
+    return load_yaml_mapping(path, TransitionRejectedError)
 
 
 def _timestamp(value: datetime | None = None) -> str:
@@ -64,46 +61,19 @@ def _timestamp(value: datetime | None = None) -> str:
     return current.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def _write_yaml(path: Path, value: Mapping[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(yaml.safe_dump(dict(value), sort_keys=False), encoding="utf-8")
-
-
-def _validated_commit(repository: Path, changes: Mapping[str, Mapping[str, Any]], command: str) -> tuple[str, ...]:
-    repository = repository.resolve()
-    with RepositoryLock(repository, command):
-        shadow_parent = Path(tempfile.mkdtemp(prefix="flywheel-shadow-"))
-        shadow = shadow_parent / "repository"
-        backups: dict[str, bytes | None] = {}
-        try:
-            shutil.copytree(repository, shadow, ignore=shutil.ignore_patterns(".git", ".runtime"))
-            for relative_path, value in changes.items():
-                _write_yaml(shadow / relative_path, value)
-            validation = validate_repository(shadow)
-            if not validation.passed:
-                details = "; ".join(
-                    f"{issue.code}:{issue.path}:{issue.message}" for issue in validation.issues
-                )
-                raise TransitionRejectedError(f"Proposed mutation failed validation: {details}")
-            for relative_path, value in changes.items():
-                target = repository / relative_path
-                backups[relative_path] = target.read_bytes() if target.is_file() else None
-                temporary = target.with_suffix(target.suffix + ".tmp")
-                _write_yaml(temporary, value)
-                target.parent.mkdir(parents=True, exist_ok=True)
-                temporary.replace(target)
-        except Exception:
-            for relative_path, prior in backups.items():
-                target = repository / relative_path
-                if prior is None:
-                    target.unlink(missing_ok=True)
-                else:
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    target.write_bytes(prior)
-            raise
-        finally:
-            shutil.rmtree(shadow_parent, ignore_errors=True)
-    return tuple(sorted(changes))
+def _validated_commit(
+    repository: Path,
+    changes: dict[str, dict[str, Any]],
+    command: str,
+    expected_sha256: dict[str, str | None],
+) -> tuple[str, ...]:
+    return commit_validated_yaml(
+        repository,
+        changes,
+        command,
+        TransitionRejectedError,
+        expected_sha256=expected_sha256,
+    )
 
 
 def _empty_stage() -> dict[str, Any]:
@@ -134,6 +104,8 @@ def start_execution(
         f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
     )
     execution_path = root / execution_relative
+    state_bytes = state_path.read_bytes() if state_path.is_file() else None
+    goal_bytes = goal_path.read_bytes() if goal_path.is_file() else None
     state = _load_mapping(state_path)
     goal = _load_mapping(goal_path)
     if state.get("active_execution") is not None:
@@ -208,6 +180,11 @@ def start_execution(
             ".flywheel/state.yaml": state,
         },
         "start-execution",
+        {
+            ".flywheel/state.yaml": sha256_bytes(state_bytes) if state_bytes is not None else None,
+            goal_relative: sha256_bytes(goal_bytes) if goal_bytes is not None else None,
+            execution_relative: None,
+        },
     )
     return DeterministicOperationResult(
         "start-execution", "completed", files, execution_id, "execute"
@@ -222,7 +199,9 @@ def advance_lifecycle(
     completed_at: datetime | None = None,
 ) -> DeterministicOperationResult:
     root = repository.resolve()
-    state = _load_mapping(root / ".flywheel/state.yaml")
+    state_path = root / ".flywheel/state.yaml"
+    state_bytes = state_path.read_bytes() if state_path.is_file() else None
+    state = _load_mapping(state_path)
     mission_id = state.get("active_mission")
     goal_id = state.get("active_goal")
     execution_id = state.get("active_execution")
@@ -234,7 +213,9 @@ def advance_lifecycle(
     execution_relative = (
         f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
     )
-    execution = _load_mapping(root / execution_relative)
+    execution_path = root / execution_relative
+    execution_bytes = execution_path.read_bytes() if execution_path.is_file() else None
+    execution = _load_mapping(execution_path)
     lifecycle = execution.get("lifecycle")
     if not isinstance(lifecycle, dict):
         raise TransitionRejectedError("Execution lifecycle must be a mapping.")
@@ -288,6 +269,10 @@ def advance_lifecycle(
         root,
         {execution_relative: execution, ".flywheel/state.yaml": state},
         "advance-lifecycle",
+        {
+            ".flywheel/state.yaml": sha256_bytes(state_bytes) if state_bytes is not None else None,
+            execution_relative: sha256_bytes(execution_bytes) if execution_bytes is not None else None,
+        },
     )
     return DeterministicOperationResult(
         "advance-lifecycle", "completed", files, execution_id, next_stage
