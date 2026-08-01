@@ -16,6 +16,12 @@ implementation:
     value: pytest
     status: confirmed
     origin: provided
+  code_quality:
+    linting: Ruff
+    formatting: Ruff
+    type_checking: mypy
+    status: confirmed
+    origin: provided
   command_interface:
     value: flywheel
     status: confirmed
@@ -37,6 +43,8 @@ implementation:
       - pipx
       - Python virtual environment
       - pytest
+      - Ruff
+      - mypy
     prohibited: []
   supported_platforms:
     - Windows
@@ -111,6 +119,11 @@ decisions:
     origin: provided
     statement: Use pytest as the project's initial automated test framework.
     evidence_ref: EVIDENCE-014
+  - id: CODE-QUALITY-001
+    status: confirmed
+    origin: provided
+    statement: Use Ruff for linting and formatting and mypy for static type checking.
+    evidence_ref: EVIDENCE-015
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
