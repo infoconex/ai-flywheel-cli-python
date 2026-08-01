@@ -2,7 +2,7 @@ schema_version: 1
 id: 004-build-and-validate-operating-tools
 mission_id: establish-ai-flywheel-operations
 title: Build and Validate Operating Tools
-status: ready
+status: active
 blocked_by: []
 objective: Build the approved minimum repository-specific tools required to operate the AI Flywheel.
 procedure:
