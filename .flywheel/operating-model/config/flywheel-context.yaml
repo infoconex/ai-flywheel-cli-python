@@ -19,6 +19,11 @@ implementation:
     validate_after_creation: true
     status: confirmed
     origin: provided
+  framework_version_selection:
+    default: latest stable release
+    explicit_option: --version
+    status: confirmed
+    origin: provided
   cli_framework:
     value: Typer
     thin_adapter_required: true
@@ -184,6 +189,13 @@ decisions:
       Use Typer for the CLI while keeping command handlers thin and core
       application behavior independent of the CLI framework.
     evidence_ref: EVIDENCE-020
+  - id: FRAMEWORK-VERSION-SELECTION-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Install the latest stable framework release by default and support an
+      explicit --version option for deterministic version pinning.
+    evidence_ref: EVIDENCE-021
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -201,3 +213,4 @@ notes:
   - Project validation commands must be convenient to execute immediately after repository onboarding and must not depend on platform-specific shell tooling.
   - Onboarding is incomplete until the generated package, tools module, tests, and development dependencies are prepared and python -m tools validate has been executed successfully.
   - Typer is limited to parsing, help, terminal interaction, and command dispatch; domain and application logic must remain independently testable.
+  - Every installation must record the resolved framework version so the generated repository remains reproducible even when latest stable changes later.
