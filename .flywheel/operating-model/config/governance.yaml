@@ -71,6 +71,14 @@ actions:
   accept_unresolved_risk: approval_required
   complete_goal: evidence_and_rules_required
   complete_mission: approval_required
+source_control:
+  branch_strategy: mission-branch
+  active_branch: mission/establish-ai-flywheel-operations
+  goal_commit_strategy: separate-goal-commits
+  pull_request_strategy: one-pull-request-per-mission
+  merge_authority: repository-owner-approval-required
+  origin: provided
+  status: confirmed
 interpretation:
   allowed: action may proceed within the active goal
   approval_required: exact durable approval is required before action
