@@ -1,30 +1,31 @@
 schema_version: 1
 id: implement-programmatic-flywheel-operations
-title: Implement Programmatic Flywheel Operations
+title: Optimize Flywheel Operations with Deterministic Tools
 status: active
-objective: Provide complete, schema-valid, command-driven management of missions, goals, executions, lifecycle stages, records, approvals, and state transitions so operators do not need to edit Flywheel artifacts manually.
+objective: Move repeated, stable, and validation-sensitive Flywheel operations across the determinism boundary into reusable Python tooling while preserving AI as the operator and retaining governed AI execution for work that remains novel, ambiguous, or judgment-heavy.
 constraints:
   - Preserve human approval boundaries defined by the operating model.
   - Do not weaken schema, reference, lifecycle, evidence, or readiness validation.
-  - All multi-artifact mutations must be atomic or durably recoverable.
-  - Commands must support deterministic machine-readable output.
-  - Programmatic operations must remain implementation-neutral at the framework contract level even though this repository uses Python and Typer.
-  - Do not start implementation goals until cross-repository contract changes are reviewed and approved or explicitly deferred.
+  - Deterministic tooling is an optional optimization and must not become a requirement for AI Flywheel conformance or mission readiness.
+  - AI remains responsible for selecting, invoking, evaluating, and adapting deterministic tools under the operating model.
+  - Multi-artifact deterministic mutations must be atomic or durably recoverable.
+  - Tool output must support deterministic machine-readable results where that improves validation and reuse.
+  - Do not change the specification merely to require or privilege programmatic execution.
 success_criteria:
   - id: MSC-001
-    statement: Mission and goal operations are available through validated programmatic commands.
+    statement: High-value repeated mission and goal artifact operations are available through validated deterministic tools.
   - id: MSC-002
-    statement: Execution and all eight lifecycle-stage transitions are programmatically managed.
+    statement: High-value execution and lifecycle transitions can be delegated to deterministic tools without removing AI governance or fallback.
   - id: MSC-003
-    statement: Evidence, findings, decisions, approvals, and reusable knowledge can be created and referenced programmatically.
+    statement: Repeated record and approval operations can be performed deterministically while preserving evidence and authority boundaries.
   - id: MSC-004
-    statement: State and related artifacts are updated atomically with deterministic recovery behavior.
+    statement: Deterministic multi-artifact mutations are atomic or durably recoverable.
   - id: MSC-005
-    statement: Approval-required transitions cannot occur without durable authorization.
+    statement: AI can determine when to use a tool, when to operate directly, and how to handle unsupported operations without overstating capability.
   - id: MSC-006
-    statement: Positive and negative end-to-end tests prove the complete operations capability profile.
+    statement: Positive and negative tests prove the implemented deterministic tool capabilities and their governed fallback behavior.
   - id: MSC-007
-    statement: The specification, framework, and testing repositories reflect the programmatic operations contract used by the CLI.
+    statement: Cross-repository learning is incorporated only where existing specification or framework contracts are genuinely incomplete.
 goals:
   - 001-align-cross-repository-operations-contract
   - 002-implement-mission-and-goal-operations
@@ -34,5 +35,5 @@ goals:
   - 006-self-host-and-certify-programmatic-operations
 approvals_required:
   - Mission kickoff approval
-  - Cross-repository contract approval before implementation goals begin
-  - Approval before any readiness or capability claim is broadened
+  - Approval before broadening any readiness or conformance claim
+  - Approval before merging changes to specification, framework, or testing repositories
