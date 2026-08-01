@@ -2,7 +2,7 @@ schema_version: 1
 id: CERT-20260801T152700Z-001
 framework_revision: 8cf83a3ef389e00bd8ee48851f6ee9859085ac80
 framework_version: 0.1.0
-status: ready-for-approval
+status: approved
 created_at: "2026-08-01T15:27:00Z"
 created_by: chatgpt-session
 mission_id: establish-ai-flywheel-operations
@@ -120,7 +120,7 @@ self_hosting:
   validation_refs: [EVIDENCE-052, .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/certification/certification-scenario-summary.yaml]
   persistence_plan_ref: .flywheel/operating-model/guidance/certification.md
 approval:
-  status: pending
-  approval_ref: null
-  authority_id: null
-overall_result: pending-approval
+  status: approved
+  approval_ref: APPROVAL-001
+  authority_id: AUTH-REPOSITORY-OWNER
+overall_result: passed
