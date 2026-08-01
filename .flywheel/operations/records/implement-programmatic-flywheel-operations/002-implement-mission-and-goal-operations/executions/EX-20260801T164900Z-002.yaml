@@ -2,36 +2,85 @@ schema_version: 1
 id: EX-20260801T164900Z-002
 mission_id: implement-programmatic-flywheel-operations
 goal_id: 002-implement-mission-and-goal-operations
-status: in-progress
+status: blocked
 intended_outcome: Evaluate repeated Flywheel activities and produce a minimal, evidence-based deterministic tooling scope for human approval.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
 started_at: "2026-08-01T16:49:00Z"
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: "2026-08-01T16:49:00Z"
-    completed_at: null
-    summary: Inventory current CLI capabilities, onboarding operations, and repeated artifact mutations to identify deterministic candidates.
-    refs: []
+    completed_at: "2026-08-01T16:54:00Z"
+    summary: Inventoried current CLI capabilities, onboarding operations, and repeated artifact mutations.
+    refs: [EVIDENCE-058]
     reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  observe:
+    status: completed
+    started_at: "2026-08-01T16:54:00Z"
+    completed_at: "2026-08-01T16:55:00Z"
+    summary: Repeated risk concentrates in coordinated execution, lifecycle, and state mutations rather than mission design or reasoning stages.
+    refs: [EVIDENCE-058]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T16:55:00Z"
+    completed_at: "2026-08-01T16:56:00Z"
+    summary: Selected execution activation, lifecycle transition, and shared validate-before-persist mutation safety as the minimal high-value scope.
+    refs: [EVIDENCE-058]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T16:56:00Z"
+    completed_at: "2026-08-01T16:57:00Z"
+    summary: Classified mission design and reasoning stages as AI-led, selected coordinated writes for deterministic optimization, and deferred broad CRUD.
+    refs: [EVIDENCE-058]
+    reason: null
+  adapt:
+    status: blocked
+    started_at: "2026-08-01T16:57:00Z"
+    completed_at: null
+    summary: Awaiting human selection of the deterministic implementation scope before revising downstream implementation goals.
+    refs: [EVIDENCE-058]
+    reason: Goal acceptance criteria require scope approval before implementation.
   validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist:
+    status: completed
+    started_at: "2026-08-01T16:57:00Z"
+    completed_at: "2026-08-01T16:58:00Z"
+    summary: Persisted the candidate assessment and evidence record.
+    refs: [EVIDENCE-058]
+    reason: null
   reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
 actions:
   - Recorded explicit authorization to continue Goal 002.
   - Activated Goal 002 candidate evaluation.
-observations: []
-evaluations: []
-classifications: []
+  - Reviewed existing install, upgrade, validation, lock, rollback, and CLI capabilities.
+  - Produced a value-based candidate inventory and minimal selected scope.
+  - Stopped before implementation pending human scope approval.
+observations:
+  - id: OBS-002-001
+    statement: Coordinated execution, lifecycle, and state writes are repeated, structurally stable, validation-sensitive, and error-prone.
+    refs: [EVIDENCE-058]
+  - id: OBS-002-002
+    statement: Mission design, goal decomposition, evaluation, classification, adaptation, and reuse depend on contextual AI judgment.
+    refs: [EVIDENCE-058]
+evaluations:
+  - id: EVAL-002-001
+    statement: A minimal implementation should protect coordinated writes before adding broad CRUD or query features.
+    refs: [EVIDENCE-058]
+classifications:
+  - id: CLASS-002-001
+    category: deterministic-tool-candidate
+    statement: Start-execution, lifecycle-transition, and validate-before-persist mutation safety should cross the determinism boundary first.
+  - id: CLASS-002-002
+    category: retain-ai-execution
+    statement: Mission design and lifecycle reasoning stages remain AI-led.
 adaptations: []
-blockers: []
+blockers:
+  - human-deterministic-scope-selection
 approval_refs: []
-evidence_refs: []
+evidence_refs: [EVIDENCE-058]
 decision_refs: []
 finding_refs: []
 validation_results: []
