@@ -1,0 +1,44 @@
+schema_version: 1
+id: 006-self-host-and-certify-programmatic-operations
+mission_id: implement-programmatic-flywheel-operations
+title: Self-Host and Certify Programmatic Operations
+status: proposed
+objective: Use the completed CLI operations to govern and complete a representative mission without manual canonical artifact editing, then certify the claimed programmatic operations capability.
+depends_on:
+  - 005-implement-atomic-transitions-and-recovery
+procedure:
+  - Declare the exact programmatic operations capability profile implemented by the CLI.
+  - Start a representative mission using only supported CLI operations after kickoff approval.
+  - Create and manage goals, executions, all lifecycle stages, records, approvals, and completion through the CLI.
+  - Exercise negative approval, invalid transition, interruption, conflict, retry, and recovery scenarios.
+  - Run repository validation after every durable transition and at final completion.
+  - Persist certification evidence and obtain human approval before broadening any capability or readiness claim.
+acceptance_criteria:
+  - id: AC-001
+    statement: A representative mission is completed without manual canonical artifact editing.
+  - id: AC-002
+    statement: Mission, goal, execution, lifecycle, record, approval, state, and recovery operations are all exercised successfully.
+  - id: AC-003
+    statement: Negative and interruption scenarios prove approval, validation, atomicity, idempotency, and recovery boundaries.
+  - id: AC-004
+    statement: Machine-readable capability claims exactly match the implemented and tested commands.
+  - id: AC-005
+    statement: Final repository validation passes and certification reaches ready-for-approval before any claim is broadened.
+  - id: AC-006
+    statement: Human authority explicitly approves the programmatic operations certification result.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [self-hosted mission transcript and records]
+  - criterion_id: AC-002
+    artifacts: [operation coverage map]
+  - criterion_id: AC-003
+    artifacts: [negative and recovery scenario results]
+  - criterion_id: AC-004
+    artifacts: [capability declaration and validation result]
+  - criterion_id: AC-005
+    artifacts: [final validation and certification record]
+  - criterion_id: AC-006
+    artifacts: [human certification approval]
+approvals_required:
+  - Representative mission kickoff approval
+  - Programmatic operations certification approval
