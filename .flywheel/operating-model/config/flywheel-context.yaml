@@ -36,6 +36,20 @@ implementation:
     mutable_operational_content_excluded: true
     status: confirmed
     origin: provided
+  transactional_installation:
+    stage_before_write: true
+    rollback_on_failure: true
+    post_install_validation_required: true
+    rollback_failure_reporting: required
+    status: confirmed
+    origin: provided
+  repository_operation_lock:
+    mutating_operations_require_lock: true
+    atomic_acquisition: required
+    stale_lock_detection: required
+    safe_read_only_access: conditional
+    status: confirmed
+    origin: provided
   upgrade_conflict_handling:
     detect_modified_framework_files: true
     preserve_local_modifications: true
@@ -116,6 +130,8 @@ manual_fallbacks:
   - If .flywheel already exists, refuse installation and direct the user to the explicit upgrade command.
   - Before writing repository files, show the planned changes and require explicit confirmation or an apply flag.
   - If framework-owned files were modified locally, preserve them and stop the upgrade with a conflict report.
+  - If installation fails after writes begin, restore the repository to its original state and report any rollback failure explicitly.
+  - If a mutating operation lock is active, report the owning operation and provide a safe stale-lock recovery path.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
   - Initial installation requires network access; downloadable offline installation bundles are deferred.
@@ -236,6 +252,20 @@ decisions:
       Record the resolved framework version, release archive checksum, and a
       checksum for every framework-owned file in installation metadata.
     evidence_ref: EVIDENCE-024
+  - id: TRANSACTIONAL-INSTALLATION-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Stage installation changes and restore the repository to its original state
+      if writing or post-install validation fails.
+    evidence_ref: EVIDENCE-025
+  - id: REPOSITORY-OPERATION-LOCK-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Require a repository-level lock for mutating Flywheel operations while
+      allowing read-only commands only when they can execute safely.
+    evidence_ref: EVIDENCE-026
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -257,3 +287,5 @@ notes:
   - Release archive integrity must be verified before extraction or any repository changes.
   - Framework-owned file checksums are the installed baseline for validation and three-way upgrade conflict detection.
   - Mutable operational state and records are excluded from the framework-owned file checksum manifest.
+  - Installation writes and post-install validation form one transaction; failure requires rollback to the original repository state.
+  - A mutating operation lock must include enough ownership metadata to diagnose active and stale operations without unsafe guessing.
