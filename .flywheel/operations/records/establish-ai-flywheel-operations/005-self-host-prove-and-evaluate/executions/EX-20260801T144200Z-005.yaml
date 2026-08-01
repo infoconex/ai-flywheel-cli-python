@@ -2,11 +2,11 @@ schema_version: 1
 id: EX-20260801T144200Z-005
 mission_id: establish-ai-flywheel-operations
 goal_id: 005-self-host-prove-and-evaluate
-status: blocked
+status: succeeded
 intended_outcome: Prove the Python CLI through self-hosted operation, context-free startup, a complete proving mission, and readiness evaluation.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006]
 started_at: "2026-08-01T14:42:00Z"
-completed_at: null
+completed_at: "2026-08-01T15:28:00Z"
 lifecycle:
   execute:
     status: completed
@@ -19,50 +19,50 @@ lifecycle:
     status: completed
     started_at: "2026-08-01T15:20:00Z"
     completed_at: "2026-08-01T15:21:00Z"
-    summary: Observed all ten certification scenarios passing while the deferred pre-release quality and packaging checks remain unexecuted.
+    summary: Observed all ten certification scenarios passing and no remaining required operational validation gate.
     refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/certification/certification-scenario-summary.yaml]
     reason: null
   evaluate:
     status: completed
     started_at: "2026-08-01T15:21:00Z"
-    completed_at: "2026-08-01T15:22:00Z"
-    summary: Determined that certification scenarios are complete but readiness approval cannot be requested until the EVIDENCE-045 pre-release gates pass.
-    refs: [EVIDENCE-045, EVIDENCE-053]
+    completed_at: "2026-08-01T15:27:00Z"
+    summary: Determined the certification package meets operational requirements and is ready for separate human readiness approval.
+    refs: [EVIDENCE-052, EVIDENCE-053, EVIDENCE-054]
     reason: null
   classify:
     status: completed
     started_at: "2026-08-01T15:22:00Z"
-    completed_at: "2026-08-01T15:22:30Z"
-    summary: Classified the remaining condition as an approved-deferral-expiration validation gate, not a certification scenario failure.
-    refs: [EVIDENCE-045]
+    completed_at: "2026-08-01T15:27:00Z"
+    summary: Classified Ruff, mypy, and Hatchling as optional development and release tooling pending Goal 007 evaluation.
+    refs: [EVIDENCE-054]
     reason: null
   adapt:
-    status: not-applicable
-    started_at: "2026-08-01T15:22:30Z"
-    completed_at: "2026-08-01T15:22:30Z"
-    summary: No further source adaptation is authorized or required unless the pre-release checks expose defects.
-    refs: [EVIDENCE-052]
-    reason: The corrected validator and proving mission passed.
+    status: completed
+    started_at: "2026-08-01T15:26:00Z"
+    completed_at: "2026-08-01T15:27:00Z"
+    summary: Removed optional tooling from operational readiness requirements and created optional Goal 007 for future evaluation.
+    refs: [EVIDENCE-054, 007-evaluate-development-and-release-quality-tooling]
+    reason: null
   validate:
-    status: blocked
+    status: completed
     started_at: "2026-08-01T15:22:30Z"
-    completed_at: null
-    summary: Awaiting Ruff lint and formatting, mypy strict typing, and Hatchling package-build validation in an environment with dependency access.
-    refs: [EVIDENCE-045]
-    reason: The approved deferral ends at pre-release readiness validation.
+    completed_at: "2026-08-01T15:27:00Z"
+    summary: Required functional, coverage, compilation, CLI, schema-backed repository, fixture, and ten-scenario certification validation passed.
+    refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-051, EVIDENCE-052, EVIDENCE-053]
+    reason: null
   persist:
     status: completed
     started_at: "2026-08-01T15:20:00Z"
-    completed_at: "2026-08-01T15:23:00Z"
-    summary: Persisted cold-start, scenario, corrective validation, and proving-mission evidence.
-    refs: [EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
+    completed_at: "2026-08-01T15:28:00Z"
+    summary: Persisted cold-start, scenario, corrective validation, proving-mission, tooling-policy, and ready-for-approval certification records.
+    refs: [EVIDENCE-048, EVIDENCE-052, EVIDENCE-053, EVIDENCE-054, CERT-20260801T152700Z-001]
     reason: null
   reuse:
     status: completed
     started_at: "2026-08-01T15:23:00Z"
-    completed_at: "2026-08-01T15:23:30Z"
-    summary: Persisted the isolated fixture and certification scenario pattern for future reuse.
-    refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/proving-mission/proving-mission-result.yaml]
+    completed_at: "2026-08-01T15:28:00Z"
+    summary: Persisted reusable fixture, certification, compatibility, and optional-tooling evaluation patterns.
+    refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/proving-mission/proving-mission-result.yaml, 007-evaluate-development-and-release-quality-tooling]
     reason: null
 actions:
   - Recorded explicit Goal 005 kickoff approval.
@@ -71,34 +71,42 @@ actions:
   - Identified and resolved FINDING-001 through corrective Goal 006.
   - Completed the isolated representative proving mission.
   - Assembled all ten certification scenario results.
+  - Recorded the repository owner's decision that Ruff, mypy, and Hatchling are optional pending separate evaluation.
+  - Created a ready-for-approval certification record without changing readiness.
 observations:
   - id: OBS-005-001
-    statement: All ten certification scenarios have passed with durable evidence.
+    statement: All ten certification scenarios passed with durable evidence.
     refs: [EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
 evaluations:
   - id: EVAL-005-001
-    statement: The certification package cannot reach ready-for-approval until the deferred pre-release gates pass.
-    refs: [EVIDENCE-045]
+    statement: Required operational validation is complete and certification is ready for explicit human readiness approval.
+    refs: [EVIDENCE-052, EVIDENCE-053, EVIDENCE-054, CERT-20260801T152700Z-001]
 classifications:
   - id: CLASS-005-001
-    category: validation-gate
-    statement: Remaining work is the expiration of an approved temporary deferral, not a failed certification scenario.
-adaptations: []
-blockers:
-  - pre-release-ruff-mypy-hatchling-validation
-approval_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050]
-evidence_refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046, EVIDENCE-047, EVIDENCE-048, EVIDENCE-049, EVIDENCE-050, EVIDENCE-051, EVIDENCE-052, EVIDENCE-053]
-decision_refs: []
+    category: optional-quality-tooling
+    statement: Ruff, mypy, and Hatchling are nonblocking unless separately adopted for development or release policy.
+adaptations:
+  - id: ADAPT-005-001
+    statement: Moved optional quality-tooling adoption to Goal 007 and removed it from operational readiness requirements.
+    refs: [EVIDENCE-054]
+blockers: []
+approval_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050, EVIDENCE-054]
+evidence_refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046, EVIDENCE-047, EVIDENCE-048, EVIDENCE-049, EVIDENCE-050, EVIDENCE-051, EVIDENCE-052, EVIDENCE-053, EVIDENCE-054]
+decision_refs: [EVIDENCE-054]
 finding_refs: [FINDING-001]
 validation_results:
   - name: certification-scenarios
     result: passed
     passed: 10
     failed: 0
-  - name: pre-release-quality-and-build
-    result: blocked
-    pending: [ruff, mypy, hatchling]
-outcome: null
+  - name: required-operational-validation
+    result: passed
+    tests_passed: 33
+    repository_errors: 0
+  - name: optional-quality-and-build-tooling
+    result: deferred-to-optional-goal
+    goal_id: 007-evaluate-development-and-release-quality-tooling
+outcome: Certification package completed successfully and reached the explicit human readiness approval boundary.
 completion:
-  disposition: null
-  rationale: null
+  disposition: succeeded
+  rationale: All required Goal 005 criteria except the separate human readiness decision are evidenced; the execution successfully prepared the certification package and stopped before readiness transition.
