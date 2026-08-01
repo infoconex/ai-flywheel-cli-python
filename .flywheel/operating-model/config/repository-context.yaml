@@ -14,11 +14,13 @@ repository:
     - .flywheel/operating-model
     - .flywheel/operations
 application:
-  languages: []
+  languages:
+    - Python
   frameworks: []
   runtimes: []
   architecture:
-    - command-line application
+    - cross-platform command-line application
+    - dependency-aware and evolvable tooling
 build:
   systems: []
   commands: []
@@ -26,22 +28,33 @@ testing:
   frameworks: []
   commands: []
 automation:
-  local: []
+  local:
+    - local developer environments
+    - AI execution environments
   hosted: []
 standards:
-  coding: []
-  architecture: []
-  testing: []
+  coding:
+    - Follow established Python industry standards and best practices.
+  architecture:
+    - Design for maintainability, extensibility, portability, and clear separation of concerns.
+  testing:
+    - Use industry-standard automated testing practices appropriate to a cross-platform Python CLI.
 constraints:
-  platforms: []
+  platforms:
+    - Windows
+    - macOS
+    - Linux
   security: []
   compliance: []
-  dependencies: []
+  dependencies:
+    - Detect required dependencies and compatibility before executing dependent operations.
+    - Provide actionable diagnostics for missing or incompatible dependencies.
+    - Allow dependency and tool requirements to evolve without coupling the CLI to one fixed environment.
   network:
     - Do not depend on GitHub Actions or other hosted execution during bootstrap unless explicitly approved.
 unknowns:
-  - Supported Python versions and operating systems are not yet selected.
-  - Packaging, installation, offline operation, and dependency constraints are not yet confirmed.
+  - Supported Python versions are not yet selected.
+  - Packaging, installation, offline operation, and standalone distribution constraints are not yet confirmed.
   - Exact CLI command surface, architecture, persistence behavior, logging, and test framework are not yet selected.
   - Branch, pull request, review, and merge policy beyond using a goal branch requires confirmation.
 conflicts: []
@@ -90,6 +103,33 @@ provenance_records:
     source: EVIDENCE-002
     rationale: This repository will demonstrate using Flywheel missions and goals to create the CLI from scratch.
     recorded_at: "2026-08-01T04:44:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-006
+    key: constraints.platforms
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-003
+    rationale: The human explicitly requires Windows, macOS, and Linux support in local developer and AI execution environments.
+    recorded_at: "2026-08-01T04:48:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-007
+    key: constraints.dependencies
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-003
+    rationale: The human requires dependency detection and tooling that can evolve as requirements change.
+    recorded_at: "2026-08-01T04:48:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-008
+    key: standards
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-003
+    rationale: The Python project must follow established industry standards and best practices.
+    recorded_at: "2026-08-01T04:48:00Z"
     recorded_by: chatgpt-session
 notes:
   - This file describes the target repository and application, not the Flywheel operating tools.
