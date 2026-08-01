@@ -2,7 +2,7 @@ schema_version: 1
 id: 006-close-certification-validation-gaps
 mission_id: establish-ai-flywheel-operations
 title: Close Certification Validation Gaps
-status: active
+status: completed
 blocked_by: []
 objective: Expand validation coverage so certification can rely on schema-valid, traceable operating records.
 procedure:
