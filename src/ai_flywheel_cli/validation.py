@@ -254,8 +254,13 @@ def validate_repository(root: Path) -> ValidationResult:
                             )
                         )
 
+    state = _load_yaml(state_path, issues) if state_path.is_file() else None
     if state_path.is_file():
-        _validate_state(repository, _load_yaml(state_path, issues), issues)
+        _validate_state(repository, state, issues)
+
+    from ai_flywheel_cli.schema_validation import validate_declared_artifacts
+
+    validate_declared_artifacts(repository, state, issues)
 
     unique = {(issue.code, issue.path, issue.message): issue for issue in issues}
     ordered = tuple(unique[key] for key in sorted(unique))
