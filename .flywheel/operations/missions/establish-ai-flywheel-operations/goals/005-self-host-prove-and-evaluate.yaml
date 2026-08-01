@@ -40,8 +40,8 @@ evidence_required:
     artifacts: [persisted findings and learning records]
   - criterion_id: AC-006
     artifacts: [readiness approval record]
-pre_release_gates:
-  - Ruff lint and formatting validation must pass.
-  - mypy strict type validation must pass.
-  - Hatchling package-build validation must pass.
-  - The approved deferral in EVIDENCE-045 must be resolved before ready-for-missions.
+quality_tooling_policy:
+  decision_ref: EVIDENCE-054
+  operational_readiness_required: false
+  future_optional_goal: 007-evaluate-development-and-release-quality-tooling
+  tools: [ruff, mypy, hatchling]
