@@ -1,7 +1,7 @@
 schema_version: 1
 id: synchronize-framework-operating-model
 title: Synchronize Framework Operating Model
-status: active
+status: completed
 objective: Synchronize canonical framework-owned operating-model guidance in the CLI repository with ai-flywheel-framework main while preserving repository-specific implementation, state, mission, record, and context artifacts.
 constraints:
   - Use ai-flywheel-framework main commit 351f85c9a10a559edfc694904163d435eceae0af as the synchronization source.
@@ -19,3 +19,7 @@ goals:
   - 001-sync-canonical-guidance
 approvals_required:
   - Approval before merging the synchronization pull request
+completion:
+  completed_at: "2026-08-01T19:14:00Z"
+  outcome: Canonical guidance synchronized, validated, and submitted in pull request 4 for merge approval.
+  evidence_refs: [EVIDENCE-065]
