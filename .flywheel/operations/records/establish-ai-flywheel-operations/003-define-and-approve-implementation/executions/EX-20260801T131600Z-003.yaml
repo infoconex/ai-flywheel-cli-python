@@ -1,0 +1,40 @@
+schema_version: 1
+id: EX-20260801T131600Z-003
+mission_id: establish-ai-flywheel-operations
+goal_id: 003-define-and-approve-implementation
+status: in-progress
+intended_outcome: Define a complete repository-specific implementation proposal from the approved operating baseline and obtain explicit human approval before implementation begins.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004]
+started_at: "2026-08-01T13:16:00Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2026-08-01T13:16:00Z"
+    completed_at: null
+    summary: Build the implementation proposal from the reconciled repository, Flywheel, governance, validation, and capability context.
+    refs: [EVIDENCE-032, EVIDENCE-033, EVIDENCE-034, EVIDENCE-035]
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions:
+  - Activated Goal 003 after successful completion of Goal 002.
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: [EVIDENCE-032, EVIDENCE-033, EVIDENCE-034, EVIDENCE-035]
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
