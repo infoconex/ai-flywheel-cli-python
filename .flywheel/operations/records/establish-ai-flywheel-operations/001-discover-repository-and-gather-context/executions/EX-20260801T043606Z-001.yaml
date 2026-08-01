@@ -15,16 +15,41 @@ started_at: "2026-08-01T04:36:06Z"
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: "2026-08-01T04:36:06Z"
-    completed_at: null
-    summary: null
+    completed_at: "2026-08-01T06:08:00Z"
+    summary: >-
+      Inspected the repository, gathered onboarding context one decision at a
+      time, persisted accepted answers, and reconciled all stale unknowns.
     refs:
       - EVIDENCE-001
+      - EVIDENCE-028
       - .flywheel/operating-model/config/repository-context.yaml
+      - .flywheel/operating-model/config/flywheel-context.yaml
+      - .flywheel/operating-model/config/governance.yaml
+      - .flywheel/operating-model/config/validation.yaml
     reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  observe:
+    status: completed
+    started_at: "2026-08-01T06:08:00Z"
+    completed_at: "2026-08-01T06:09:00Z"
+    summary: >-
+      The required repository, governance, validation, and Flywheel-tool context
+      exists. The repository-context unknown list had become stale and was
+      reconciled. Implementation-policy decisions exceeded the minimum discovery
+      needed but did not perform application implementation.
+    refs:
+      - EVIDENCE-028
+      - .flywheel/operations/knowledge/onboarding-framework-improvement-insights.md
+    reason: null
+  evaluate:
+    status: in-progress
+    started_at: "2026-08-01T06:09:00Z"
+    completed_at: null
+    summary: Evaluate each acceptance criterion against durable artifacts and provenance.
+    refs:
+      - .flywheel/operations/missions/establish-ai-flywheel-operations/goals/001-discover-repository-and-gather-context.yaml
+    reason: null
   classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
   adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
   validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
@@ -33,10 +58,21 @@ lifecycle:
 actions:
   - Inspected repository metadata and default branch configuration.
   - Searched for README, Python package metadata, source, tests, automation, and prior pull requests.
-  - Verified conventional top-level project files are absent.
-  - Persisted initial repository discovery evidence.
-  - Populated repository context with confirmed purpose, discovered bootstrap state, provenance, and unresolved onboarding questions.
-observations: []
+  - Verified conventional top-level project files were absent at initial discovery.
+  - Persisted repository discovery and onboarding decision evidence through EVIDENCE-028.
+  - Populated repository, Flywheel, governance, validation, and capability context.
+  - Reconciled stale unknowns against confirmed decisions.
+  - Captured framework onboarding improvement insights for later use.
+observations:
+  - id: OBS-001
+    statement: All previously listed material onboarding unknowns now have durable resolutions.
+    refs: [EVIDENCE-028]
+  - id: OBS-002
+    statement: No application implementation was created during goal 001.
+    refs: [.flywheel/operating-model/config/repository-context.yaml]
+  - id: OBS-003
+    statement: The onboarding process exposed reusable framework improvement opportunities.
+    refs: [.flywheel/operations/knowledge/onboarding-framework-improvement-insights.md]
 evaluations: []
 classifications: []
 adaptations: []
@@ -44,7 +80,39 @@ blockers: []
 approval_refs: []
 evidence_refs:
   - EVIDENCE-001
-decision_refs: []
+  - EVIDENCE-002
+  - EVIDENCE-003
+  - EVIDENCE-004
+  - EVIDENCE-005
+  - EVIDENCE-006
+  - EVIDENCE-007
+  - EVIDENCE-008
+  - EVIDENCE-009
+  - EVIDENCE-010
+  - EVIDENCE-011
+  - EVIDENCE-012
+  - EVIDENCE-013
+  - EVIDENCE-014
+  - EVIDENCE-015
+  - EVIDENCE-016
+  - EVIDENCE-017
+  - EVIDENCE-018
+  - EVIDENCE-019
+  - EVIDENCE-020
+  - EVIDENCE-021
+  - EVIDENCE-022
+  - EVIDENCE-023
+  - EVIDENCE-024
+  - EVIDENCE-025
+  - EVIDENCE-026
+  - EVIDENCE-027
+  - EVIDENCE-028
+decision_refs:
+  - RUNTIME-BASELINE-001
+  - COMMAND-NAME-001
+  - TEST-FRAMEWORK-001
+  - CODE-QUALITY-001
+  - CLI-FRAMEWORK-001
 finding_refs: []
 validation_results: []
 outcome: null
