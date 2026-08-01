@@ -197,6 +197,7 @@ def advance_lifecycle(
     refs: tuple[str, ...],
     *,
     completed_at: datetime | None = None,
+    expected_stage: str | None = None,
 ) -> DeterministicOperationResult:
     root = repository.resolve()
     state_path = root / ".flywheel/state.yaml"
@@ -210,6 +211,10 @@ def advance_lifecycle(
         raise TransitionRejectedError("An active mission, goal, execution, and lifecycle stage are required.")
     if current_stage not in LIFECYCLE_STAGES:
         raise TransitionRejectedError(f"Unsupported lifecycle stage: {current_stage}")
+    if expected_stage is not None and current_stage != expected_stage:
+        raise TransitionRejectedError(
+            f"Lifecycle stage changed before retry: expected {expected_stage}, found {current_stage}."
+        )
     execution_relative = (
         f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
     )
