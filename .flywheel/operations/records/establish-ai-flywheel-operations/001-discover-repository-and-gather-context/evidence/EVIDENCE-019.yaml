@@ -1,0 +1,18 @@
+schema_version: 1
+id: EVIDENCE-019
+kind: human-confirmed-decision
+summary: >-
+  Use pyproject.toml with a src layout, and require onboarding to create an
+  immediately executable project scaffold rather than documentation-only
+  configuration.
+details:
+  packaging:
+    configuration: pyproject.toml
+    layout: src
+  execution_requirements:
+    - Create the Python package, tools module, tests, and quality-tool configuration during onboarding.
+    - Install or prepare the selected development dependencies before validation.
+    - Execute the generated project validation command after scaffolding is created.
+    - Treat successful execution as evidence that onboarding produced a usable repository.
+source: user
+status: confirmed
