@@ -6,6 +6,14 @@ from pathlib import Path
 import typer
 
 from ai_flywheel_cli import __version__
+from ai_flywheel_cli.operations import (
+    LockContentionError,
+    OperationError,
+    RepositoryConflictError,
+    install_from_archive,
+    plan_install,
+    upgrade_from_archive,
+)
 from ai_flywheel_cli.validation import validate_repository
 
 app = typer.Typer(
@@ -19,19 +27,30 @@ def _emit(payload: dict[str, object], *, as_json: bool) -> None:
     if as_json:
         typer.echo(json.dumps(payload, sort_keys=True))
         return
-
     for key, value in payload.items():
         typer.echo(f"{key}: {value}")
 
 
+def _operation_exit(error: OperationError, *, command: str, as_json: bool) -> None:
+    if isinstance(error, LockContentionError):
+        code = 5
+        category = "lock-contention"
+    elif isinstance(error, RepositoryConflictError):
+        code = 4
+        category = "repository-conflict"
+    else:
+        code = 8
+        category = "operation-failed"
+    _emit(
+        {"command": command, "status": category, "error": str(error)},
+        as_json=as_json,
+    )
+    raise typer.Exit(code=code)
+
+
 @app.callback()
 def main(
-    version: bool = typer.Option(
-        False,
-        "--version",
-        help="Show the CLI version and exit.",
-        is_eager=True,
-    ),
+    version: bool = typer.Option(False, "--version", help="Show the CLI version and exit.", is_eager=True),
 ) -> None:
     if version:
         typer.echo(__version__)
@@ -50,6 +69,7 @@ def doctor(
             "command": "doctor",
             "repository": str(repository.resolve()),
             "flywheel_exists": flywheel_path.is_dir(),
+            "repository_writable": repository.exists() and repository.is_dir(),
             "status": "ok",
         },
         as_json=json_output,
@@ -63,12 +83,23 @@ def status(
 ) -> None:
     """Report the current repository Flywheel status."""
     state_path = repository / ".flywheel" / "state.yaml"
+    if not state_path.is_file():
+        _emit(
+            {
+                "command": "status",
+                "repository": str(repository.resolve()),
+                "status": "not-installed",
+            },
+            as_json=json_output,
+        )
+        return
+    result = validate_repository(repository)
     _emit(
         {
             "command": "status",
             "repository": str(repository.resolve()),
-            "state_exists": state_path.is_file(),
-            "status": "ok" if state_path.is_file() else "not-installed",
+            "status": "valid" if result.passed else "invalid",
+            "issue_count": len(result.issues),
         },
         as_json=json_output,
     )
@@ -94,14 +125,68 @@ def validate(
 
 
 @app.command()
-def install() -> None:
-    """Install Flywheel artifacts into a repository."""
-    typer.echo("Install implementation is pending within Goal 004.")
-    raise typer.Exit(code=3)
+def install(
+    repository: Path = typer.Argument(Path.cwd(), exists=True, file_okay=False),
+    archive: Path = typer.Option(..., "--archive", exists=True, dir_okay=False),
+    checksum: str = typer.Option(..., "--checksum", help="Expected SHA-256 checksum."),
+    framework_version: str = typer.Option(..., "--framework-version"),
+    source_identity: str = typer.Option("local-archive", "--source-identity"),
+    apply: bool = typer.Option(False, "--apply", "--yes", help="Apply the displayed plan."),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Install verified Flywheel artifacts transactionally from an immutable archive."""
+    try:
+        plan = plan_install(archive, framework_version)
+        if not apply:
+            _emit(
+                {**plan.as_dict(), "status": "planned", "apply_required": True},
+                as_json=json_output,
+            )
+            return
+        result = install_from_archive(
+            repository,
+            archive,
+            checksum,
+            framework_version,
+            source_identity,
+        )
+    except OperationError as error:
+        _operation_exit(error, command="install", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
 
 
 @app.command()
-def upgrade() -> None:
-    """Upgrade an existing Flywheel installation."""
-    typer.echo("Upgrade implementation is pending within Goal 004.")
-    raise typer.Exit(code=3)
+def upgrade(
+    repository: Path = typer.Argument(Path.cwd(), exists=True, file_okay=False),
+    archive: Path = typer.Option(..., "--archive", exists=True, dir_okay=False),
+    checksum: str = typer.Option(..., "--checksum", help="Expected SHA-256 checksum."),
+    framework_version: str = typer.Option(..., "--framework-version"),
+    source_identity: str = typer.Option("local-archive", "--source-identity"),
+    apply: bool = typer.Option(False, "--apply", "--yes", help="Apply the displayed upgrade."),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Upgrade verified Flywheel artifacts with conflict detection and rollback."""
+    if not apply:
+        _emit(
+            {
+                "command": "upgrade",
+                "status": "planned",
+                "framework_version": framework_version,
+                "apply_required": True,
+            },
+            as_json=json_output,
+        )
+        return
+    try:
+        result = upgrade_from_archive(
+            repository,
+            archive,
+            checksum,
+            framework_version,
+            source_identity,
+        )
+    except OperationError as error:
+        _operation_exit(error, command="upgrade", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
