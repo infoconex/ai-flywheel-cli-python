@@ -1,0 +1,16 @@
+schema_version: 1
+id: EVIDENCE-055
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 001-align-cross-repository-operations-contract
+execution_id: EX-20260801T154900Z-001
+type: human-approval
+summary: Repository owner approved the Implement Programmatic Flywheel Operations mission and authorized starting Goal 001 to align the cross-repository operations contract.
+details:
+  approval: approved
+  approved_action: Start the mission and Goal 001 cross-repository contract alignment work.
+  authorization_limits:
+    - Do not begin implementation Goals 002 through 006 until the cross-repository contract is reviewed and approved or explicitly deferred.
+    - Do not merge any repository changes without explicit approval.
+    - Preserve ready-for-missions while this operational improvement mission is active.
+  source: User message approving the proposed mission and goals.
+recorded_at: "2026-08-01T15:49:00Z"
