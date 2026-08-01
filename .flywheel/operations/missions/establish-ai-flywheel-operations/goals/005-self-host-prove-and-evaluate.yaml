@@ -2,7 +2,7 @@ schema_version: 1
 id: 005-self-host-prove-and-evaluate
 mission_id: establish-ai-flywheel-operations
 title: Self-Host, Prove, and Evaluate
-status: ready
+status: active
 blocked_by: []
 objective: Transition from manual bootstrap to tool-managed operation, prove the implementation through a real mission and context-free cold start, and capture framework learning.
 procedure:
