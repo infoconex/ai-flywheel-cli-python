@@ -1,0 +1,42 @@
+schema_version: 1
+id: EX-20260801T150100Z-006
+mission_id: establish-ai-flywheel-operations
+goal_id: 006-close-certification-validation-gaps
+status: in-progress
+intended_outcome: Expand validation coverage to satisfy the certification contract and resolve FINDING-001.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T15:01:00Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2026-08-01T15:01:00Z"
+    completed_at: null
+    summary: Implement schema-backed validation, record invariants, compatibility handling, and isolated certification fixtures.
+    refs: [EVIDENCE-049, FINDING-001]
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions:
+  - Recorded explicit approval to start Goal 006.
+  - Added Goal 006 to the onboarding mission sequence.
+  - Suspended Goal 005 on the corrective dependency.
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: [EVIDENCE-049]
+evidence_refs: [EVIDENCE-049]
+decision_refs: []
+finding_refs: [FINDING-001]
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
