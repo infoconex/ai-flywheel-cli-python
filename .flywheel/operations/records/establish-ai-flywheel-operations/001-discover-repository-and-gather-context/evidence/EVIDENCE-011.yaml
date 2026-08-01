@@ -1,0 +1,13 @@
+schema_version: 1
+id: EVIDENCE-011
+kind: human-confirmed-context
+summary: Initial installation requires network access, while normal lifecycle operations should work locally after installation.
+source:
+  type: conversation
+  provided_by: repository-owner
+recorded_at: "2026-08-01T05:15:00Z"
+recorded_by: chatgpt-session
+facts:
+  - The initial bootstrap and CLI installation may require internet access.
+  - After installation and repository setup, normal Flywheel lifecycle operations should work using local repository content.
+  - Downloadable offline installation bundles are not required for the initial version.
