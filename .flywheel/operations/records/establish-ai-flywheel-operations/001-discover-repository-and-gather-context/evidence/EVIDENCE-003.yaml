@@ -1,0 +1,30 @@
+schema_version: 1
+id: EVIDENCE-003
+kind: evidence
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+created_at: "2026-08-01T04:48:00Z"
+created_by: chatgpt-session
+summary: Confirmed cross-platform execution, dependency detection, evolutionary tooling, and Python engineering standards.
+status: accepted
+classification: null
+criterion_ids:
+  - AC-003
+  - AC-004
+source_refs:
+  - human-response:2026-08-01T04:48:00Z
+artifact_refs:
+  - .flywheel/operating-model/config/repository-context.yaml
+  - .flywheel/operating-model/config/flywheel-context.yaml
+  - .flywheel/operating-model/config/capabilities.yaml
+evidence:
+  evidence_type: human-approval
+  supported_claim: The CLI must run on Windows, macOS, and Linux in local developer and AI execution environments, detect dependencies, support evolving tools, and follow industry-standard Python practices.
+  source_or_method: Direct human onboarding response.
+  actual_result: Requirements were explicitly provided and accepted as confirmed onboarding context.
+  observed_at: "2026-08-01T04:48:00Z"
+  storage_location: This evidence record.
+decision: null
+finding: null
+approval: null
