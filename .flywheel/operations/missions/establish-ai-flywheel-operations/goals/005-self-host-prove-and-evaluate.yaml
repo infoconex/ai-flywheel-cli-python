@@ -2,9 +2,8 @@ schema_version: 1
 id: 005-self-host-prove-and-evaluate
 mission_id: establish-ai-flywheel-operations
 title: Self-Host, Prove, and Evaluate
-status: blocked
-blocked_by:
-  - 004-build-and-validate-operating-tools
+status: ready
+blocked_by: []
 objective: Transition from manual bootstrap to tool-managed operation, prove the implementation through a real mission and context-free cold start, and capture framework learning.
 procedure:
   - Use the new tools to manage the remaining bootstrap records.
@@ -41,3 +40,8 @@ evidence_required:
     artifacts: [persisted findings and learning records]
   - criterion_id: AC-006
     artifacts: [readiness approval record]
+pre_release_gates:
+  - Ruff lint and formatting validation must pass.
+  - mypy strict type validation must pass.
+  - Hatchling package-build validation must pass.
+  - The approved deferral in EVIDENCE-045 must be resolved before ready-for-missions.
