@@ -1,0 +1,13 @@
+schema_version: 1
+id: EVIDENCE-015
+type: human-confirmed-context
+summary: Ruff and mypy were selected as the initial code-quality toolset.
+details:
+  linting: Ruff
+  formatting: Ruff
+  type_checking: mypy
+source:
+  kind: human-direction
+  session: chatgpt
+recorded_at: "2026-08-01T05:21:00Z"
+recorded_by: chatgpt-session
