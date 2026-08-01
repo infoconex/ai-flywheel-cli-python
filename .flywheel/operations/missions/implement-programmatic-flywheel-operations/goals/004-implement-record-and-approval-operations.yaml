@@ -1,0 +1,37 @@
+schema_version: 1
+id: 004-implement-record-and-approval-operations
+mission_id: implement-programmatic-flywheel-operations
+title: Implement Record and Approval Operations
+status: proposed
+objective: Add programmatic creation, validation, lookup, and linking of evidence, findings, decisions, approvals, observations, evaluations, classifications, adaptations, and reusable knowledge records.
+depends_on:
+  - 003-implement-execution-and-lifecycle-operations
+procedure:
+  - Implement typed record creation using authoritative schemas and placement rules.
+  - Generate or validate deterministic record identifiers and filenames.
+  - Link records to missions, goals, executions, lifecycle stages, criteria, and other records.
+  - Implement approval creation and verification without allowing the operator to self-authorize restricted transitions.
+  - Add record show and list operations with type, mission, goal, execution, status, and criterion filters.
+  - Prevent broken, duplicate, cross-scope, or unauthorized references.
+acceptance_criteria:
+  - id: AC-001
+    statement: All supported record types can be created programmatically in their canonical locations.
+  - id: AC-002
+    statement: Record identifiers, filenames, parent references, and cross-references are validated before persistence.
+  - id: AC-003
+    statement: Approval records preserve human authority and cannot be fabricated by the transition being approved.
+  - id: AC-004
+    statement: Record list and lookup operations support deterministic filtering and ordering.
+  - id: AC-005
+    statement: Automated tests cover valid records, malformed records, broken references, duplicate identifiers, and approval misuse.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [record operation source, record creation tests]
+  - criterion_id: AC-002
+    artifacts: [identity and reference validation tests]
+  - criterion_id: AC-003
+    artifacts: [approval boundary tests]
+  - criterion_id: AC-004
+    artifacts: [record query tests]
+  - criterion_id: AC-005
+    artifacts: [negative record operation report]
