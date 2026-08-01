@@ -1,0 +1,19 @@
+schema_version: 1
+id: 003-prove-installable-release-candidate
+mission_id: prepare-python-cli-initial-release
+title: Prove Installable Release Candidate
+status: proposed
+objective: Build the package and prove installation, console entry points, and core commands in a clean local environment.
+depends_on:
+  - 002-apply-local-quality-gates
+acceptance_criteria:
+  - id: AC-001
+    statement: Source and wheel distributions build successfully.
+  - id: AC-002
+    statement: The built wheel installs into a clean environment.
+  - id: AC-003
+    statement: The flywheel console command and module entry point execute from the installed package.
+  - id: AC-004
+    statement: Representative commands operate successfully from the installed package.
+  - id: AC-005
+    statement: Release artifacts are inspected for expected files and absence of repository-only content.
