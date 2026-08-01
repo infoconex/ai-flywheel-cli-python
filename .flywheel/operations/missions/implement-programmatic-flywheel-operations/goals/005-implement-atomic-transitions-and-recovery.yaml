@@ -1,37 +1,37 @@
 schema_version: 1
 id: 005-implement-atomic-transitions-and-recovery
 mission_id: implement-programmatic-flywheel-operations
-title: Implement Atomic Transitions and Recovery
+title: Harden Deterministic Mutation and Recovery
 status: proposed
-objective: Ensure every multi-artifact operation is atomic or durably recoverable under interruption, conflict, validation failure, and retry.
+objective: Ensure each implemented mutating operation is conflict-safe, retry-safe, and either atomic or durably recoverable, while leaving nonimplemented activities under governed AI control.
 depends_on:
   - 004-implement-record-and-approval-operations
 procedure:
-  - Define the transaction boundary and write ordering for each mutating operation.
-  - Add repository locking and stale-lock handling consistent with the framework contract.
-  - Stage all writes, validate the complete proposed state, and commit atomically where the filesystem permits.
-  - Persist transition intent and recovery metadata when atomic replacement cannot cover the full operation.
-  - Implement recovery inspection, resume, rollback, and abandon operations.
-  - Add interruption and conflict injection tests at every durable transition point.
+  - Define the transaction boundary and write ordering for each implemented mutating operation.
+  - Detect stale revisions and conflicting concurrent changes before canonical state is overwritten.
+  - Stage and validate complete proposed changes before commit where practical.
+  - Use the framework persistence and transition-recovery rules when a mutation spans multiple artifacts.
+  - Define deterministic retry, resume, rollback, and conflict behavior for each supported mutation.
+  - Add interruption and conflict injection tests only for the implemented mutation paths.
 acceptance_criteria:
   - id: AC-001
-    statement: No supported operation leaves silently inconsistent partial state after an injected interruption.
+    statement: No implemented operation leaves silently inconsistent partial state after an injected interruption.
   - id: AC-002
-    statement: Conflicting concurrent mutations are detected before canonical state is overwritten.
+    statement: Conflicting mutations are rejected before canonical state is overwritten.
   - id: AC-003
-    statement: Failed validation prevents all canonical mutations or triggers deterministic recovery.
+    statement: Validation failure prevents durable mutation or results in a governed recoverable state.
   - id: AC-004
-    statement: Recovery commands can inspect and resolve every persisted partial-transition state.
+    statement: Retry and recovery behavior is deterministic for every implemented mutating operation.
   - id: AC-005
-    statement: Retry behavior is idempotent and preserves record and execution identity.
+    statement: Safety claims are limited to tested operations and do not imply blanket programmatic coverage.
 evidence_required:
   - criterion_id: AC-001
     artifacts: [interruption injection tests]
   - criterion_id: AC-002
-    artifacts: [concurrency and conflict tests]
+    artifacts: [conflict detection tests]
   - criterion_id: AC-003
-    artifacts: [validation rollback tests]
+    artifacts: [validation and recovery tests]
   - criterion_id: AC-004
-    artifacts: [recovery command tests]
+    artifacts: [retry and idempotency report]
   - criterion_id: AC-005
-    artifacts: [idempotency test report]
+    artifacts: [supported-operation safety matrix]
