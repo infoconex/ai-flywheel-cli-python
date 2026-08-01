@@ -13,9 +13,9 @@ implementation:
     status: candidate
     origin: provided
   test_framework:
-    value: null
-    status: candidate
-    origin: null
+    value: pytest
+    status: confirmed
+    origin: provided
   command_interface:
     value: flywheel
     status: confirmed
@@ -36,6 +36,7 @@ implementation:
       - uv
       - pipx
       - Python virtual environment
+      - pytest
     prohibited: []
   supported_platforms:
     - Windows
@@ -105,6 +106,11 @@ decisions:
       confirmation; non-interactive installation requires an explicit --yes or
       --apply flag before writing repository files.
     evidence_ref: EVIDENCE-012
+  - id: TEST-FRAMEWORK-001
+    status: confirmed
+    origin: provided
+    statement: Use pytest as the project's initial automated test framework.
+    evidence_ref: EVIDENCE-014
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
