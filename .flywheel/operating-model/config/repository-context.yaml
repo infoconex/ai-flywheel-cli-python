@@ -8,6 +8,7 @@ purpose:
   status: confirmed
 repository:
   type: bootstrap-cli-project
+  example_role: self-hosting proving repository
   primary_artifacts:
     - .flywheel/manifest.yaml
     - .flywheel/state.yaml
@@ -16,17 +17,29 @@ repository:
 application:
   languages:
     - Python
-  frameworks: []
-  runtimes: []
+  frameworks:
+    - Typer
+  runtimes:
+    - Python 3.11+
   architecture:
     - cross-platform command-line application
+    - thin CLI adapter over independently testable application logic
     - dependency-aware and evolvable tooling
+    - pyproject.toml packaging with a src layout
 build:
-  systems: []
-  commands: []
+  systems:
+    - pyproject.toml
+  commands:
+    - python -m tools validate
 testing:
-  frameworks: []
-  commands: []
+  frameworks:
+    - pytest
+    - pytest-cov
+    - coverage.py
+  commands:
+    - python -m tools test
+    - python -m tools coverage
+    - python -m tools validate
 automation:
   local:
     - local developer environments
@@ -35,10 +48,13 @@ automation:
 standards:
   coding:
     - Follow established Python industry standards and best practices.
+    - Use Ruff for linting and formatting and mypy for static type checking.
   architecture:
     - Design for maintainability, extensibility, portability, and clear separation of concerns.
+    - Keep domain and application behavior independent of Typer and terminal handling.
   testing:
-    - Use industry-standard automated testing practices appropriate to a cross-platform Python CLI.
+    - Use unit, integration, and fixture-based end-to-end tests.
+    - Enforce an initial minimum test coverage threshold of 80 percent.
 constraints:
   platforms:
     - Windows
@@ -47,19 +63,27 @@ constraints:
   security:
     - Bootstrap scripts must not modify a target repository until dependency and installation verification succeeds.
     - Provide an inspect-before-run alternative to direct remote-script execution.
+    - Verify release archive checksums and reject unsafe archive paths, links, duplicate destinations, and manifest mismatches.
+    - Redact secrets and tokens from output and diagnostics.
   compliance: []
   dependencies:
     - Detect required dependencies and compatibility before executing dependent operations.
     - Provide actionable diagnostics for missing or incompatible dependencies.
     - Allow dependency and tool requirements to evolve without coupling the CLI to one fixed environment.
+    - Interactive bootstrap preserves user choice between uv and pipx when both are available.
+    - Non-interactive bootstrap prefers uv, then pipx, then a managed Python virtual environment.
   network:
-    - Do not depend on GitHub Actions or other hosted execution during bootstrap unless explicitly approved.
-unknowns:
-  - Supported Python versions are not yet selected.
-  - Exact package installation mechanism used behind the bootstrap scripts remains to be selected.
-  - Offline operation and standalone distribution constraints are not yet confirmed.
-  - Exact CLI command surface, architecture, persistence behavior, logging, and test framework are not yet selected.
-  - Branch, pull request, review, and merge policy beyond using a goal branch requires confirmation.
+    - Initial installation may require network access.
+    - Routine installed operations should work locally unless a command explicitly requires an external service.
+    - Use bounded timeouts and limited retries only for safe idempotent network reads.
+    - Do not depend on GitHub Actions or other hosted execution unless explicitly approved.
+source_control:
+  branch_strategy: mission-branch
+  goal_commit_strategy: separate-goal-commits
+  pull_request_strategy: one-pull-request-per-mission
+  merge_authority: human-approval-required
+  status: confirmed
+unknowns: []
 conflicts: []
 provenance_records:
   - id: PROV-001
@@ -77,7 +101,7 @@ provenance_records:
     status: confirmed
     confidence: high
     source: EVIDENCE-001
-    rationale: The repository currently contains the installed Flywheel operating model but no application implementation files.
+    rationale: The repository initially contained the installed Flywheel operating model but no application implementation files.
     recorded_at: "2026-08-01T04:38:00Z"
     recorded_by: chatgpt-session
   - id: PROV-003
@@ -86,7 +110,7 @@ provenance_records:
     status: confirmed
     confidence: high
     source: EVIDENCE-001
-    rationale: The only confirmed artifacts are the installed Flywheel operating files and onboarding records.
+    rationale: The confirmed initial artifacts were the installed Flywheel operating files and onboarding records.
     recorded_at: "2026-08-01T04:38:00Z"
     recorded_by: chatgpt-session
   - id: PROV-004
@@ -95,7 +119,7 @@ provenance_records:
     status: confirmed
     confidence: confirmed
     source: EVIDENCE-002
-    rationale: The human defined installation into empty or existing repositories and lifecycle assistance after installation as the CLI's programmatic purpose.
+    rationale: The human defined installation into empty or existing repositories and lifecycle assistance after installation as the CLI's purpose.
     recorded_at: "2026-08-01T04:44:00Z"
     recorded_by: chatgpt-session
   - id: PROV-005
@@ -104,7 +128,7 @@ provenance_records:
     status: confirmed
     confidence: confirmed
     source: EVIDENCE-002
-    rationale: This repository will demonstrate using Flywheel missions and goals to create the CLI from scratch.
+    rationale: This repository demonstrates using Flywheel missions and goals to create the CLI from scratch.
     recorded_at: "2026-08-01T04:44:00Z"
     recorded_by: chatgpt-session
   - id: PROV-006
@@ -140,13 +164,31 @@ provenance_records:
     status: confirmed
     confidence: confirmed
     source: EVIDENCE-004
-    rationale: The human selected two small bootstrap entry points as the preferred one-command installation experience.
+    rationale: The human selected shell and PowerShell bootstrap entry points as the preferred one-command installation experience.
     recorded_at: "2026-08-01T04:57:00Z"
     recorded_by: chatgpt-session
+  - id: PROV-010
+    key: application
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-006 through EVIDENCE-027
+    rationale: The runtime, architecture, packaging, command, testing, quality, safety, upgrade, output, documentation, and release policies were confirmed during onboarding.
+    recorded_at: "2026-08-01T05:52:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-011
+    key: unknowns
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-028
+    rationale: All previously listed material onboarding unknowns were reconciled against durable decisions.
+    recorded_at: "2026-08-01T06:06:00Z"
+    recorded_by: chatgpt-session
 notes:
-  - This file describes the target repository and application, not the Flywheel operating tools.
+  - This file describes the target repository and application; detailed operating-tool policies remain canonical in flywheel-context.yaml and capabilities.yaml.
   - No README, Python package metadata, source tree, tests, or automation were present during initial discovery.
   - The CLI must support installation into both empty repositories and repositories containing an existing project.
   - This repository is also the proving example for creating the CLI itself through the Flywheel mission and goal lifecycle.
   - After installation, the CLI should programmatically assist with lifecycle execution rather than serving only as an installer.
-  - Preferred installation uses a shell bootstrap entry point for macOS and Linux and a PowerShell bootstrap entry point for Windows.
+  - Implementation-policy decisions captured during goal 001 are inputs to later goals; no application implementation occurred during discovery.
