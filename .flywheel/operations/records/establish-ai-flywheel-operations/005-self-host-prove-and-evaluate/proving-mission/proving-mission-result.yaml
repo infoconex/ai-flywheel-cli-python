@@ -1,0 +1,49 @@
+schema_version: 1
+id: PROVING-MISSION-001
+title: Validate AI Flywheel CLI Against an Isolated Repository Fixture
+status: succeeded
+mode: isolated-non-destructive
+source_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+objective: Prove that the installed CLI detects valid and invalid Flywheel states without changing canonical readiness or application mission permissions.
+boundaries:
+  - Do not modify canonical operating artifacts during fixture execution.
+  - Do not authorize application mission work.
+  - Do not transition readiness.
+fixture:
+  method: temporary repository copy
+  validator: src/ai_flywheel_cli/validation.py
+  schema_validator: src/ai_flywheel_cli/schema_validation.py
+lifecycle:
+  execute:
+    status: completed
+    summary: Created isolated valid and invalid repository fixtures and invoked the repository validator.
+  observe:
+    status: completed
+    summary: Valid fixture returned zero errors; invalid fixtures produced deterministic missing-file, broken-reference, schema, and completion diagnostics.
+  evaluate:
+    status: completed
+    summary: Results matched the proving mission acceptance conditions and preserved canonical repository state.
+  classify:
+    status: completed
+    summary: The run was classified as a successful non-destructive operational proof.
+  adapt:
+    status: not-applicable
+    reason: No new implementation correction was required after Goal 006 validation passed.
+  validate:
+    status: completed
+    summary: Thirty-three automated tests passed and expanded repository validation returned zero errors on the synchronized canonical snapshot.
+  persist:
+    status: completed
+    summary: Proving mission result and evidence were persisted under Goal 005 records.
+  reuse:
+    status: completed
+    summary: The isolated fixture pattern is reusable for future certification and regression checks.
+acceptance_results:
+  tool_operation: passed
+  deterministic_negative_diagnostics: passed
+  lifecycle_completeness: passed
+  evidence_persistence: passed
+  canonical_state_unchanged: passed
+outcome: The representative proving mission succeeded without authorizing readiness or application mission work.
+known_limitations:
+  - Ruff, mypy, and Hatchling validation remain deferred until pre-release readiness validation under EVIDENCE-045.
