@@ -1,0 +1,31 @@
+schema_version: 1
+id: EVIDENCE-057
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 001-align-cross-repository-operations-contract
+execution_id: EX-20260801T154900Z-001
+type: determinism-boundary-decision
+summary: Full specification review confirmed that AI is the operator and deterministic tooling is an optional optimization, not a conformance or readiness requirement.
+details:
+  decision:
+    - AI-operated execution can fully conform to the AI Flywheel specification.
+    - Deterministic tools are selected or created when repeated, stable, validation-sensitive work benefits from code.
+    - The specification must not require programmatic implementation.
+    - Framework and testing contracts may validate optional tools only when an implementation claims those capabilities.
+  corrective_actions:
+    specification:
+      branch: feature/programmatic-operations-contract
+      revision: 05246f4ce0ad072d0b47c4c03288187f5517b5df
+      result: Removed the proposed programmatic operations specification document.
+    framework:
+      branch: feature/programmatic-operations-contract
+      revision: 168c0951c2a8f6f33df2086f3751807efbe16c12
+      result: Removed mandatory programmatic guidance, capability declaration, schema, and manifest registration.
+    testing:
+      branch: feature/programmatic-operations-contract
+      revision: bc583fc53e5e1dda2530c62481a447f46acdf2a1
+      result: Removed the programmatic conformance prompt and scenarios.
+    cli_mission:
+      result: Reframed the mission around deterministic optimization under AI governance.
+  human_agreement: approved
+  merge_required: false
+recorded_at: "2026-08-01T16:28:00Z"
