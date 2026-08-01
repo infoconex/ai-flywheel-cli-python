@@ -1,15 +1,15 @@
 schema_version: 1
 phase: operational
 readiness: ready-for-missions
-status: ready
-active_mission: null
-active_goal: null
-active_execution: null
-lifecycle_stage: null
+status: active
+active_mission: implement-programmatic-flywheel-operations
+active_goal: 001-align-cross-repository-operations-contract
+active_execution: EX-20260801T154900Z-001
+lifecycle_stage: execute
 implementation_available: true
 application_missions_allowed: true
 blockers: []
 last_durable_update:
-  at: "2026-08-01T15:30:00Z"
+  at: "2026-08-01T15:49:00Z"
   by: chatgpt-session
-  reason: Repository owner approved certification record CERT-20260801T152700Z-001 and authorized transition to ready-for-missions. The onboarding mission completed; optional Goal 007 remains deferred.
+  reason: Repository owner approved the programmatic operations mission and authorized Goal 001 cross-repository contract alignment.
