@@ -46,9 +46,9 @@ manual_fallbacks:
   - Detect required runtime and tool dependencies before attempting operations.
   - Report missing or incompatible dependencies with actionable remediation rather than failing ambiguously.
   - When neither uv nor pipx is available, offer to install a supported tool or use a managed virtual environment.
+  - In non-interactive environments, use uv when available, otherwise pipx, otherwise a managed virtual environment.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
-  - Non-interactive installer selection behavior remains to be defined.
 decisions:
   - id: INSTALL-PREFERENCE-001
     status: candidate
@@ -73,6 +73,13 @@ decisions:
       available, and offer installation or a managed virtual environment when
       neither is available.
     evidence_ref: EVIDENCE-008
+  - id: NONINTERACTIVE-INSTALLER-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      In non-interactive environments, prefer uv, then pipx, then a managed
+      Python virtual environment without prompting.
+    evidence_ref: EVIDENCE-009
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -82,3 +89,4 @@ notes:
   - The bootstrap entry points should detect prerequisites, install or invoke the CLI through the selected package mechanism, verify the installation, and avoid modifying a target repository until checks pass.
   - Documentation should provide both the one-command form and a download-inspect-run alternative.
   - Interactive installation should preserve user choice instead of silently preferring one detected installer.
+  - Non-interactive installation must be deterministic and must not block waiting for user input.
