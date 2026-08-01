@@ -1,0 +1,20 @@
+schema_version: 1
+id: EVIDENCE-024
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+summary: Installation metadata must record checksums for every framework-owned file.
+details:
+  decision_id: INSTALLATION-METADATA-001
+  status: confirmed
+  origin: provided
+  statement: >-
+    Installation metadata records the resolved framework version, release archive
+    checksum, and checksum for every framework-owned file.
+  implications:
+    - Validation can identify missing, changed, and unexpected framework-owned files.
+    - Upgrade can compare the installed baseline, local content, and target release deterministically.
+    - Mutable operational state and records remain outside the framework-owned file manifest.
+    - Metadata updates occur only after a successful install or upgrade transaction.
+recorded_at: 2026-08-01T05:44:00Z
