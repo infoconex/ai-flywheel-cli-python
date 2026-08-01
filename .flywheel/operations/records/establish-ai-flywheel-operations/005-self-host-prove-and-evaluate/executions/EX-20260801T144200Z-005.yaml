@@ -2,39 +2,102 @@ schema_version: 1
 id: EX-20260801T144200Z-005
 mission_id: establish-ai-flywheel-operations
 goal_id: 005-self-host-prove-and-evaluate
-status: in-progress
+status: blocked
 intended_outcome: Prove the Python CLI through self-hosted operation, context-free startup, a complete proving mission, and readiness evaluation.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006]
 started_at: "2026-08-01T14:42:00Z"
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: "2026-08-01T14:42:00Z"
-    completed_at: null
-    summary: Use the implemented CLI to validate and manage Flywheel artifacts, prepare cold-start and proving-mission fixtures, and assemble readiness evidence without crossing the human approval boundary.
-    refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046, .flywheel/implementation-manifest.yaml]
+    completed_at: "2026-08-01T15:20:00Z"
+    summary: Completed self-hosted validation, context-free startup, corrective validation work, isolated certification fixtures, and the representative proving mission.
+    refs: [EVIDENCE-046, EVIDENCE-047, EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
     reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  observe:
+    status: completed
+    started_at: "2026-08-01T15:20:00Z"
+    completed_at: "2026-08-01T15:21:00Z"
+    summary: Observed all ten certification scenarios passing while the deferred pre-release quality and packaging checks remain unexecuted.
+    refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/certification/certification-scenario-summary.yaml]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T15:21:00Z"
+    completed_at: "2026-08-01T15:22:00Z"
+    summary: Determined that certification scenarios are complete but readiness approval cannot be requested until the EVIDENCE-045 pre-release gates pass.
+    refs: [EVIDENCE-045, EVIDENCE-053]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T15:22:00Z"
+    completed_at: "2026-08-01T15:22:30Z"
+    summary: Classified the remaining condition as an approved-deferral-expiration validation gate, not a certification scenario failure.
+    refs: [EVIDENCE-045]
+    reason: null
+  adapt:
+    status: not-applicable
+    started_at: "2026-08-01T15:22:30Z"
+    completed_at: "2026-08-01T15:22:30Z"
+    summary: No further source adaptation is authorized or required unless the pre-release checks expose defects.
+    refs: [EVIDENCE-052]
+    reason: The corrected validator and proving mission passed.
+  validate:
+    status: blocked
+    started_at: "2026-08-01T15:22:30Z"
+    completed_at: null
+    summary: Awaiting Ruff lint and formatting, mypy strict typing, and Hatchling package-build validation in an environment with dependency access.
+    refs: [EVIDENCE-045]
+    reason: The approved deferral ends at pre-release readiness validation.
+  persist:
+    status: completed
+    started_at: "2026-08-01T15:20:00Z"
+    completed_at: "2026-08-01T15:23:00Z"
+    summary: Persisted cold-start, scenario, corrective validation, and proving-mission evidence.
+    refs: [EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
+    reason: null
+  reuse:
+    status: completed
+    started_at: "2026-08-01T15:23:00Z"
+    completed_at: "2026-08-01T15:23:30Z"
+    summary: Persisted the isolated fixture and certification scenario pattern for future reuse.
+    refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/proving-mission/proving-mission-result.yaml]
+    reason: null
 actions:
   - Recorded explicit Goal 005 kickoff approval.
-  - Preserved not-ready-for-missions and the deferred pre-release validation requirement.
-observations: []
-evaluations: []
-classifications: []
+  - Ran repository self-validation through the CLI.
+  - Completed and evaluated the independent context-free startup.
+  - Identified and resolved FINDING-001 through corrective Goal 006.
+  - Completed the isolated representative proving mission.
+  - Assembled all ten certification scenario results.
+observations:
+  - id: OBS-005-001
+    statement: All ten certification scenarios have passed with durable evidence.
+    refs: [EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
+evaluations:
+  - id: EVAL-005-001
+    statement: The certification package cannot reach ready-for-approval until the deferred pre-release gates pass.
+    refs: [EVIDENCE-045]
+classifications:
+  - id: CLASS-005-001
+    category: validation-gate
+    statement: Remaining work is the expiration of an approved temporary deferral, not a failed certification scenario.
 adaptations: []
-blockers: []
-approval_refs: [EVIDENCE-045, EVIDENCE-046]
-evidence_refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046]
+blockers:
+  - pre-release-ruff-mypy-hatchling-validation
+approval_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050]
+evidence_refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046, EVIDENCE-047, EVIDENCE-048, EVIDENCE-049, EVIDENCE-050, EVIDENCE-051, EVIDENCE-052, EVIDENCE-053]
 decision_refs: []
-finding_refs: []
-validation_results: []
+finding_refs: [FINDING-001]
+validation_results:
+  - name: certification-scenarios
+    result: passed
+    passed: 10
+    failed: 0
+  - name: pre-release-quality-and-build
+    result: blocked
+    pending: [ruff, mypy, hatchling]
 outcome: null
 completion:
   disposition: null
