@@ -13,6 +13,9 @@ procedure:
   - Provide deterministic machine-readable results for supported operations.
   - Clearly report unsupported operations and allow the AI operator to continue through governed artifact execution.
   - Add positive and negative automated tests for every implemented operation.
+  - Continue without renewed approval through implementation, test execution, correction, repository validation, evidence persistence, lifecycle completion, and the goal completion summary.
+  - Treat progress updates as non-blocking; continue immediately after each update unless a documented approval boundary, blocker, required scope expansion, or human-disposition failure exists.
+  - Before stopping while the goal remains active, verify whether the goal is complete, a blocker is documented, an approval boundary exists, or scope expansion is required; continue when all are false.
 acceptance_criteria:
   - id: AC-001
     statement: Every operation approved by Goal 002 is implemented and no unapproved blanket operation scope is introduced.
