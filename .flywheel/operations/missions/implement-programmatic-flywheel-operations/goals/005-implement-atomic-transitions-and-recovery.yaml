@@ -2,7 +2,7 @@ schema_version: 1
 id: 005-implement-atomic-transitions-and-recovery
 mission_id: implement-programmatic-flywheel-operations
 title: Prove Interruption, Retry, and Idempotency Safety
-status: proposed
+status: completed
 objective: Prove deterministic interruption recovery, retry behavior, and idempotency for start-execution and advance-lifecycle without expanding the supported operation set.
 depends_on:
   - 004-implement-record-and-approval-operations
