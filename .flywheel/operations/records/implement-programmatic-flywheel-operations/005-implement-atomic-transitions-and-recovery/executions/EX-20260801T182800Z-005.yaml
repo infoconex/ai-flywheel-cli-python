@@ -1,0 +1,57 @@
+schema_version: 1
+id: EX-20260801T182800Z-005
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 005-implement-atomic-transitions-and-recovery
+status: completed
+intended_outcome: Prove interruption recovery, retry behavior, and idempotency for the supported deterministic operations without expanding their scope.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T18:28:00Z"
+completed_at: "2026-08-01T18:36:00Z"
+lifecycle:
+  execute: {status: completed, started_at: "2026-08-01T18:28:00Z", completed_at: "2026-08-01T18:30:00Z", summary: Added interruption hooks, canonical restoration, and lifecycle retry protection., refs: [EVIDENCE-063], reason: null}
+  observe: {status: completed, started_at: "2026-08-01T18:30:00Z", completed_at: "2026-08-01T18:31:00Z", summary: Confirmed partial replacement and replay are the remaining demonstrated safety risks., refs: [EVIDENCE-063], reason: null}
+  evaluate: {status: completed, started_at: "2026-08-01T18:31:00Z", completed_at: "2026-08-01T18:32:00Z", summary: Determined rollback plus expected-stage comparison provides deterministic recovery and replay rejection., refs: [EVIDENCE-063], reason: null}
+  classify: {status: completed, started_at: "2026-08-01T18:32:00Z", completed_at: "2026-08-01T18:33:00Z", summary: Classified interruption handling as shared mutation safety and lifecycle replay protection as operation-specific idempotency., refs: [EVIDENCE-063], reason: null}
+  adapt: {status: completed, started_at: "2026-08-01T18:33:00Z", completed_at: "2026-08-01T18:34:00Z", summary: Added injectable interruption points and an optional expected-stage CLI guard without adding new operation families., refs: [EVIDENCE-063], reason: null}
+  validate: {status: completed, started_at: "2026-08-01T18:34:00Z", completed_at: "2026-08-01T18:35:00Z", summary: Full test suite passed 40 tests and repository validation reported zero issues., refs: [EVIDENCE-063], reason: null}
+  persist: {status: completed, started_at: "2026-08-01T18:35:00Z", completed_at: "2026-08-01T18:36:00Z", summary: Persisted implementation, tests, evidence, and supported-operation safety matrix., refs: [EVIDENCE-063], reason: null}
+  reuse: {status: completed, started_at: "2026-08-01T18:36:00Z", completed_at: "2026-08-01T18:36:00Z", summary: Captured interruption, retry, and replay guarantees for future supported mutation candidates., refs: [EVIDENCE-063], reason: null}
+actions:
+  - Recorded approval to start Goal 005.
+  - Added interruption injection and rollback verification.
+  - Added deterministic retry and lifecycle replay protection.
+  - Ran the complete automated test suite and repository validation.
+observations:
+  - id: OBS-005-001
+    statement: A failure after the first canonical replacement requires restoring every touched path and deleting temporary artifacts.
+    refs: [EVIDENCE-063]
+evaluations:
+  - id: EVAL-005-001
+    statement: Expected-stage comparison prevents an equivalent lifecycle retry from advancing a second stage.
+    refs: [EVIDENCE-063]
+classifications:
+  - id: CLASS-005-001
+    category: deterministic-mutation-safety
+    statement: Interruption rollback is shared mutation-boundary behavior.
+  - id: CLASS-005-002
+    category: operation-idempotency
+    statement: Lifecycle replay rejection is specific to advance-lifecycle.
+adaptations:
+  - id: ADAPT-005-001
+    disposition: completed
+    statement: Added interruption hooks and expected-stage retry protection within the approved operation scope.
+    refs: [EVIDENCE-063]
+blockers: []
+approval_refs: []
+evidence_refs: [EVIDENCE-063]
+decision_refs: []
+finding_refs: []
+validation_results:
+  - id: VAL-005-001
+    status: passed
+    statement: Forty automated tests and repository validation passed with zero issues.
+    refs: [EVIDENCE-063]
+outcome: Supported deterministic mutations now have tested interruption recovery, deterministic retry behavior, and explicit replay protection.
+completion:
+  disposition: completed
+  rationale: All Goal 005 acceptance criteria are satisfied and evidenced.
