@@ -28,29 +28,29 @@ Keep `.flywheel/operating-model/config/repository-context.yaml` separate from `.
 
 Use Mission -> Goal -> Execution. Before the first goal-directed action, create or resume an execution according to `.flywheel/operating-model/guidance/execution-model.md`. Store records according to `.flywheel/operating-model/guidance/records.md` and update `.flywheel/state.yaml` before beginning each lifecycle stage.
 
-Approval to start a goal authorizes continuous execution through implementation, correction, validation, evidence persistence, lifecycle completion, and the goal completion summary. Normal implementation milestones, partial progress, successful file changes, and progress updates do not suspend that authorization.
+Approval to start a goal authorizes continuous execution through implementation, correction, validation, evidence persistence, lifecycle completion, and the goal completion summary. That authorization remains active until the goal completes or a valid stop condition is reached.
 
-Progress updates are non-blocking communications. After providing one, continue the active goal immediately unless a documented stop condition exists.
+A progress update communicates status and does not suspend execution. After sending a progress update, continue the active goal immediately unless a documented stop condition exists.
 
-Stop only when one of these conditions is true:
+The only valid stop conditions during an approved goal are:
 
-- a human approval boundary has been reached;
-- required information or a dependency cannot be resolved from available sources;
-- continuing requires material scope expansion;
-- continuing would perform a prohibited or unsafe action;
-- a failure requires human disposition rather than correction within the approved scope; or
-- the goal is complete and its completion summary has been produced.
+- a human approval boundary explicitly required by governance or the active goal;
+- unresolved information that cannot be obtained from available sources and is necessary to continue correctly;
+- required work that would materially expand the approved goal scope;
+- a dependency, tool limitation, prohibited action, or unsafe condition that prevents further work;
+- a validation failure whose disposition requires human authority rather than an authorized implementation correction; or
+- goal completion after the completion summary and durable state updates are produced.
 
-Implementation, test, or validation failures that can be corrected within the approved goal are not stop conditions. Preserve the failure, adapt within scope, rerun the affected checks, and continue.
+Normal implementation milestones, successful partial results, progress reports, and the availability of more work are not stop conditions.
 
-Before ending work on an active goal, perform this pre-stop check:
+Before ending work while a goal remains active, perform this pre-stop check:
 
 1. Is the goal complete?
 2. Is there a documented blocker?
 3. Is there an explicit approval boundary?
 4. Is material scope expansion required?
 
-If every answer is no, execution must continue.
+If all answers are no, continue execution.
 
 Record all eight lifecycle stages. A stage may be `not-applicable` only with a concrete reason. Each acceptance-criterion ID must map to actual evidence. Execution success does not itself complete a goal.
 
