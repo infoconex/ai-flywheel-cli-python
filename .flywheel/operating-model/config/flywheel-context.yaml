@@ -24,6 +24,11 @@ implementation:
     explicit_option: --version
     status: confirmed
     origin: provided
+  framework_distribution:
+    source: immutable GitHub Release archive
+    checksum_verification: required
+    status: confirmed
+    origin: provided
   cli_framework:
     value: Typer
     thin_adapter_required: true
@@ -196,6 +201,13 @@ decisions:
       Install the latest stable framework release by default and support an
       explicit --version option for deterministic version pinning.
     evidence_ref: EVIDENCE-021
+  - id: FRAMEWORK-DISTRIBUTION-SOURCE-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Download framework contents from an immutable GitHub Release archive and
+      verify the published checksum before installation.
+    evidence_ref: EVIDENCE-022
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -214,3 +226,4 @@ notes:
   - Onboarding is incomplete until the generated package, tools module, tests, and development dependencies are prepared and python -m tools validate has been executed successfully.
   - Typer is limited to parsing, help, terminal interaction, and command dispatch; domain and application logic must remain independently testable.
   - Every installation must record the resolved framework version so the generated repository remains reproducible even when latest stable changes later.
+  - Release archive integrity must be verified before extraction or any repository changes.
