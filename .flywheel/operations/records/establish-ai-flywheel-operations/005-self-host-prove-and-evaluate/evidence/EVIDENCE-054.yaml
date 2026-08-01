@@ -1,0 +1,27 @@
+schema_version: 1
+id: EVIDENCE-054
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+type: human-policy-decision
+summary: Repository owner approved removing Ruff, mypy, and Hatchling from operational readiness requirements and deferring adoption decisions to a future optional goal.
+details:
+  decision: approved
+  approved_at: "2026-08-01T15:26:00Z"
+  operational_readiness_effect:
+    - Ruff is not required to establish current repository-local CLI functionality.
+    - mypy is not required to establish current repository-local CLI functionality.
+    - Hatchling package build is not required until distributable packaging becomes an approved release requirement.
+  preserved_required_validation:
+    - automated functional tests
+    - required coverage threshold
+    - Python compilation
+    - CLI execution
+    - schema-backed repository validation
+    - all ten certification scenarios
+  future_action: Evaluate these tools separately through optional Goal 007 before adopting any as required policy.
+  authorization_limits:
+    - This decision does not itself approve ready-for-missions.
+    - This decision does not authorize branch merge or package publication.
+source: User approval in the Goal 005 session.
+recorded_at: "2026-08-01T15:26:00Z"
