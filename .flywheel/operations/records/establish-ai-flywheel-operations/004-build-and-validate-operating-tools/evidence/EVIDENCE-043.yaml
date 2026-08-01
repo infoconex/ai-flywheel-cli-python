@@ -1,0 +1,40 @@
+schema_version: 1
+id: EVIDENCE-043
+mission_id: establish-ai-flywheel-operations
+goal_id: 004-build-and-validate-operating-tools
+execution_id: EX-20260801T134200Z-004
+type: local-validation
+summary: Executed the uploaded Goal 004 implementation, corrected discovered defects, and produced passing functional and coverage results.
+details:
+  uploaded_snapshot:
+    source: ai-flywheel-cli-python-mission-establish-ai-flywheel-operations.zip
+    initial_tests: 21
+    initial_passed: 18
+    initial_failed: 3
+    initial_coverage_percent: 69.61
+  defects_corrected:
+    - Typer root --version option was not executable without invoke_without_command.
+    - Obsolete install and upgrade placeholder tests no longer matched implemented commands.
+    - Duplicate upgrade implementation reduced clarity and coverage.
+    - Python module entry point src/ai_flywheel_cli/__main__.py was missing.
+  corrected_results:
+    tests: 24
+    passed: 24
+    failed: 0
+    coverage_percent: 81.01
+    coverage_threshold_percent: 80
+    bytecode_compilation: passed
+    module_version_command: passed
+    repository_self_validation: passed
+    repository_self_validation_errors: 0
+  commands:
+    - PYTHONPATH=src python -m pytest -q --cov=ai_flywheel_cli --cov-report=term-missing
+    - PYTHONPATH=src python -m compileall -q src tests tools
+    - PYTHONPATH=src python -m ai_flywheel_cli --version
+    - PYTHONPATH=src python -m ai_flywheel_cli validate . --json
+  unavailable_checks:
+    - ruff check
+    - ruff format --check
+    - mypy
+  limitation: The execution environment package index does not provide Ruff, mypy, or Hatchling, so python -m tools validate cannot complete here even though tests, coverage, compilation, and repository validation pass.
+recorded_at: 2026-08-01T14:19:00Z
