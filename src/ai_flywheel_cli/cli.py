@@ -59,7 +59,9 @@ def _operation_exit(error: OperationError, *, command: str, as_json: bool) -> No
 
 @app.callback()
 def main(
-    version: bool = typer.Option(False, "--version", help="Show the CLI version and exit.", is_eager=True),
+    version: bool = typer.Option(
+        False, "--version", help="Show the CLI version and exit.", is_eager=True
+    ),
 ) -> None:
     if version:
         typer.echo(__version__)

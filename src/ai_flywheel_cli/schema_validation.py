@@ -69,12 +69,8 @@ def _legacy_evidence_valid(value: Any) -> bool:
     evidence_id = value.get("id", value.get("evidence_id"))
     if not isinstance(evidence_id, str) or not evidence_id.startswith("EVIDENCE-"):
         return False
-    timestamp_present = any(
-        key in value for key in ("recorded_at", "created_at", "captured_at")
-    )
-    content_present = any(
-        key in value for key in ("details", "evidence", "observations", "source")
-    )
+    timestamp_present = any(key in value for key in ("recorded_at", "created_at", "captured_at"))
+    content_present = any(key in value for key in ("details", "evidence", "observations", "source"))
     return timestamp_present or content_present
 
 
@@ -83,8 +79,8 @@ def validate_declared_artifacts(
     state: Any,
     issues: list[ValidationIssue],
 ) -> None:
-    for schema_name, relative in CORE_SCHEMAS.items():
-        _validate_schema(root, Path(relative), schema_name, issues)
+    for schema_name, relative_path in CORE_SCHEMAS.items():
+        _validate_schema(root, Path(relative_path), schema_name, issues)
 
     if not isinstance(state, dict):
         return
@@ -130,8 +126,7 @@ def validate_declared_artifacts(
         if isinstance(evidence_id, str):
             known_evidence.add(evidence_id)
         if isinstance(evidence_id, str) and not (
-            evidence_path.stem == evidence_id
-            or evidence_path.stem.startswith(evidence_id + "-")
+            evidence_path.stem == evidence_id or evidence_path.stem.startswith(evidence_id + "-")
         ):
             issues.append(
                 ValidationIssue(
@@ -168,10 +163,7 @@ def validate_declared_artifacts(
             )
         parts = relative.parts
         expected_mission, expected_goal = parts[-4], parts[-3]
-        if (
-            value.get("mission_id") != expected_mission
-            or value.get("goal_id") != expected_goal
-        ):
+        if value.get("mission_id") != expected_mission or value.get("goal_id") != expected_goal:
             issues.append(
                 ValidationIssue(
                     "EXECUTION_PARENT_MISMATCH",
@@ -190,8 +182,7 @@ def validate_declared_artifacts(
             )
         if value.get("status") in TERMINAL_EXECUTION_STATUSES:
             if not isinstance(lifecycle, dict) or any(
-                not isinstance(stage, dict)
-                or stage.get("status") not in TERMINAL_STAGE_STATUSES
+                not isinstance(stage, dict) or stage.get("status") not in TERMINAL_STAGE_STATUSES
                 for stage in lifecycle.values()
             ):
                 issues.append(

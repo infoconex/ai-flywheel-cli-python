@@ -13,8 +13,8 @@ from ai_flywheel_cli.operations import (
     RepositoryConflictError,
     RepositoryLock,
     detect_upgrade_conflicts,
-    install_from_archive,
     inspect_archive,
+    install_from_archive,
     load_installation_metadata,
     sha256_file,
     verify_checksum,
@@ -55,15 +55,19 @@ def test_archive_requires_flywheel_root(tmp_path: Path) -> None:
 
 
 def test_repository_lock_rejects_contention(tmp_path: Path) -> None:
-    with RepositoryLock(tmp_path, "install"):
-        with pytest.raises(LockContentionError):
-            with RepositoryLock(tmp_path, "upgrade"):
-                pass
+    with (
+        RepositoryLock(tmp_path, "install"),
+        pytest.raises(LockContentionError),
+        RepositoryLock(tmp_path, "upgrade"),
+    ):
+        pass
 
 
 def test_install_refuses_existing_flywheel(tmp_path: Path) -> None:
     (tmp_path / ".flywheel").mkdir()
-    archive = _archive(tmp_path / "framework.zip", {".flywheel/manifest.yaml": "schema_version: 1\n"})
+    archive = _archive(
+        tmp_path / "framework.zip", {".flywheel/manifest.yaml": "schema_version: 1\n"}
+    )
     with pytest.raises(RepositoryConflictError):
         install_from_archive(tmp_path, archive, sha256_file(archive), "0.1.0", "fixture")
 
@@ -138,5 +142,7 @@ def test_upgrade_preserves_mutable_state(tmp_path: Path) -> None:
         },
     )
     upgrade_from_archive(tmp_path, target, sha256_file(target), "0.2.0", "fixture")
-    assert (tmp_path / ".flywheel/manifest.yaml").read_text(encoding="utf-8") == "schema_version: 2\n"
+    assert (tmp_path / ".flywheel/manifest.yaml").read_text(
+        encoding="utf-8"
+    ) == "schema_version: 2\n"
     assert (tmp_path / ".flywheel/state.yaml").read_text(encoding="utf-8") == "value: local\n"

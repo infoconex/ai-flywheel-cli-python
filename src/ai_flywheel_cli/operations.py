@@ -161,7 +161,9 @@ class RepositoryLock(AbstractContextManager["RepositoryLock"]):
             descriptor = os.open(self.lock_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         except FileExistsError as error:
             existing = self.lock_path.read_text(encoding="utf-8", errors="replace")
-            raise LockContentionError(f"Repository mutation lock already exists: {existing}") from error
+            raise LockContentionError(
+                f"Repository mutation lock already exists: {existing}"
+            ) from error
         with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
             json.dump(metadata, stream, sort_keys=True)
             stream.write("\n")
@@ -222,7 +224,9 @@ def detect_upgrade_conflicts(repository: Path, metadata: dict[str, Any]) -> tupl
     conflicts: list[str] = []
     for path, baseline in owned_files.items():
         if not isinstance(path, str) or not isinstance(baseline, str):
-            raise RepositoryConflictError("Installation metadata contains an invalid checksum entry.")
+            raise RepositoryConflictError(
+                "Installation metadata contains an invalid checksum entry."
+            )
         target = repository / path
         if not target.is_file() or sha256_file(target) != baseline:
             conflicts.append(path)

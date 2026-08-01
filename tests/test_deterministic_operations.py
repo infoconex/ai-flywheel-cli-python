@@ -56,11 +56,7 @@ def _repository(tmp_path: Path) -> Path:
         },
     )
     _write_yaml(
-        repository
-        / ".flywheel/operations/missions"
-        / MISSION_ID
-        / "goals"
-        / f"{GOAL_ID}.yaml",
+        repository / ".flywheel/operations/missions" / MISSION_ID / "goals" / f"{GOAL_ID}.yaml",
         {
             "schema_version": 1,
             "id": GOAL_ID,
@@ -68,9 +64,7 @@ def _repository(tmp_path: Path) -> Path:
             "title": "Sample Goal",
             "status": "proposed",
             "objective": "Exercise deterministic operations.",
-            "acceptance_criteria": [
-                {"id": "AC-001", "statement": "The operation succeeds."}
-            ],
+            "acceptance_criteria": [{"id": "AC-001", "statement": "The operation succeeds."}],
         },
     )
     return repository
@@ -101,11 +95,7 @@ def test_start_execution_synchronizes_goal_execution_and_state(
     assert state["active_execution"] == EXECUTION_ID
     assert state["lifecycle_stage"] == "execute"
     goal = _load_yaml(
-        repository
-        / ".flywheel/operations/missions"
-        / MISSION_ID
-        / "goals"
-        / f"{GOAL_ID}.yaml"
+        repository / ".flywheel/operations/missions" / MISSION_ID / "goals" / f"{GOAL_ID}.yaml"
     )
     assert goal["status"] == "active"
 
@@ -116,11 +106,7 @@ def test_start_execution_validation_failure_leaves_repository_unchanged(
     repository = _repository(tmp_path)
     state_path = repository / ".flywheel/state.yaml"
     goal_path = (
-        repository
-        / ".flywheel/operations/missions"
-        / MISSION_ID
-        / "goals"
-        / f"{GOAL_ID}.yaml"
+        repository / ".flywheel/operations/missions" / MISSION_ID / "goals" / f"{GOAL_ID}.yaml"
     )
     original_state = state_path.read_bytes()
     original_goal = goal_path.read_bytes()

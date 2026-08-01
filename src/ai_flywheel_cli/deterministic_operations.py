@@ -109,18 +109,24 @@ def start_execution(
     state = _load_mapping(state_path)
     goal = _load_mapping(goal_path)
     if state.get("active_execution") is not None:
-        raise TransitionRejectedError("Cannot start an execution while another execution is active.")
+        raise TransitionRejectedError(
+            "Cannot start an execution while another execution is active."
+        )
     if execution_path.exists():
         raise TransitionRejectedError(f"Execution already exists: {execution_id}")
     if goal.get("mission_id") != mission_id or goal.get("id") != goal_id:
-        raise TransitionRejectedError("Goal identity or mission reference does not match the request.")
+        raise TransitionRejectedError(
+            "Goal identity or mission reference does not match the request."
+        )
     criteria = [
         item.get("id")
         for item in goal.get("acceptance_criteria", [])
         if isinstance(item, dict) and isinstance(item.get("id"), str)
     ]
     if not criteria:
-        raise TransitionRejectedError("Goal must define acceptance criteria before execution starts.")
+        raise TransitionRejectedError(
+            "Goal must define acceptance criteria before execution starts."
+        )
     timestamp = _timestamp(started_at)
     lifecycle = {stage: _empty_stage() for stage in LIFECYCLE_ORDER}
     lifecycle["execute"] = {
@@ -207,13 +213,18 @@ def advance_lifecycle(
     goal_id = state.get("active_goal")
     execution_id = state.get("active_execution")
     current_stage = state.get("lifecycle_stage")
-    if not all(isinstance(value, str) for value in (mission_id, goal_id, execution_id, current_stage)):
-        raise TransitionRejectedError("An active mission, goal, execution, and lifecycle stage are required.")
+    if not all(
+        isinstance(value, str) for value in (mission_id, goal_id, execution_id, current_stage)
+    ):
+        raise TransitionRejectedError(
+            "An active mission, goal, execution, and lifecycle stage are required."
+        )
     if current_stage not in LIFECYCLE_STAGES:
         raise TransitionRejectedError(f"Unsupported lifecycle stage: {current_stage}")
     if expected_stage is not None and current_stage != expected_stage:
         raise TransitionRejectedError(
-            f"Lifecycle stage changed before retry: expected {expected_stage}, found {current_stage}."
+            "Lifecycle stage changed before retry: "
+            f"expected {expected_stage}, found {current_stage}."
         )
     execution_relative = (
         f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
@@ -226,7 +237,9 @@ def advance_lifecycle(
         raise TransitionRejectedError("Execution lifecycle must be a mapping.")
     stage = lifecycle.get(current_stage)
     if not isinstance(stage, dict) or stage.get("status") != "in-progress":
-        raise TransitionRejectedError("The active lifecycle stage must be in-progress before advancing.")
+        raise TransitionRejectedError(
+            "The active lifecycle stage must be in-progress before advancing."
+        )
     if not summary.strip():
         raise TransitionRejectedError("A lifecycle completion summary is required.")
     timestamp = _timestamp(completed_at)
@@ -242,7 +255,8 @@ def advance_lifecycle(
     index = LIFECYCLE_ORDER.index(current_stage)
     if index == len(LIFECYCLE_ORDER) - 1:
         raise UnsupportedDeterministicOperationError(
-            "Completing reuse and closing the execution remains governed AI work in the approved scope."
+            "Completing reuse and closing the execution remains governed AI work "
+            "in the approved scope."
         )
     next_stage = LIFECYCLE_ORDER[index + 1]
     next_value = lifecycle.get(next_stage)
@@ -276,9 +290,12 @@ def advance_lifecycle(
         "advance-lifecycle",
         {
             ".flywheel/state.yaml": sha256_bytes(state_bytes) if state_bytes is not None else None,
-            execution_relative: sha256_bytes(execution_bytes) if execution_bytes is not None else None,
+            execution_relative: sha256_bytes(execution_bytes)
+            if execution_bytes is not None
+            else None,
         },
     )
+    assert isinstance(execution_id, str)
     return DeterministicOperationResult(
         "advance-lifecycle", "completed", files, execution_id, next_stage
     )
@@ -288,5 +305,6 @@ def require_supported_operation(operation: str) -> None:
     supported = {"start-execution", "advance-lifecycle"}
     if operation not in supported:
         raise UnsupportedDeterministicOperationError(
-            f"Operation '{operation}' is not deterministic in the approved scope; continue through governed AI execution."
+            f"Operation '{operation}' is not deterministic in the approved scope; "
+            "continue through governed AI execution."
         )
