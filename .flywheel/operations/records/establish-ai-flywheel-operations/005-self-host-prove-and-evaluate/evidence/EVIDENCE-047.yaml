@@ -1,0 +1,25 @@
+schema_version: 1
+id: EVIDENCE-047
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+type: validation
+summary: The Python CLI validated its own active Goal 005 repository state with no reported errors.
+details:
+  command: PYTHONPATH=src python -m ai_flywheel_cli validate . --json
+  result: passed
+  error_count: 0
+  tested_framework_revision: e56e5233f5f4424b1bdeeef8044c09eb75686778
+  environment: local synchronized workspace created from the uploaded mission-branch archive and subsequent committed corrections
+  scope:
+    - manifest-required files
+    - state consistency
+    - active mission reference
+    - active goal reference
+    - active execution reference
+    - execution lifecycle completeness
+    - active lifecycle-stage consistency
+  limitations:
+    - This is not the independent context-free startup scenario.
+    - Deferred Ruff, mypy, and Hatchling gates remain unresolved.
+recorded_at: "2026-08-01T14:47:00Z"
