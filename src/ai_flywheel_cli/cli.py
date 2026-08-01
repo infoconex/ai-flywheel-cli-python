@@ -6,6 +6,7 @@ from pathlib import Path
 import typer
 
 from ai_flywheel_cli import __version__
+from ai_flywheel_cli.validation import validate_repository
 
 app = typer.Typer(
     name="flywheel",
@@ -78,29 +79,18 @@ def validate(
     repository: Path = typer.Argument(Path.cwd(), exists=True, file_okay=False),
     json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
 ) -> None:
-    """Validate repository Flywheel artifacts."""
-    state_path = repository / ".flywheel" / "state.yaml"
-    if not state_path.is_file():
-        _emit(
-            {
-                "command": "validate",
-                "repository": str(repository.resolve()),
-                "status": "validation-failed",
-                "errors": ["Missing required .flywheel/state.yaml"],
-            },
-            as_json=json_output,
-        )
+    """Validate repository Flywheel artifacts and active references."""
+    result = validate_repository(repository)
+    payload: dict[str, object] = {
+        "command": "validate",
+        "repository": str(repository.resolve()),
+        "status": "passed" if result.passed else "validation-failed",
+        "error_count": len(result.issues),
+        "errors": [issue.as_dict() for issue in result.issues],
+    }
+    _emit(payload, as_json=json_output)
+    if not result.passed:
         raise typer.Exit(code=2)
-
-    _emit(
-        {
-            "command": "validate",
-            "repository": str(repository.resolve()),
-            "status": "passed",
-            "errors": [],
-        },
-        as_json=json_output,
-    )
 
 
 @app.command()
