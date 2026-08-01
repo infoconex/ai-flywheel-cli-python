@@ -1,7 +1,7 @@
 schema_version: 1
 id: implement-programmatic-flywheel-operations
 title: Implement Programmatic Flywheel Operations
-status: proposed
+status: active
 objective: Provide complete, schema-valid, command-driven management of missions, goals, executions, lifecycle stages, records, approvals, and state transitions so operators do not need to edit Flywheel artifacts manually.
 constraints:
   - Preserve human approval boundaries defined by the operating model.
@@ -9,7 +9,7 @@ constraints:
   - All multi-artifact mutations must be atomic or durably recoverable.
   - Commands must support deterministic machine-readable output.
   - Programmatic operations must remain implementation-neutral at the framework contract level even though this repository uses Python and Typer.
-  - Do not start this mission until cross-repository contract changes are reviewed and approved or explicitly deferred.
+  - Do not start implementation goals until cross-repository contract changes are reviewed and approved or explicitly deferred.
 success_criteria:
   - id: MSC-001
     statement: Mission and goal operations are available through validated programmatic commands.
