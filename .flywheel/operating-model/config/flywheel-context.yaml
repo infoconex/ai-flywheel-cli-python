@@ -17,8 +17,8 @@ implementation:
     status: candidate
     origin: null
   command_interface:
-    value: cross-platform CLI
-    status: candidate
+    value: flywheel
+    status: confirmed
     origin: provided
   location:
     value: .flywheel/tools
@@ -55,6 +55,11 @@ decisions:
     origin: provided
     statement: Support Python 3.11 and newer as the initial runtime baseline.
     evidence_ref: EVIDENCE-006
+  - id: COMMAND-NAME-001
+    status: confirmed
+    origin: provided
+    statement: Expose the CLI using the command name flywheel.
+    evidence_ref: EVIDENCE-007
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
