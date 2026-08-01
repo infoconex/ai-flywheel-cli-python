@@ -1,0 +1,14 @@
+schema_version: 1
+id: EVIDENCE-007
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+type: human-provided-context
+summary: Human selected flywheel as the public CLI command name.
+source:
+  kind: human-direction
+  actor: repository-owner
+observations:
+  - Expose the Python CLI using the command name flywheel.
+  - Use the selected command name consistently in entry points, documentation, and examples.
+recorded_at: "2026-08-01T05:05:00Z"
+recorded_by: chatgpt-session
