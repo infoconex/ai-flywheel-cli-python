@@ -30,6 +30,17 @@ implementation:
     type_checking: mypy
     status: confirmed
     origin: provided
+  project_tasks:
+    interface: python -m tools
+    commands:
+      - test
+      - lint
+      - format
+      - typecheck
+      - coverage
+      - validate
+    status: confirmed
+    origin: provided
   command_interface:
     value: flywheel
     status: confirmed
@@ -139,6 +150,13 @@ decisions:
     origin: provided
     statement: Enforce test coverage from the first release with an initial minimum threshold of 80 percent.
     evidence_ref: EVIDENCE-016
+  - id: PROJECT-TASK-INTERFACE-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Expose cross-platform project tasks through a small Python module invoked
+      with python -m tools, including individual checks and a complete validate task.
+    evidence_ref: EVIDENCE-018
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -153,3 +171,4 @@ notes:
   - Once the CLI and framework content are installed, routine lifecycle operations should not require network access unless a specific command explicitly depends on an external service.
   - Planning and validation are read-only; repository changes occur only after the explicit application boundary is satisfied.
   - Coverage enforcement begins at 80 percent and may be raised later through an approved project-standard change.
+  - Project validation commands must be convenient to execute immediately after repository onboarding and must not depend on platform-specific shell tooling.
