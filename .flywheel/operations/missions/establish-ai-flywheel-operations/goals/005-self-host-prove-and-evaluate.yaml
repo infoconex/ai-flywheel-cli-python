@@ -2,9 +2,8 @@ schema_version: 1
 id: 005-self-host-prove-and-evaluate
 mission_id: establish-ai-flywheel-operations
 title: Self-Host, Prove, and Evaluate
-status: blocked
-blocked_by:
-  - human-readiness-approval
+status: completed
+blocked_by: []
 objective: Transition from manual bootstrap to tool-managed operation, prove the implementation through a real mission and context-free cold start, and capture framework learning.
 procedure:
   - Use the new tools to manage the remaining bootstrap records.
@@ -43,11 +42,15 @@ evidence_required:
     artifacts: [readiness approval record]
 certification:
   record_id: CERT-20260801T152700Z-001
-  status: ready-for-approval
+  status: approved
   scenarios_passed: 10
   scenarios_failed: 0
+  approval_ref: APPROVAL-001
 quality_tooling_policy:
   decision_ref: EVIDENCE-054
   operational_readiness_required: false
   future_optional_goal: 007-evaluate-development-and-release-quality-tooling
   tools: [ruff, mypy, hatchling]
+completion:
+  disposition: succeeded
+  summary: Certification passed, readiness was explicitly approved, and the repository transitioned to ready-for-missions.
