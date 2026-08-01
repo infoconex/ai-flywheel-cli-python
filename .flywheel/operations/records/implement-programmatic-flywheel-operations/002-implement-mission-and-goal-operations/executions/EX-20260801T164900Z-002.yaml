@@ -1,0 +1,41 @@
+schema_version: 1
+id: EX-20260801T164900Z-002
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 002-implement-mission-and-goal-operations
+status: in-progress
+intended_outcome: Evaluate repeated Flywheel activities and produce a minimal, evidence-based deterministic tooling scope for human approval.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
+started_at: "2026-08-01T16:49:00Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2026-08-01T16:49:00Z"
+    completed_at: null
+    summary: Inventory current CLI capabilities, onboarding operations, and repeated artifact mutations to identify deterministic candidates.
+    refs: []
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions:
+  - Recorded explicit authorization to continue Goal 002.
+  - Activated Goal 002 candidate evaluation.
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
