@@ -1,37 +1,37 @@
 schema_version: 1
 id: 004-implement-record-and-approval-operations
 mission_id: implement-programmatic-flywheel-operations
-title: Build Shared Validation and Mutation Safety
+title: Harden Shared Validation and Mutation Safety
 status: proposed
-objective: Build reusable validation, reference, approval, and mutation-safety services needed by the selected deterministic operations without requiring every Flywheel activity to use code.
+objective: Refactor and strengthen only the shared validation and persistence protections demonstrated by the implemented start-execution and advance-lifecycle operations.
 depends_on:
   - 003-implement-execution-and-lifecycle-operations
 procedure:
-  - Extract shared schema, identity, placement, reference, and state-consistency checks used by selected operations.
-  - Centralize approval verification while preventing tools or the AI operator from self-authorizing restricted transitions.
-  - Validate complete proposed mutations before canonical artifacts are changed.
-  - Preserve useful structured errors that allow the AI operator to understand and recover from rejected operations.
-  - Avoid adding unused abstractions for operation families outside the approved scope.
-  - Add focused tests for malformed inputs, broken references, approval misuse, and inconsistent proposed state.
+  - Extract and reuse only the artifact loading, schema, identity, canonical placement, reference, and state-consistency checks demonstrated by the selected operations.
+  - Strengthen staged repository validation, atomic persistence, rollback, and stale or conflicting mutation protection.
+  - Preserve actionable structured errors that allow the AI operator to understand and recover from rejected operations.
+  - Reject a transition when existing governance identifies a required approval and no matching durable human authorization is available; do not create, infer, or broaden authority.
+  - Avoid general approval-verification services, evidence or record CRUD, and abstractions intended for operation families outside the approved scope.
+  - Add focused positive and negative tests for malformed input, identity mismatch, broken references, invalid proposed state, stale mutation, failed validation, and rollback.
 acceptance_criteria:
   - id: AC-001
-    statement: Selected deterministic operations use shared validation rather than duplicating critical governance rules.
+    statement: Start-execution and advance-lifecycle reuse shared validation for demonstrated critical governance and consistency rules.
   - id: AC-002
-    statement: Identity, placement, references, and affected state are validated before persistence.
+    statement: Identity, canonical placement, references, and affected state are validated before persistence.
   - id: AC-003
-    statement: Approval-required actions cannot proceed without durable matching human authorization.
+    statement: Proposed mutations are validated as a complete set and are applied atomically or restored without partial canonical changes.
   - id: AC-004
-    statement: Rejected operations return actionable structured results that support governed AI recovery.
+    statement: Stale, conflicting, malformed, or governance-restricted operations are rejected with actionable structured results.
   - id: AC-005
-    statement: Shared services are limited to demonstrated needs and are covered by positive and negative tests.
+    statement: Shared services remain limited to demonstrated needs and are covered by positive and negative automated tests.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [shared validation source, reuse mapping]
+    artifacts: [shared validation source, operation reuse mapping]
   - criterion_id: AC-002
-    artifacts: [identity reference and state validation tests]
+    artifacts: [identity placement reference and state validation tests]
   - criterion_id: AC-003
-    artifacts: [approval boundary tests]
+    artifacts: [staged validation atomic persistence and rollback tests]
   - criterion_id: AC-004
-    artifacts: [structured failure and recovery tests]
+    artifacts: [structured rejection and recovery tests]
   - criterion_id: AC-005
-    artifacts: [scope review and test report]
+    artifacts: [scope review and complete test report]
