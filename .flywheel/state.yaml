@@ -3,13 +3,13 @@ phase: onboarding
 readiness: not-ready-for-missions
 status: active
 active_mission: establish-ai-flywheel-operations
-active_goal: 002-reconcile-and-approve-operating-context
-active_execution: EX-20260801T061800Z-002
-lifecycle_stage: validate
+active_goal: 003-define-and-approve-implementation
+active_execution: EX-20260801T131600Z-003
+lifecycle_stage: execute
 implementation_available: false
 application_missions_allowed: false
 blockers: []
 last_durable_update:
-  at: "2026-08-01T06:29:00Z"
+  at: "2026-08-01T13:16:00Z"
   by: chatgpt-session
-  reason: Goal 002 acceptance criteria passed with no blocking conflicts; advanced the reconciled operating context to validation.
+  reason: Completed Goal 002 and activated execution EX-20260801T131600Z-003 for implementation definition and approval.
