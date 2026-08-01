@@ -1,0 +1,12 @@
+schema_version: 1
+id: EVIDENCE-017
+type: human-confirmed-requirement
+summary: Repository onboarding must create convenient, consistent commands for executing tests and quality checks immediately after project scaffolding.
+source:
+  kind: human-input
+  statement: These tools will be executed after onboarding creates them, so they need to be conveniently executable.
+implications:
+  - The project must provide simple cross-platform developer commands that wrap pytest, coverage, Ruff, and mypy.
+  - Operators and AI execution environments should not need to remember tool-specific command syntax.
+  - The command interface should support running individual checks and the complete validation suite.
+status: accepted
