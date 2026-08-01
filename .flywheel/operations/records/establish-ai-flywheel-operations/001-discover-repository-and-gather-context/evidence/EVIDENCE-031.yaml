@@ -1,0 +1,24 @@
+schema_version: 1
+id: EVIDENCE-031
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: persistence-and-reuse
+summary: Goal 001 results are durable and reusable onboarding insights were preserved.
+details:
+  persistence:
+    result: passed
+    durable_artifacts:
+      - .flywheel/operating-model/config/repository-context.yaml
+      - .flywheel/operating-model/config/flywheel-context.yaml
+      - .flywheel/operating-model/config/governance.yaml
+      - .flywheel/operating-model/config/validation.yaml
+      - .flywheel/operating-model/config/capabilities.yaml
+      - .flywheel/operations/records/establish-ai-flywheel-operations/001-discover-repository-and-gather-context/evidence/
+  reuse:
+    result: passed
+    disposition: preserved-for-future-framework-work
+    artifact: .flywheel/operations/knowledge/onboarding-framework-improvement-insights.md
+    statement: Reusable onboarding findings were preserved without changing the framework during this goal.
+  blockers: []
+recorded_at: 2026-08-01T06:16:00Z
