@@ -38,7 +38,7 @@ def _repository(tmp_path: Path) -> Path:
         repository / ".flywheel/state.yaml",
         {
             "schema_version": 1,
-            "phase": "operational",
+            "phase": "operating",
             "readiness": "ready-for-missions",
             "status": "ready",
             "active_mission": MISSION_ID,
@@ -81,7 +81,7 @@ def test_start_execution_synchronizes_goal_execution_and_state(
 ) -> None:
     repository = _repository(tmp_path)
     monkeypatch.setattr(
-        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(issues=()),
     )
 
@@ -125,7 +125,7 @@ def test_start_execution_validation_failure_leaves_repository_unchanged(
     original_state = state_path.read_bytes()
     original_goal = goal_path.read_bytes()
     monkeypatch.setattr(
-        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(
             issues=(
                 ValidationIssue(
@@ -172,7 +172,7 @@ def test_start_execution_rejects_existing_active_execution(
     state["status"] = "active"
     _write_yaml(state_path, state)
     monkeypatch.setattr(
-        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(issues=()),
     )
 
@@ -191,7 +191,7 @@ def test_advance_lifecycle_completes_current_and_starts_next(
 ) -> None:
     repository = _repository(tmp_path)
     monkeypatch.setattr(
-        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(issues=()),
     )
     start_execution(
@@ -232,7 +232,7 @@ def test_advance_lifecycle_rejects_blank_summary(
 ) -> None:
     repository = _repository(tmp_path)
     monkeypatch.setattr(
-        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(issues=()),
     )
     start_execution(
