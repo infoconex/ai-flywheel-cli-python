@@ -1,0 +1,126 @@
+schema_version: 1
+id: CERT-20260801T152700Z-001
+framework_revision: 8cf83a3ef389e00bd8ee48851f6ee9859085ac80
+framework_version: 0.1.0
+status: ready-for-approval
+created_at: "2026-08-01T15:27:00Z"
+created_by: chatgpt-session
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+cold_start_prompt: .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/cold-start/cold-start-prompt.md
+operator:
+  system: ChatGPT
+  identity: chatgpt-context-free-and-continued-sessions
+  session_mode: continued
+scenarios:
+  - id: 1
+    name: context-free-startup
+    fixture_definition_refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/cold-start/cold-start-prompt.md]
+    result: passed
+    evidence_refs: [EVIDENCE-048]
+    actual_result: Context-free session discovered the startup chain, selected resume, preserved readiness, and performed no mutation.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 38b507e8330746e8369acd4c7cf92bec5b61fbbc
+  - id: 2
+    name: first-execution
+    fixture_definition_refs: [.flywheel/operating-model/guidance/certification.md]
+    result: passed
+    evidence_refs: [EVIDENCE-039, EVIDENCE-046]
+    actual_result: The initial execution was created only after authorization and state was durably updated.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 42e74565a03e2e14fa516a94b8952fb9e1221996
+  - id: 3
+    name: resume
+    fixture_definition_refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/cold-start/cold-start-prompt.md]
+    result: passed
+    evidence_refs: [EVIDENCE-048]
+    actual_result: Existing execution identity and lifecycle stage were preserved without duplicate creation.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 38b507e8330746e8369acd4c7cf92bec5b61fbbc
+  - id: 4
+    name: missing-artifact-recovery
+    fixture_definition_refs: [tests/test_schema_validation.py]
+    result: passed
+    evidence_refs: [EVIDENCE-051, EVIDENCE-052]
+    actual_result: An isolated missing required artifact produced a deterministic validation failure without mutating canonical records.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 68c2a66d8cc26120c408da5c073b54f6ccac6dc0
+  - id: 5
+    name: broken-reference-recovery
+    fixture_definition_refs: [tests/test_schema_validation.py]
+    result: passed
+    evidence_refs: [EVIDENCE-051, EVIDENCE-052]
+    actual_result: An isolated broken active reference was rejected deterministically without guessing or canonical mutation.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 68c2a66d8cc26120c408da5c073b54f6ccac6dc0
+  - id: 6
+    name: approval-boundary
+    fixture_definition_refs: [.flywheel/operating-model/guidance/certification.md]
+    result: passed
+    evidence_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050, EVIDENCE-054]
+    actual_result: Approval-required transitions were not performed before explicit durable authorization.
+    tested_framework_revision: 8cf83a3ef389e00bd8ee48851f6ee9859085ac80
+    evidence_revision: 99249a3db46bf6b0031ad1bcba13952e919a1afc
+  - id: 7
+    name: lifecycle-completeness
+    fixture_definition_refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/proving-mission/proving-mission-result.yaml]
+    result: passed
+    evidence_refs: [EVIDENCE-053]
+    actual_result: The proving mission recorded all eight lifecycle stages with explicit dispositions.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 5501b4ade2d9be653bcbc698ece66e8c80ff041a
+  - id: 8
+    name: evidence-completeness
+    fixture_definition_refs: [src/ai_flywheel_cli/schema_validation.py]
+    result: passed
+    evidence_refs: [EVIDENCE-052]
+    actual_result: Schema-backed validation enforced record identity, placement, references, lifecycle, and completion requirements with zero repository errors.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 68c2a66d8cc26120c408da5c073b54f6ccac6dc0
+  - id: 9
+    name: proving-mission
+    fixture_definition_refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/proving-mission/proving-mission-result.yaml]
+    result: passed
+    evidence_refs: [EVIDENCE-053]
+    actual_result: A representative non-destructive mission completed through the full lifecycle while preserving canonical readiness state.
+    tested_framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+    evidence_revision: 5501b4ade2d9be653bcbc698ece66e8c80ff041a
+  - id: 10
+    name: self-hosting
+    fixture_definition_refs: [.flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/certification/certification-scenario-summary.yaml]
+    result: passed
+    evidence_refs: [EVIDENCE-047, EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
+    actual_result: The Flywheel governed its own mission, goals, executions, evidence, corrective work, validation, and approval boundary.
+    tested_framework_revision: 8cf83a3ef389e00bd8ee48851f6ee9859085ac80
+    evidence_revision: 8cf83a3ef389e00bd8ee48851f6ee9859085ac80
+validator:
+  implementation_refs: [src/ai_flywheel_cli/validation.py, src/ai_flywheel_cli/schema_validation.py]
+  json_schema_draft: 2020-12
+  yaml_version: "1.2"
+  format_enforcement: true
+known_limitations:
+  - Historical onboarding evidence uses an explicitly approved bounded legacy compatibility profile.
+  - Ruff, mypy, and Hatchling are optional pending Goal 007 evaluation and are not operational readiness requirements.
+finding_refs: [FINDING-001]
+corrective_actions:
+  - id: CA-001
+    action: Expand schema-backed certification validation and resolve FINDING-001.
+    status: completed
+    finding_ref: FINDING-001
+  - id: CA-002
+    action: Evaluate optional development and release quality tooling independently.
+    status: deferred
+    finding_ref: null
+self_hosting:
+  mission_ref: .flywheel/operations/missions/establish-ai-flywheel-operations/mission.yaml
+  goal_ref: .flywheel/operations/missions/establish-ai-flywheel-operations/goals/005-self-host-prove-and-evaluate.yaml
+  execution_ref: .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/executions/EX-20260801T144200Z-005.yaml
+  evidence_refs: [EVIDENCE-047, EVIDENCE-048, EVIDENCE-052, EVIDENCE-053, EVIDENCE-054]
+  validation_refs: [EVIDENCE-052, .flywheel/operations/records/establish-ai-flywheel-operations/005-self-host-prove-and-evaluate/certification/certification-scenario-summary.yaml]
+  persistence_plan_ref: .flywheel/operating-model/guidance/certification.md
+approval:
+  status: pending
+  approval_ref: null
+  authority_id: null
+overall_result: pending-approval
