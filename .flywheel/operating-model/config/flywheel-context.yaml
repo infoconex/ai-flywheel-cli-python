@@ -19,6 +19,11 @@ implementation:
     validate_after_creation: true
     status: confirmed
     origin: provided
+  cli_framework:
+    value: Typer
+    thin_adapter_required: true
+    status: confirmed
+    origin: provided
   test_framework:
     value: pytest
     status: confirmed
@@ -68,6 +73,7 @@ implementation:
       - uv
       - pipx
       - Python virtual environment
+      - Typer
       - pytest
       - pytest-cov
       - coverage.py
@@ -171,6 +177,13 @@ decisions:
       Use pyproject.toml with a src layout, and require onboarding to create,
       prepare, and validate an immediately executable project scaffold.
     evidence_ref: EVIDENCE-019
+  - id: CLI-FRAMEWORK-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Use Typer for the CLI while keeping command handlers thin and core
+      application behavior independent of the CLI framework.
+    evidence_ref: EVIDENCE-020
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -187,3 +200,4 @@ notes:
   - Coverage enforcement begins at 80 percent and may be raised later through an approved project-standard change.
   - Project validation commands must be convenient to execute immediately after repository onboarding and must not depend on platform-specific shell tooling.
   - Onboarding is incomplete until the generated package, tools module, tests, and development dependencies are prepared and python -m tools validate has been executed successfully.
+  - Typer is limited to parsing, help, terminal interaction, and command dispatch; domain and application logic must remain independently testable.
