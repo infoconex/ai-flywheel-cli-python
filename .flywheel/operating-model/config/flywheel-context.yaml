@@ -48,6 +48,7 @@ manual_fallbacks:
   - When neither uv nor pipx is available, offer to install a supported tool or use a managed virtual environment.
   - In non-interactive environments, use uv when available, otherwise pipx, otherwise a managed virtual environment.
   - If .flywheel already exists, refuse installation and direct the user to the explicit upgrade command.
+  - Before writing repository files, show the planned changes and require explicit confirmation or an apply flag.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
   - Initial installation requires network access; downloadable offline installation bundles are deferred.
@@ -96,6 +97,14 @@ decisions:
       Initial installation requires internet access, while normal lifecycle
       operations should work locally after installation.
     evidence_ref: EVIDENCE-011
+  - id: INSTALL-APPROVAL-BOUNDARY-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Interactive installation shows the complete change plan and requires
+      confirmation; non-interactive installation requires an explicit --yes or
+      --apply flag before writing repository files.
+    evidence_ref: EVIDENCE-012
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -108,3 +117,4 @@ notes:
   - Non-interactive installation must be deterministic and must not block waiting for user input.
   - Installation and upgrade are separate operations; installation must never replace an existing Flywheel installation.
   - Once the CLI and framework content are installed, routine lifecycle operations should not require network access unless a specific command explicitly depends on an external service.
+  - Planning and validation are read-only; repository changes occur only after the explicit application boundary is satisfied.
