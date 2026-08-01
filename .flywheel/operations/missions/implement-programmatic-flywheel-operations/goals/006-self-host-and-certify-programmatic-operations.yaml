@@ -2,7 +2,7 @@ schema_version: 1
 id: 006-self-host-and-certify-programmatic-operations
 mission_id: implement-programmatic-flywheel-operations
 title: Prove Hybrid AI and Deterministic Operation
-status: active
+status: completed
 objective: Complete a representative mission with AI as the operator, using deterministic tools for the operations selected in Goal 002 and governed AI execution for the remaining activities, then evaluate whether the tools delivered measurable value.
 depends_on:
   - 005-implement-atomic-transitions-and-recovery
