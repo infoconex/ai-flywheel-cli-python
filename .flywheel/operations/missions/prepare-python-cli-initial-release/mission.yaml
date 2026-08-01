@@ -1,0 +1,17 @@
+schema_version: 1
+id: prepare-python-cli-initial-release
+title: Prepare Python CLI for Initial Release
+status: active
+objective: Produce a locally validated, installable release candidate for the Python CLI without enabling hosted automation or publishing a release.
+constraints:
+  - Do not enable GitHub Actions or other hosted execution.
+  - Do not publish to PyPI, create a tag, or create a GitHub release without explicit human approval.
+  - Adopt quality tools only when they provide clear repository value.
+  - Preserve current deterministic operation behavior and framework compatibility.
+goals:
+  - 001-establish-release-baseline
+  - 002-apply-local-quality-gates
+  - 003-prove-installable-release-candidate
+  - 004-finalize-release-readiness
+approvals_required:
+  - Approval before publishing, tagging, or creating a release
