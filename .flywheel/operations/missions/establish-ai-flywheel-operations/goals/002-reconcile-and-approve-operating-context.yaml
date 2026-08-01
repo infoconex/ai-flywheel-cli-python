@@ -2,9 +2,8 @@ schema_version: 1
 id: 002-reconcile-and-approve-operating-context
 mission_id: establish-ai-flywheel-operations
 title: Reconcile and Approve Operating Context
-status: blocked
-blocked_by:
-  - 001-discover-repository-and-gather-context
+status: ready
+blocked_by: []
 objective: Reconcile discovered repository facts, human-provided context, inferences, defaults, and deferred unknowns into an approved operating context.
 procedure:
   - Review discovery evidence and onboarding answers.
