@@ -1,0 +1,35 @@
+schema_version: 1
+id: 006-close-certification-validation-gaps
+mission_id: establish-ai-flywheel-operations
+title: Close Certification Validation Gaps
+status: proposed
+blocked_by: []
+objective: Expand validation coverage so certification can rely on schema-valid, traceable operating records.
+procedure:
+  - Add JSON Schema validation with format checking for declared operating artifact types.
+  - Enforce artifact placement, filename-to-ID, parent references, evidence references, approvals, and terminal completion rules.
+  - Inventory existing records and migrate them or define an approved compatibility rule.
+  - Add isolated positive and negative certification fixtures.
+  - Resolve FINDING-001 and unblock Goal 005 after validation passes.
+acceptance_criteria:
+  - id: AC-001
+    statement: Declared operating artifacts are checked against authoritative schemas with format enforcement.
+  - id: AC-002
+    statement: Placement, identity, reference, approval, evidence, and completion invariants are enforced.
+  - id: AC-003
+    statement: Existing operating records conform to the enforced contract or an approved compatibility rule.
+  - id: AC-004
+    statement: Isolated certification fixtures pass for corrected validation behavior.
+  - id: AC-005
+    statement: FINDING-001 is resolved and Goal 005 can resume.
+evidence_required:
+  - criterion_id: AC-001
+    artifacts: [validator source, schema validation results]
+  - criterion_id: AC-002
+    artifacts: [negative tests, invariant validation report]
+  - criterion_id: AC-003
+    artifacts: [record inventory, migration or compatibility decision]
+  - criterion_id: AC-004
+    artifacts: [isolated fixture results]
+  - criterion_id: AC-005
+    artifacts: [resolved finding, Goal 005 unblock transition]
