@@ -50,6 +50,7 @@ manual_fallbacks:
   - If .flywheel already exists, refuse installation and direct the user to the explicit upgrade command.
 known_limitations:
   - Standalone distribution strategy remains unresolved.
+  - Initial installation requires network access; downloadable offline installation bundles are deferred.
 decisions:
   - id: INSTALL-PREFERENCE-001
     status: candidate
@@ -88,6 +89,13 @@ decisions:
       The install command refuses when .flywheel already exists and requires the
       user to invoke a separate explicit upgrade command.
     evidence_ref: EVIDENCE-010
+  - id: OFFLINE-MODEL-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Initial installation requires internet access, while normal lifecycle
+      operations should work locally after installation.
+    evidence_ref: EVIDENCE-011
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -99,3 +107,4 @@ notes:
   - Interactive installation should preserve user choice instead of silently preferring one detected installer.
   - Non-interactive installation must be deterministic and must not block waiting for user input.
   - Installation and upgrade are separate operations; installation must never replace an existing Flywheel installation.
+  - Once the CLI and framework content are installed, routine lifecycle operations should not require network access unless a specific command explicitly depends on an external service.
