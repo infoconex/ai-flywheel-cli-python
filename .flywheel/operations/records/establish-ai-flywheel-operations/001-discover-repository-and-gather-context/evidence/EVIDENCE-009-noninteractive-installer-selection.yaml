@@ -1,0 +1,22 @@
+schema_version: 1
+id: EVIDENCE-009
+type: human-provided-context
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+summary: >-
+  The human selected a deterministic installer preference for non-interactive
+  environments: use uv when available, otherwise pipx, otherwise a managed
+  Python virtual environment.
+source:
+  kind: human-direction
+  conversation_date: "2026-08-01"
+observations:
+  - Non-interactive execution must not prompt for installer selection.
+  - uv is the first preference.
+  - pipx is the second preference.
+  - A managed virtual environment is the final fallback.
+provenance:
+  origin: provided
+  status: confirmed
+  recorded_by: chatgpt-session
