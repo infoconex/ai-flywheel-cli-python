@@ -37,3 +37,4 @@ goals:
   - 004-build-and-validate-operating-tools
   - 005-self-host-prove-and-evaluate
   - 006-close-certification-validation-gaps
+  - 007-evaluate-development-and-release-quality-tooling
