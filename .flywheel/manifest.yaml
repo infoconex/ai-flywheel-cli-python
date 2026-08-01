@@ -68,7 +68,7 @@ onboarding:
   mission: establish-ai-flywheel-operations
   status: active
 implementation:
-  status: not-created
+  status: approved
   manifest: null
 compatibility:
   application_missions_require_readiness: ready-for-missions
