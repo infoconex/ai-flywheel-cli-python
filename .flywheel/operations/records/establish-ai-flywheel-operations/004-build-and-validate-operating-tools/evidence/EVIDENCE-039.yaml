@@ -1,0 +1,24 @@
+schema_version: 1
+id: EVIDENCE-039
+mission_id: establish-ai-flywheel-operations
+goal_id: 004-build-and-validate-operating-tools
+execution_id: EX-20260801T134200Z-004
+type: goal-kickoff-approval
+summary: The repository owner approved starting Goal 004 after reviewing its title, purpose, expected outcome, and completion boundary.
+details:
+  approval:
+    statement: No adjustments are required; approved moving to Goal 004.
+    authority: repository-owner
+    scope:
+      - create and execute Goal 004
+      - implement the approved Python CLI proposal
+      - run local tests and validation
+    exclusions:
+      - no merge to main without separate approval
+      - no hosted execution or GitHub Actions
+  kickoff_presented:
+    title: Build and Validate Operating Tools
+    purpose: Build the approved Python CLI and minimum repository-specific Flywheel operating tools.
+    expected_outcome_reviewed: true
+    completion_boundary_reviewed: true
+recorded_at: 2026-08-01T13:42:00Z
