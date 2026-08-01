@@ -13,19 +13,19 @@ constraints:
   - Do not change the specification merely to require or privilege programmatic execution.
 success_criteria:
   - id: MSC-001
-    statement: High-value repeated mission and goal artifact operations are available through validated deterministic tools.
+    statement: Repeated Flywheel activities are evaluated against explicit determinism-boundary criteria before implementation is selected.
   - id: MSC-002
-    statement: High-value execution and lifecycle transitions can be delegated to deterministic tools without removing AI governance or fallback.
+    statement: Only approved high-value operations are implemented as deterministic tools.
   - id: MSC-003
-    statement: Repeated record and approval operations can be performed deterministically while preserving evidence and authority boundaries.
+    statement: Implemented tools preserve the same schema, lifecycle, evidence, validation, and human-authority boundaries as governed AI execution.
   - id: MSC-004
-    statement: Deterministic multi-artifact mutations are atomic or durably recoverable.
+    statement: Deterministic multi-artifact mutations are conflict-safe, retry-safe, and atomic or durably recoverable.
   - id: MSC-005
-    statement: AI can determine when to use a tool, when to operate directly, and how to handle unsupported operations without overstating capability.
+    statement: Unsupported and judgment-heavy activities remain valid governed AI work rather than being treated as implementation gaps.
   - id: MSC-006
-    statement: Positive and negative tests prove the implemented deterministic tool capabilities and their governed fallback behavior.
+    statement: A representative hybrid mission proves AI-led operation with selective deterministic delegation and governed fallback.
   - id: MSC-007
-    statement: Cross-repository learning is incorporated only where existing specification or framework contracts are genuinely incomplete.
+    statement: Evidence demonstrates whether deterministic tooling improved reliability, consistency, effort, cost, or reuse and informs future boundary movement.
 goals:
   - 001-align-cross-repository-operations-contract
   - 002-implement-mission-and-goal-operations
@@ -35,5 +35,6 @@ goals:
   - 006-self-host-and-certify-programmatic-operations
 approvals_required:
   - Mission kickoff approval
+  - Approval of selected deterministic implementation scope
   - Approval before broadening any readiness or conformance claim
   - Approval before merging changes to specification, framework, or testing repositories
