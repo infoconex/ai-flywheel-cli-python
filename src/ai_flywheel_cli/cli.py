@@ -20,6 +20,7 @@ app = typer.Typer(
     name="flywheel",
     help="Install, inspect, validate, and upgrade AI Flywheel repository artifacts.",
     no_args_is_help=True,
+    invoke_without_command=True,
 )
 
 
