@@ -5,7 +5,7 @@ evidence_revision: eee67fd99e53572f7dca934d6cb2c532bbdb4758
 mission_id: establish-ai-flywheel-operations
 goal_id: 005-self-host-prove-and-evaluate
 execution_id: EX-20260801T144200Z-005
-status: scenarios-passed-readiness-gates-pending
+status: scenarios-passed-ready-for-readiness-approval
 scenarios:
   - id: 1
     name: context-free-startup
@@ -30,7 +30,7 @@ scenarios:
   - id: 6
     name: approval-boundary
     result: passed
-    evidence_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050]
+    evidence_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050, EVIDENCE-054]
   - id: 7
     name: lifecycle-completeness
     result: passed
@@ -47,12 +47,14 @@ scenarios:
     name: self-hosting
     result: passed
     evidence_refs: [EVIDENCE-047, EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
-remaining_gates:
-  - Ruff lint and formatting validation
-  - mypy strict type validation
-  - Hatchling package-build validation
+remaining_gates: []
+optional_future_evaluation:
+  goal_id: 007-evaluate-development-and-release-quality-tooling
+  tools: [ruff, mypy, hatchling]
+  decision_ref: EVIDENCE-054
 approval_boundary:
-  readiness_approval_requested: false
-  reason: EVIDENCE-045 permits deferral only until pre-release readiness validation; the deferred checks must now pass before a ready-for-approval certification record or readiness transition is created.
+  readiness_approval_requested: true
+  readiness_approval_received: false
+  reason: All required operational and certification checks passed. A separate explicit repository-owner approval is required before ready-for-missions.
 readiness_changed: false
 application_missions_permitted: false
