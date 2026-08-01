@@ -28,6 +28,30 @@ Keep `.flywheel/operating-model/config/repository-context.yaml` separate from `.
 
 Use Mission -> Goal -> Execution. Before the first goal-directed action, create or resume an execution according to `.flywheel/operating-model/guidance/execution-model.md`. Store records according to `.flywheel/operating-model/guidance/records.md` and update `.flywheel/state.yaml` before beginning each lifecycle stage.
 
+Approval to start a goal authorizes continuous execution through implementation, correction, validation, evidence persistence, lifecycle completion, and the goal completion summary. Normal implementation milestones, partial progress, successful file changes, and progress updates do not suspend that authorization.
+
+Progress updates are non-blocking communications. After providing one, continue the active goal immediately unless a documented stop condition exists.
+
+Stop only when one of these conditions is true:
+
+- a human approval boundary has been reached;
+- required information or a dependency cannot be resolved from available sources;
+- continuing requires material scope expansion;
+- continuing would perform a prohibited or unsafe action;
+- a failure requires human disposition rather than correction within the approved scope; or
+- the goal is complete and its completion summary has been produced.
+
+Implementation, test, or validation failures that can be corrected within the approved goal are not stop conditions. Preserve the failure, adapt within scope, rerun the affected checks, and continue.
+
+Before ending work on an active goal, perform this pre-stop check:
+
+1. Is the goal complete?
+2. Is there a documented blocker?
+3. Is there an explicit approval boundary?
+4. Is material scope expansion required?
+
+If every answer is no, execution must continue.
+
 Record all eight lifecycle stages. A stage may be `not-applicable` only with a concrete reason. Each acceptance-criterion ID must map to actual evidence. Execution success does not itself complete a goal.
 
 Classify meaningful outcomes, preserve failures, record decisions, and update state before ending a session. Promote records to reusable knowledge only after validation.
