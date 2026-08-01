@@ -2,7 +2,7 @@ schema_version: 1
 id: 001-align-cross-repository-operations-contract
 mission_id: implement-programmatic-flywheel-operations
 title: Align Cross-Repository Operations Contract
-status: proposed
+status: active
 objective: Define and approve the specification, framework, capability, transition, and certification contracts required for programmatic Flywheel operations before implementing repository-specific commands.
 blocked_by: []
 procedure:
