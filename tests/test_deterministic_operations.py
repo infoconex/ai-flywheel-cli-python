@@ -7,12 +7,13 @@ import pytest
 import yaml
 
 from ai_flywheel_cli.deterministic_operations import (
+    TransitionRejectedError,
     UnsupportedDeterministicOperationError,
     advance_lifecycle,
     require_supported_operation,
     start_execution,
 )
-from ai_flywheel_cli.validation import ValidationResult
+from ai_flywheel_cli.validation import ValidationIssue, ValidationResult
 
 MISSION_ID = "sample-mission"
 GOAL_ID = "001-sample-goal"
@@ -109,6 +110,82 @@ def test_start_execution_synchronizes_goal_execution_and_state(
     assert goal["status"] == "active"
 
 
+def test_start_execution_validation_failure_leaves_repository_unchanged(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    repository = _repository(tmp_path)
+    state_path = repository / ".flywheel/state.yaml"
+    goal_path = (
+        repository
+        / ".flywheel/operations/missions"
+        / MISSION_ID
+        / "goals"
+        / f"{GOAL_ID}.yaml"
+    )
+    original_state = state_path.read_bytes()
+    original_goal = goal_path.read_bytes()
+    monkeypatch.setattr(
+        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        lambda _: ValidationResult(
+            issues=(
+                ValidationIssue(
+                    "INVALID_EXECUTION",
+                    ".flywheel/state.yaml",
+                    "The proposed execution is invalid.",
+                ),
+            )
+        ),
+    )
+
+    with pytest.raises(TransitionRejectedError, match="failed validation"):
+        start_execution(
+            repository,
+            MISSION_ID,
+            GOAL_ID,
+            EXECUTION_ID,
+            "Complete the sample goal.",
+            started_at=datetime(2026, 8, 1, 17, 2, tzinfo=UTC),
+        )
+
+    execution_path = (
+        repository
+        / ".flywheel/operations/records"
+        / MISSION_ID
+        / GOAL_ID
+        / "executions"
+        / f"{EXECUTION_ID}.yaml"
+    )
+    assert state_path.read_bytes() == original_state
+    assert goal_path.read_bytes() == original_goal
+    assert not execution_path.exists()
+
+
+def test_start_execution_rejects_existing_active_execution(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    repository = _repository(tmp_path)
+    state_path = repository / ".flywheel/state.yaml"
+    state = _load_yaml(state_path)
+    state["active_goal"] = GOAL_ID
+    state["active_execution"] = "EX-20260801T170000Z-999"
+    state["lifecycle_stage"] = "execute"
+    state["status"] = "active"
+    _write_yaml(state_path, state)
+    monkeypatch.setattr(
+        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        lambda _: ValidationResult(issues=()),
+    )
+
+    with pytest.raises(TransitionRejectedError, match="another execution is active"):
+        start_execution(
+            repository,
+            MISSION_ID,
+            GOAL_ID,
+            EXECUTION_ID,
+            "Complete the sample goal.",
+        )
+
+
 def test_advance_lifecycle_completes_current_and_starts_next(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -148,6 +225,26 @@ def test_advance_lifecycle_completes_current_and_starts_next(
     assert isinstance(lifecycle, dict)
     assert lifecycle["execute"]["status"] == "completed"
     assert lifecycle["observe"]["status"] == "in-progress"
+
+
+def test_advance_lifecycle_rejects_blank_summary(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    repository = _repository(tmp_path)
+    monkeypatch.setattr(
+        "ai_flywheel_cli.deterministic_operations.validate_repository",
+        lambda _: ValidationResult(issues=()),
+    )
+    start_execution(
+        repository,
+        MISSION_ID,
+        GOAL_ID,
+        EXECUTION_ID,
+        "Complete the sample goal.",
+    )
+
+    with pytest.raises(TransitionRejectedError, match="summary is required"):
+        advance_lifecycle(repository, "   ", ())
 
 
 def test_unsupported_operation_requires_governed_ai_fallback() -> None:
