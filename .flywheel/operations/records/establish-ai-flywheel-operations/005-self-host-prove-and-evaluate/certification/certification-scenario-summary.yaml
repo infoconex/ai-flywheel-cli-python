@@ -1,0 +1,58 @@
+schema_version: 1
+id: CERTIFICATION-SCENARIO-SUMMARY-001
+framework_revision: b82a91c47fd1aebda3e4ffb46b4c016457b8efae
+evidence_revision: eee67fd99e53572f7dca934d6cb2c532bbdb4758
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+status: scenarios-passed-readiness-gates-pending
+scenarios:
+  - id: 1
+    name: context-free-startup
+    result: passed
+    evidence_refs: [EVIDENCE-048]
+  - id: 2
+    name: first-execution
+    result: passed
+    evidence_refs: [EVIDENCE-039, EVIDENCE-046]
+  - id: 3
+    name: resume
+    result: passed
+    evidence_refs: [EVIDENCE-048]
+  - id: 4
+    name: missing-artifact-recovery
+    result: passed
+    evidence_refs: [EVIDENCE-051, EVIDENCE-052]
+  - id: 5
+    name: broken-reference-recovery
+    result: passed
+    evidence_refs: [EVIDENCE-051, EVIDENCE-052]
+  - id: 6
+    name: approval-boundary
+    result: passed
+    evidence_refs: [EVIDENCE-045, EVIDENCE-046, EVIDENCE-049, EVIDENCE-050]
+  - id: 7
+    name: lifecycle-completeness
+    result: passed
+    evidence_refs: [EVIDENCE-053]
+  - id: 8
+    name: evidence-completeness
+    result: passed
+    evidence_refs: [EVIDENCE-052]
+  - id: 9
+    name: proving-mission
+    result: passed
+    evidence_refs: [EVIDENCE-053]
+  - id: 10
+    name: self-hosting
+    result: passed
+    evidence_refs: [EVIDENCE-047, EVIDENCE-048, EVIDENCE-052, EVIDENCE-053]
+remaining_gates:
+  - Ruff lint and formatting validation
+  - mypy strict type validation
+  - Hatchling package-build validation
+approval_boundary:
+  readiness_approval_requested: false
+  reason: EVIDENCE-045 permits deferral only until pre-release readiness validation; the deferred checks must now pass before a ready-for-approval certification record or readiness transition is created.
+readiness_changed: false
+application_missions_permitted: false
