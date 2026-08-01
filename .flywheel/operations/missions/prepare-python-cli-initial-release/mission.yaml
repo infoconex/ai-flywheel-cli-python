@@ -8,6 +8,15 @@ constraints:
   - Do not publish to PyPI, create a tag, or create a GitHub release without explicit human approval.
   - Adopt quality tools only when they provide clear repository value.
   - Preserve current deterministic operation behavior and framework compatibility.
+success_criteria:
+  - id: MSC-001
+    statement: Package metadata, dependencies, and CLI entry points are internally consistent and documented.
+  - id: MSC-002
+    statement: Local linting, formatting, strict typing, testing, and coverage gates pass reproducibly.
+  - id: MSC-003
+    statement: An installable release candidate is built and validated without publishing or hosted automation.
+  - id: MSC-004
+    statement: Release readiness, remaining risks, and approval boundaries are recorded for human review.
 goals:
   - 001-establish-release-baseline
   - 002-apply-local-quality-gates
