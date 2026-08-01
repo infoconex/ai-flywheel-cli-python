@@ -3,13 +3,13 @@ phase: onboarding
 readiness: not-ready-for-missions
 status: active
 active_mission: establish-ai-flywheel-operations
-active_goal: 005-self-host-prove-and-evaluate
-active_execution: EX-20260801T144200Z-005
+active_goal: 006-close-certification-validation-gaps
+active_execution: EX-20260801T150100Z-006
 lifecycle_stage: execute
 implementation_available: true
 application_missions_allowed: false
 blockers: []
 last_durable_update:
-  at: "2026-08-01T14:42:00Z"
+  at: "2026-08-01T15:01:00Z"
   by: chatgpt-session
-  reason: Recorded Goal 005 kickoff approval and started self-hosting execution EX-20260801T144200Z-005 without changing readiness.
+  reason: Started corrective Goal 006 under explicit approval to resolve FINDING-001 while preserving readiness and pre-release gates.
