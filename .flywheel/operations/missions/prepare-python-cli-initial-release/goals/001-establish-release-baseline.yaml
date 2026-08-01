@@ -18,3 +18,18 @@ acceptance_criteria:
     statement: Missing release dependencies and documentation gaps are identified without prematurely adopting tools.
   - id: AC-004
     statement: A bounded change plan exists for the remaining mission goals.
+evidence_required:
+  - criterion_id: AC-001
+    evidence_types:
+      - package metadata and entry-point inspection
+  - criterion_id: AC-002
+    evidence_types:
+      - local test and repository-validation results
+  - criterion_id: AC-003
+    evidence_types:
+      - documented dependency and documentation-gap findings
+  - criterion_id: AC-004
+    artifact_refs:
+      - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/002-apply-local-quality-gates.yaml
+      - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/003-prove-installable-release-candidate.yaml
+      - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/004-finalize-release-readiness.yaml
