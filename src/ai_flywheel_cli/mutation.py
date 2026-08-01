@@ -5,7 +5,7 @@ import shutil
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping, TypeVar
+from typing import Any, Callable, Mapping, TypeVar
 
 import yaml
 
@@ -13,6 +13,7 @@ from ai_flywheel_cli.operations import OperationError, RepositoryLock
 from ai_flywheel_cli.validation import ValidationIssue, validate_repository
 
 TMutationError = TypeVar("TMutationError", bound="MutationRejectedError")
+MutationHook = Callable[[str, str, int], None]
 
 
 @dataclass(frozen=True)
@@ -75,6 +76,7 @@ def commit_validated_yaml(
     error_type: type[TMutationError],
     *,
     expected_sha256: Mapping[str, str | None] | None = None,
+    interruption_hook: MutationHook | None = None,
 ) -> tuple[str, ...]:
     root = repository.resolve()
     expected = expected_sha256 or {}
@@ -99,14 +101,17 @@ def commit_validated_yaml(
                 _write_yaml(shadow / relative_path, value)
             validation = validate_repository(shadow)
             if not validation.passed:
-                failures = _validation_failures(validation.issues)
-                raise error_type("Proposed mutation failed validation.", failures)
-            for relative_path, value in changes.items():
+                raise error_type("Proposed mutation failed validation.", _validation_failures(validation.issues))
+            for index, (relative_path, value) in enumerate(changes.items()):
                 target = root / relative_path
                 backups[relative_path] = target.read_bytes() if target.is_file() else None
                 temporary = target.with_suffix(target.suffix + ".tmp")
                 _write_yaml(temporary, value)
+                if interruption_hook is not None:
+                    interruption_hook("before-replace", relative_path, index)
                 temporary.replace(target)
+                if interruption_hook is not None:
+                    interruption_hook("after-replace", relative_path, index)
         except Exception:
             for relative_path, prior in backups.items():
                 target = root / relative_path
@@ -115,6 +120,7 @@ def commit_validated_yaml(
                 else:
                     target.parent.mkdir(parents=True, exist_ok=True)
                     target.write_bytes(prior)
+                target.with_suffix(target.suffix + ".tmp").unlink(missing_ok=True)
             raise
         finally:
             shutil.rmtree(shadow_parent, ignore_errors=True)
