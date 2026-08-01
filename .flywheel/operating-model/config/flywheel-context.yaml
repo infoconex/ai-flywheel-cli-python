@@ -16,6 +16,14 @@ implementation:
     value: pytest
     status: confirmed
     origin: provided
+  coverage:
+    tooling:
+      - pytest-cov
+      - coverage.py
+    minimum_percent: 80
+    enforcement: required
+    status: confirmed
+    origin: provided
   code_quality:
     linting: Ruff
     formatting: Ruff
@@ -43,6 +51,8 @@ implementation:
       - pipx
       - Python virtual environment
       - pytest
+      - pytest-cov
+      - coverage.py
       - Ruff
       - mypy
     prohibited: []
@@ -124,6 +134,11 @@ decisions:
     origin: provided
     statement: Use Ruff for linting and formatting and mypy for static type checking.
     evidence_ref: EVIDENCE-015
+  - id: COVERAGE-ENFORCEMENT-001
+    status: confirmed
+    origin: provided
+    statement: Enforce test coverage from the first release with an initial minimum threshold of 80 percent.
+    evidence_ref: EVIDENCE-016
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
@@ -137,3 +152,4 @@ notes:
   - Installation and upgrade are separate operations; installation must never replace an existing Flywheel installation.
   - Once the CLI and framework content are installed, routine lifecycle operations should not require network access unless a specific command explicitly depends on an external service.
   - Planning and validation are read-only; repository changes occur only after the explicit application boundary is satisfied.
+  - Coverage enforcement begins at 80 percent and may be raised later through an approved project-standard change.
