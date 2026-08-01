@@ -1,6 +1,9 @@
 schema_version: 1
 purpose:
-  value: Provide a Python command-line implementation for operating the AI Flywheel framework in a repository.
+  value: >-
+    Provide a Python command-line implementation that programmatically installs
+    the AI Flywheel into an empty or existing repository and, after installation,
+    assists operators in executing the Flywheel lifecycle.
   origin: provided
   status: confirmed
 repository:
@@ -14,7 +17,8 @@ application:
   languages: []
   frameworks: []
   runtimes: []
-  architecture: []
+  architecture:
+    - command-line application
 build:
   systems: []
   commands: []
@@ -36,10 +40,9 @@ constraints:
   network:
     - Do not depend on GitHub Actions or other hosted execution during bootstrap unless explicitly approved.
 unknowns:
-  - Intended CLI users and primary operating scenarios require confirmation.
   - Supported Python versions and operating systems are not yet selected.
   - Packaging, installation, offline operation, and dependency constraints are not yet confirmed.
-  - CLI command surface, architecture, persistence behavior, logging, and test framework are not yet selected.
+  - Exact CLI command surface, architecture, persistence behavior, logging, and test framework are not yet selected.
   - Branch, pull request, review, and merge policy beyond using a goal branch requires confirmation.
 conflicts: []
 provenance_records:
@@ -70,6 +73,27 @@ provenance_records:
     rationale: The only confirmed artifacts are the installed Flywheel operating files and onboarding records.
     recorded_at: "2026-08-01T04:38:00Z"
     recorded_by: chatgpt-session
+  - id: PROV-004
+    key: purpose.value
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-002
+    rationale: The human defined installation into empty or existing repositories and lifecycle assistance after installation as the CLI's programmatic purpose.
+    recorded_at: "2026-08-01T04:44:00Z"
+    recorded_by: chatgpt-session
+  - id: PROV-005
+    key: repository.example_role
+    origin: provided
+    status: confirmed
+    confidence: confirmed
+    source: EVIDENCE-002
+    rationale: This repository will demonstrate using Flywheel missions and goals to create the CLI from scratch.
+    recorded_at: "2026-08-01T04:44:00Z"
+    recorded_by: chatgpt-session
 notes:
   - This file describes the target repository and application, not the Flywheel operating tools.
   - No README, Python package metadata, source tree, tests, or automation were present during initial discovery.
+  - The CLI must support installation into both empty repositories and repositories containing an existing project.
+  - This repository is also the proving example for creating the CLI itself through the Flywheel mission and goal lifecycle.
+  - After installation, the CLI should programmatically assist with lifecycle execution rather than serving only as an installer.
