@@ -1,0 +1,43 @@
+schema_version: 1
+id: EVIDENCE-062
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 004-implement-record-and-approval-operations
+execution_id: EX-20260801T175500Z-004
+type: shared-mutation-safety-validation
+summary: Shared mutation validation and persistence safety were extracted, reused by both selected deterministic operations, and validated by the complete repository test suite and repository validator.
+details:
+  implementation:
+    shared_service: src/ai_flywheel_cli/mutation.py
+    reused_by: src/ai_flywheel_cli/deterministic_operations.py
+    scope:
+      - structured artifact-loading failures
+      - complete proposed-set repository validation
+      - stale source revision detection using retained SHA-256 digests
+      - repository mutation locking
+      - atomic temporary-file replacement
+      - rollback after persistence failure
+      - structured validation and conflict failures
+    excluded:
+      - general approval services
+      - approval creation or inferred authority
+      - evidence or record CRUD
+      - future operation-family abstractions
+  test_result:
+    command: PYTHONPATH=src pytest -q
+    passed: 37
+    failed: 0
+    duration_seconds: 0.97
+    added_coverage:
+      - malformed artifact shape rejection
+      - structured rejection payloads
+      - stale source revision rejection before validation
+      - repository validation issue preservation
+      - no canonical write after rejected mutation
+  repository_validation:
+    command: PYTHONPATH=src python -c "from pathlib import Path; from ai_flywheel_cli.validation import validate_repository; print(validate_repository(Path('.')).passed)"
+    passed: true
+    issue_count: 0
+  compatibility:
+    established failed-validation error wording preserved
+    github_actions_enabled: false
+recorded_at: "2026-08-01T18:05:00Z"
