@@ -1,0 +1,22 @@
+schema_version: 1
+id: EVIDENCE-025
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+summary: Installation must be transactional and restore the repository on failure.
+details:
+  decision_id: TRANSACTIONAL-INSTALLATION-001
+  status: confirmed
+  origin: provided
+  statement: >-
+    The install command stages all intended changes, applies them only after
+    validation and approval, and restores the repository to its original state
+    if any write or post-installation validation step fails.
+  implications:
+    - Downloads, checksum verification, extraction, planning, and validation occur before target writes.
+    - Existing files that may be changed must be captured for restoration before application.
+    - Newly created files and directories must be removed during rollback.
+    - Installation metadata is committed only after all files and validations succeed.
+    - A failed rollback must be reported distinctly with actionable recovery details.
+recorded_at: 2026-08-01T05:46:00Z
