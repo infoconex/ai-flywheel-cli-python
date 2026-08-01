@@ -1,0 +1,15 @@
+schema_version: 1
+id: EVIDENCE-022
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: decision
+captured_at: 2026-08-01T05:40:00Z
+summary: Framework release contents will be obtained from immutable GitHub Release archives.
+details:
+  decision_id: FRAMEWORK-DISTRIBUTION-SOURCE-001
+  selected_option: 1
+  source: user
+  statement: >-
+    Download the selected framework version from an immutable GitHub Release
+    archive and verify its published checksum before installation.
