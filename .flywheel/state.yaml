@@ -1,15 +1,16 @@
 schema_version: 1
 phase: operational
 readiness: ready-for-missions
-status: active
+status: blocked
 active_mission: implement-programmatic-flywheel-operations
 active_goal: 002-implement-mission-and-goal-operations
 active_execution: EX-20260801T164900Z-002
-lifecycle_stage: execute
+lifecycle_stage: adapt
 implementation_available: true
 application_missions_allowed: true
-blockers: []
+blockers:
+  - human-deterministic-scope-selection
 last_durable_update:
-  at: "2026-08-01T16:49:00Z"
+  at: "2026-08-01T16:58:00Z"
   by: chatgpt-session
-  reason: Goal 002 candidate evaluation started after repository owner authorized continuation.
+  reason: Goal 002 candidate assessment completed and awaits human selection of the minimal deterministic implementation scope.
