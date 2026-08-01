@@ -1,5 +1,5 @@
 schema_version: 1
-required:
+product_direction_required:
   - read and validate Flywheel configuration
   - associate work with an active mission and goal
   - create and update mission, goal, and execution records
@@ -11,17 +11,22 @@ recommended:
   - structured logging
   - human-readable status reporting
   - reusable validation commands
-selected:
-  - flywheel doctor
-  - flywheel install
-  - flywheel validate
-  - flywheel status
-  - flywheel upgrade
-deferred:
-  - mission record commands
-  - goal record commands
-  - execution record commands
-  - full lifecycle assistance
+initial_release:
+  selected:
+    - flywheel doctor
+    - flywheel install
+    - flywheel validate
+    - flywheel status
+    - flywheel upgrade
+  deferred_without_blocking_initial_design:
+    - mission record commands
+    - goal record commands
+    - execution record commands
+    - full lifecycle assistance
+  rationale: >-
+    The first release establishes safe installation, diagnosis, validation,
+    status, and upgrade foundations. Record-management and full lifecycle
+    assistance remain required product-direction capabilities for later goals.
 rejected: []
 repository_defined:
   - install the Flywheel into an empty repository
@@ -40,3 +45,7 @@ repository_defined:
   - keep documentation synchronized with released CLI behavior and installation entry points
   - provide simple cross-platform commands for running tests, coverage, linting, formatting checks, type checking, and the complete validation suite immediately after onboarding
   - hide tool-specific invocation details behind consistent project-level commands suitable for both humans and AI execution environments
+reconciliation:
+  status: confirmed
+  evidence_ref: EVIDENCE-032
+  blockers: []
