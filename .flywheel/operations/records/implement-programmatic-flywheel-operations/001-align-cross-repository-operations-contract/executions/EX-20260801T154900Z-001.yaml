@@ -2,37 +2,80 @@ schema_version: 1
 id: EX-20260801T154900Z-001
 mission_id: implement-programmatic-flywheel-operations
 goal_id: 001-align-cross-repository-operations-contract
-status: in-progress
+status: blocked
 intended_outcome: Produce and approve aligned specification, framework, capability, transition, certification, and testing contracts for complete programmatic Flywheel operations.
 acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005]
 started_at: "2026-08-01T15:49:00Z"
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: "2026-08-01T15:49:00Z"
-    completed_at: null
-    summary: Review onboarding learning and prepare coordinated cross-repository contract changes before repository-specific implementation begins.
-    refs: [EVIDENCE-055, .flywheel/operations/knowledge/onboarding-programmatic-operations-assessment.yaml]
+    completed_at: "2026-08-01T15:58:00Z"
+    summary: Prepared coordinated specification, framework, capability declaration, and testing contract changes on dedicated branches.
+    refs: [EVIDENCE-055, EVIDENCE-056, .flywheel/operations/knowledge/onboarding-programmatic-operations-assessment.yaml]
     reason: null
-  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  observe:
+    status: completed
+    started_at: "2026-08-01T15:58:00Z"
+    completed_at: "2026-08-01T15:59:00Z"
+    summary: Observed that the prior framework allowed artifact-governed readiness to be interpreted as complete programmatic support; the draft contract now separates those claims.
+    refs: [EVIDENCE-056]
+    reason: null
+  evaluate:
+    status: completed
+    started_at: "2026-08-01T15:59:00Z"
+    completed_at: "2026-08-01T16:00:00Z"
+    summary: Determined that the draft covers operation families, capability claims, approval boundaries, validation, atomicity, idempotency, recovery, and end-to-end certification.
+    refs: [EVIDENCE-056]
+    reason: null
+  classify:
+    status: completed
+    started_at: "2026-08-01T16:00:00Z"
+    completed_at: "2026-08-01T16:00:30Z"
+    summary: Classified the changes as normative cross-repository contract alignment required before repository-specific implementation.
+    refs: [EVIDENCE-056]
+    reason: null
+  adapt:
+    status: blocked
+    started_at: "2026-08-01T16:00:30Z"
+    completed_at: null
+    summary: Awaiting explicit human approval of the cross-repository contract before merging or beginning implementation goals.
+    refs: [EVIDENCE-056]
+    reason: Goal acceptance criteria require approval before implementation begins.
   validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
-  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist:
+    status: completed
+    started_at: "2026-08-01T15:58:00Z"
+    completed_at: "2026-08-01T16:00:30Z"
+    summary: Persisted exact branch revisions and artifact lists for the specification, framework, and testing changes.
+    refs: [EVIDENCE-056]
+    reason: null
   reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
 actions:
   - Recorded explicit mission and Goal 001 kickoff approval.
-  - Activated the programmatic operations mission.
-  - Activated Goal 001 for cross-repository contract alignment.
-observations: []
-evaluations: []
-classifications: []
+  - Created dedicated cross-repository contract branches.
+  - Added the programmatic operations specification section.
+  - Added the framework operation contract, capability schema, baseline declaration, and manifest registration.
+  - Added testing scenarios and Prompt 018.
+  - Stopped before merge or CLI implementation pending contract approval.
+observations:
+  - id: OBS-001-001
+    statement: Artifact-governed readiness and programmatic-operations support require independent capability and certification results.
+    refs: [EVIDENCE-056]
+evaluations:
+  - id: EVAL-001-001
+    statement: The draft contract is sufficient to govern Goals 002 through 006 once approved and merged.
+    refs: [EVIDENCE-056]
+classifications:
+  - id: CLASS-001-001
+    category: normative-contract-alignment
+    statement: Cross-repository contract changes are required before implementation.
 adaptations: []
-blockers: []
+blockers:
+  - human-cross-repository-contract-approval
 approval_refs: [EVIDENCE-055]
-evidence_refs: [EVIDENCE-055]
+evidence_refs: [EVIDENCE-055, EVIDENCE-056]
 decision_refs: []
 finding_refs: []
 validation_results: []
