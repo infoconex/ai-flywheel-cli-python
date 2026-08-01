@@ -38,3 +38,5 @@ repository_defined:
   - document common workflows for empty and existing repositories
   - document configuration, upgrades, compatibility, troubleshooting, recovery, and safe-operation behavior
   - keep documentation synchronized with released CLI behavior and installation entry points
+  - provide simple cross-platform commands for running tests, coverage, linting, formatting checks, type checking, and the complete validation suite immediately after onboarding
+  - hide tool-specific invocation details behind consistent project-level commands suitable for both humans and AI execution environments
