@@ -1,37 +1,37 @@
 schema_version: 1
 id: 004-implement-record-and-approval-operations
 mission_id: implement-programmatic-flywheel-operations
-title: Implement Record and Approval Operations
+title: Build Shared Validation and Mutation Safety
 status: proposed
-objective: Add programmatic creation, validation, lookup, and linking of evidence, findings, decisions, approvals, observations, evaluations, classifications, adaptations, and reusable knowledge records.
+objective: Build reusable validation, reference, approval, and mutation-safety services needed by the selected deterministic operations without requiring every Flywheel activity to use code.
 depends_on:
   - 003-implement-execution-and-lifecycle-operations
 procedure:
-  - Implement typed record creation using authoritative schemas and placement rules.
-  - Generate or validate deterministic record identifiers and filenames.
-  - Link records to missions, goals, executions, lifecycle stages, criteria, and other records.
-  - Implement approval creation and verification without allowing the operator to self-authorize restricted transitions.
-  - Add record show and list operations with type, mission, goal, execution, status, and criterion filters.
-  - Prevent broken, duplicate, cross-scope, or unauthorized references.
+  - Extract shared schema, identity, placement, reference, and state-consistency checks used by selected operations.
+  - Centralize approval verification while preventing tools or the AI operator from self-authorizing restricted transitions.
+  - Validate complete proposed mutations before canonical artifacts are changed.
+  - Preserve useful structured errors that allow the AI operator to understand and recover from rejected operations.
+  - Avoid adding unused abstractions for operation families outside the approved scope.
+  - Add focused tests for malformed inputs, broken references, approval misuse, and inconsistent proposed state.
 acceptance_criteria:
   - id: AC-001
-    statement: All supported record types can be created programmatically in their canonical locations.
+    statement: Selected deterministic operations use shared validation rather than duplicating critical governance rules.
   - id: AC-002
-    statement: Record identifiers, filenames, parent references, and cross-references are validated before persistence.
+    statement: Identity, placement, references, and affected state are validated before persistence.
   - id: AC-003
-    statement: Approval records preserve human authority and cannot be fabricated by the transition being approved.
+    statement: Approval-required actions cannot proceed without durable matching human authorization.
   - id: AC-004
-    statement: Record list and lookup operations support deterministic filtering and ordering.
+    statement: Rejected operations return actionable structured results that support governed AI recovery.
   - id: AC-005
-    statement: Automated tests cover valid records, malformed records, broken references, duplicate identifiers, and approval misuse.
+    statement: Shared services are limited to demonstrated needs and are covered by positive and negative tests.
 evidence_required:
   - criterion_id: AC-001
-    artifacts: [record operation source, record creation tests]
+    artifacts: [shared validation source, reuse mapping]
   - criterion_id: AC-002
-    artifacts: [identity and reference validation tests]
+    artifacts: [identity reference and state validation tests]
   - criterion_id: AC-003
     artifacts: [approval boundary tests]
   - criterion_id: AC-004
-    artifacts: [record query tests]
+    artifacts: [structured failure and recovery tests]
   - criterion_id: AC-005
-    artifacts: [negative record operation report]
+    artifacts: [scope review and test report]
