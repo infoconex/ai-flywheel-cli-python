@@ -1,0 +1,47 @@
+schema_version: 1
+scenario: hybrid-ai-and-deterministic-operation
+run_at: "2026-08-01T18:31:00Z"
+operator: chatgpt-session
+human_authority: repository-owner
+supported_operations_exercised:
+  - operation: start-execution
+    result: passed
+    coordinated_files_changed: 3
+  - operation: advance-lifecycle
+    result: passed
+    invocations: 2
+    coordinated_files_changed: 4
+negative_scenarios:
+  - scenario: duplicate execution start
+    result: rejected-without-change
+    message: Cannot start an execution while another execution is active.
+  - scenario: replay prior lifecycle stage
+    result: rejected-without-change
+    message: Lifecycle stage changed before retry; expected execute and found observe.
+ai_executed_activities:
+  - representative mission design
+  - goal and acceptance-criteria definition
+  - result interpretation
+  - observation and evidence authoring
+  - value evaluation
+  - unsupported operation fallback
+fallback:
+  requested_operation: create-mission
+  result: governed-ai-execution-required
+interruption_and_recovery:
+  evidence_ref: EVIDENCE-063
+  result: passed
+validation:
+  full_test_suite:
+    passed: 40
+    failed: 0
+  repository_validation:
+    status: passed
+    issue_count: 0
+metrics:
+  deterministic_commands: 3
+  coordinated_artifact_writes_delegated: 7
+  negative_scenarios: 2
+  negative_scenarios_without_canonical_change: 2
+  ai_fallback_scenarios: 1
+conclusion: The hybrid model preserved AI operator responsibility and human authority while deterministic delegation reduced repeated multi-file mutation work and prevented duplicate or stale transitions.
