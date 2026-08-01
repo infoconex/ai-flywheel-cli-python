@@ -1,0 +1,14 @@
+schema_version: 1
+id: APPROVAL-001
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+execution_id: EX-20260801T144200Z-005
+certification_record_id: CERT-20260801T152700Z-001
+authority_id: AUTH-REPOSITORY-OWNER
+status: approved
+approved_action: Transition the repository to ready-for-missions and permit application mission work under the installed operating model.
+known_limitations:
+  - Historical onboarding evidence uses an explicitly approved bounded legacy compatibility profile.
+  - Ruff, mypy, and Hatchling remain optional pending future Goal 007 evaluation.
+authorization_basis: Explicit repository-owner approval in the active ChatGPT session.
+approved_at: "2026-08-01T15:30:00Z"
