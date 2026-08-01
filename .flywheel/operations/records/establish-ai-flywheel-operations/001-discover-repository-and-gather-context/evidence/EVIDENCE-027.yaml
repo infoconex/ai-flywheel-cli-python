@@ -1,0 +1,36 @@
+schema_version: 1
+id: EVIDENCE-027
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+type: delegated-decisions
+summary: The user authorized all remaining onboarding questions to use the recommended defaults.
+details:
+  authorization:
+    statement: Apply the recommended answer for all remaining onboarding decisions.
+    origin: provided
+  decisions:
+    - id: RUNTIME-STORAGE-001
+      statement: Store locks, staging, rollback, and other ephemeral files under .flywheel/.runtime and exclude that directory from version control.
+    - id: OUTPUT-CONTRACT-001
+      statement: Provide readable terminal output by default and deterministic JSON output through --json for automation and AI execution.
+    - id: EXIT-CODE-CONTRACT-001
+      statement: Define stable documented exit-code categories for success, validation failure, usage error, dependency failure, conflict, lock contention, network failure, and internal failure.
+    - id: CONFIGURATION-FORMAT-001
+      statement: Use YAML for Flywheel repository configuration, validate it against versioned schemas, and reject unknown required semantics rather than guessing.
+    - id: NETWORK-RESILIENCE-001
+      statement: Use bounded timeouts and limited retries with backoff only for safe idempotent network reads; never retry repository mutations implicitly.
+    - id: ARCHIVE-SAFETY-001
+      statement: Reject archive path traversal, absolute paths, unsafe links, duplicate destinations, and content that does not match the signed or checksummed release manifest.
+    - id: COMPATIBILITY-POLICY-001
+      statement: Follow semantic versioning, block unsupported major-version upgrades, and require explicit migration handling for breaking changes.
+    - id: TEST-STRATEGY-001
+      statement: Use unit tests for core logic, integration tests for filesystem and command behavior, and fixture-based end-to-end tests for install, validate, status, and upgrade scenarios.
+    - id: OUTPUT-LOGGING-001
+      statement: Keep normal command output concise, support verbose diagnostics explicitly, redact secrets and tokens, and write persistent logs only when configured or required for recovery.
+    - id: DOCUMENTATION-QUALITY-001
+      statement: Treat installation, quick start, command reference, configuration, upgrade, troubleshooting, recovery, and safe-operation documentation as release requirements.
+    - id: RELEASE-DISCIPLINE-001
+      statement: Require local validation, versioned release artifacts, checksums, and release notes; do not enable GitHub Actions or hosted execution without separate human approval.
+  status: confirmed
+recorded_at: 2026-08-01T05:52:00Z
