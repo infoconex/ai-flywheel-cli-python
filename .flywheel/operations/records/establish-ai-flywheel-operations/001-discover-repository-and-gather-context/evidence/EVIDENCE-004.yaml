@@ -1,0 +1,29 @@
+schema_version: 1
+id: EVIDENCE-004
+kind: evidence
+mission_id: establish-ai-flywheel-operations
+goal_id: 001-discover-repository-and-gather-context
+execution_id: EX-20260801T043606Z-001
+created_at: "2026-08-01T04:57:00Z"
+created_by: chatgpt-session
+summary: Human selected two small bootstrap entry points as the preferred one-command installation experience.
+status: accepted
+classification: installation-preference
+criterion_ids:
+  - AC-001
+  - AC-004
+source_refs:
+  - human-response:2026-08-01T04:57:00Z
+artifact_refs:
+  - .flywheel/operating-model/config/repository-context.yaml
+  - .flywheel/operating-model/config/flywheel-context.yaml
+evidence:
+  evidence_type: human-approval
+  supported_claim: The preferred installation experience uses a macOS/Linux shell bootstrap entry point and a Windows PowerShell bootstrap entry point.
+  source_or_method: Direct human response during onboarding.
+  actual_result: The human selected the two-bootstrap-entry-point option.
+  observed_at: "2026-08-01T04:57:00Z"
+  storage_location: .flywheel/operations/records/establish-ai-flywheel-operations/001-discover-repository-and-gather-context/evidence/EVIDENCE-004.yaml
+decision: null
+finding: null
+approval: null
