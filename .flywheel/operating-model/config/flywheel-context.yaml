@@ -5,9 +5,9 @@ implementation:
     status: candidate
     origin: provided
   runtime:
-    value: null
-    status: candidate
-    origin: null
+    value: Python 3.11+
+    status: confirmed
+    origin: provided
   architecture:
     value: evolvable command-line tooling with dependency detection
     status: candidate
@@ -43,13 +43,18 @@ manual_fallbacks:
   - Detect required runtime and tool dependencies before attempting operations.
   - Report missing or incompatible dependencies with actionable remediation rather than failing ambiguously.
 known_limitations:
-  - Exact supported Python versions and standalone distribution strategy remain unresolved.
+  - Standalone distribution strategy remains unresolved.
 decisions:
   - id: INSTALL-PREFERENCE-001
     status: candidate
     origin: provided
     statement: Provide two small one-command bootstrap entry points, one for macOS and Linux and one for Windows PowerShell.
     evidence_ref: EVIDENCE-004
+  - id: RUNTIME-BASELINE-001
+    status: confirmed
+    origin: provided
+    statement: Support Python 3.11 and newer as the initial runtime baseline.
+    evidence_ref: EVIDENCE-006
 notes:
   - Flywheel implementation choices are independent from target application technologies.
   - Material selections remain candidates until the required approval is recorded.
