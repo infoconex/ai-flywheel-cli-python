@@ -1,0 +1,41 @@
+schema_version: 1
+id: EX-20260801T144200Z-005
+mission_id: establish-ai-flywheel-operations
+goal_id: 005-self-host-prove-and-evaluate
+status: in-progress
+intended_outcome: Prove the Python CLI through self-hosted operation, context-free startup, a complete proving mission, and readiness evaluation.
+acceptance_criteria: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006]
+started_at: "2026-08-01T14:42:00Z"
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: "2026-08-01T14:42:00Z"
+    completed_at: null
+    summary: Use the implemented CLI to validate and manage Flywheel artifacts, prepare cold-start and proving-mission fixtures, and assemble readiness evidence without crossing the human approval boundary.
+    refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046, .flywheel/implementation-manifest.yaml]
+    reason: null
+  observe: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  evaluate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  classify: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  adapt: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  validate: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  persist: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+  reuse: {status: pending, started_at: null, completed_at: null, summary: null, refs: [], reason: null}
+actions:
+  - Recorded explicit Goal 005 kickoff approval.
+  - Preserved not-ready-for-missions and the deferred pre-release validation requirement.
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: [EVIDENCE-045, EVIDENCE-046]
+evidence_refs: [EVIDENCE-043, EVIDENCE-044, EVIDENCE-045, EVIDENCE-046]
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
