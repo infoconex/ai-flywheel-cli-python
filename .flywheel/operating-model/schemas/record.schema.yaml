@@ -1,0 +1,318 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: record.schema.yaml
+type: object
+additionalProperties: false
+required: [schema_version, id, kind, mission_id, goal_id, execution_id, created_at, created_by, summary, status, source_refs, artifact_refs]
+properties:
+  schema_version: {type: integer, const: 1}
+  id: {type: string, minLength: 1}
+  kind: {type: string, enum: [evidence, decision, finding, approval]}
+  mission_id: {type: string, minLength: 1}
+  goal_id: {type: string, minLength: 1}
+  execution_id: {type: [string, 'null'], minLength: 1}
+  created_at: {type: string, format: date-time}
+  created_by: {type: string, minLength: 1}
+  summary: {type: string, minLength: 1}
+  status: {type: string, enum: [open, accepted, superseded, closed, rejected]}
+  classification: {type: [string, 'null']}
+  criterion_ids:
+    type: array
+    uniqueItems: true
+    items: {type: string, pattern: '^AC-[0-9]{3,}$'}
+  source_refs:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
+  artifact_refs:
+    type: array
+    uniqueItems: true
+    items: {type: string, minLength: 1}
+  evidence:
+    type: [object, 'null']
+    additionalProperties: false
+    required: [evidence_type, supported_claim, source_or_method, actual_result, observed_at, storage_location]
+    properties:
+      evidence_type: {type: string, minLength: 1}
+      supported_claim: {type: string, minLength: 1}
+      source_or_method: {type: string, minLength: 1}
+      actual_result: {type: string, minLength: 1}
+      observed_at: {type: string, format: date-time}
+      storage_location: {type: string, minLength: 1}
+  decision:
+    type: [object, 'null']
+    additionalProperties: false
+    required: [decision, rationale, authority, decided_at, alternatives_considered, validation_disposition]
+    properties:
+      decision: {type: string, minLength: 1}
+      rationale: {type: string, minLength: 1}
+      authority: {type: string, minLength: 1}
+      decided_at: {type: string, format: date-time}
+      alternatives_considered:
+        type: array
+        items: {type: string, minLength: 1}
+      validation_disposition:
+        oneOf:
+          - type: 'null'
+          - $ref: '#/$defs/validation_disposition'
+  finding:
+    type: [object, 'null']
+    additionalProperties: false
+    required: [finding_type, description, impact, discovered_at, disposition]
+    properties:
+      finding_type: {type: string, minLength: 1}
+      description: {type: string, minLength: 1}
+      impact: {type: string, minLength: 1}
+      discovered_at: {type: string, format: date-time}
+      disposition: {type: string, enum: [open, accepted, resolved, deferred, rejected]}
+      transition_recovery:
+        oneOf:
+          - type: 'null'
+          - $ref: '#/$defs/transition_recovery'
+    allOf:
+      - if:
+          properties: {finding_type: {const: partial-lifecycle-transition}}
+          required: [finding_type]
+        then:
+          required: [transition_recovery]
+          properties:
+            transition_recovery: {$ref: '#/$defs/transition_recovery'}
+        else:
+          properties:
+            transition_recovery: {type: 'null'}
+  approval:
+    type: [object, 'null']
+    additionalProperties: false
+    required: [authority, authorization_basis, decision, scope, decided_at, evidence_ref]
+    properties:
+      authority: {type: string, minLength: 1}
+      authorization_basis: {type: string, minLength: 1}
+      decision: {type: string, enum: [approved, rejected, deferred]}
+      scope: {type: string, minLength: 1}
+      decided_at: {type: string, format: date-time}
+      evidence_ref: {type: string, minLength: 1}
+allOf:
+  - if:
+      properties: {kind: {const: evidence}}
+      required: [kind]
+    then:
+      required: [evidence]
+      properties:
+        evidence: {type: object}
+        decision: {type: 'null'}
+        finding: {type: 'null'}
+        approval: {type: 'null'}
+  - if:
+      properties: {kind: {const: decision}}
+      required: [kind]
+    then:
+      required: [decision]
+      properties:
+        evidence: {type: 'null'}
+        decision: {type: object}
+        finding: {type: 'null'}
+        approval: {type: 'null'}
+  - if:
+      properties: {kind: {const: finding}}
+      required: [kind]
+    then:
+      required: [finding]
+      properties:
+        evidence: {type: 'null'}
+        decision: {type: 'null'}
+        finding: {type: object}
+        approval: {type: 'null'}
+  - if:
+      properties: {kind: {const: approval}}
+      required: [kind]
+    then:
+      required: [approval]
+      properties:
+        evidence: {type: 'null'}
+        decision: {type: 'null'}
+        finding: {type: 'null'}
+        approval: {type: object}
+$defs:
+  transition_recovery:
+    type: object
+    additionalProperties: false
+    required:
+      - original_plan_id
+      - original_plan_path
+      - transition_operator
+      - transition_at
+      - observed_at
+      - targets
+      - failure_condition
+      - rollback
+      - original_pair_restored
+      - continuation_prohibited
+      - continuation_reason
+      - recovery_action
+      - human_reconciliation_required
+    properties:
+      original_plan_id: {type: string, pattern: '^PERSIST-[0-9]{8}T[0-9]{6}Z-[0-9]{3}$'}
+      original_plan_path: {type: string, minLength: 1}
+      transition_operator: {type: string, minLength: 1}
+      transition_at: {type: string, format: date-time}
+      observed_at: {type: string, format: date-time}
+      targets:
+        type: array
+        minItems: 2
+        uniqueItems: true
+        items: {$ref: '#/$defs/transition_recovery_target'}
+        allOf:
+          - contains:
+              properties: {write_result: {const: succeeded}}
+              required: [write_result]
+            minContains: 1
+          - contains:
+              properties: {write_result: {enum: [failed, not-attempted]}}
+              required: [write_result]
+            minContains: 1
+      failure_condition: {type: string, minLength: 1}
+      rollback:
+        $ref: '#/$defs/transition_recovery_rollback'
+      original_pair_restored: {type: boolean}
+      continuation_prohibited: {type: boolean, const: true}
+      continuation_reason: {type: string, minLength: 1}
+      recovery_action: {type: string, minLength: 1}
+      human_reconciliation_required: {type: boolean}
+    allOf:
+      - if:
+          properties: {original_pair_restored: {const: false}}
+          required: [original_pair_restored]
+        then:
+          properties:
+            human_reconciliation_required: {const: true}
+      - if:
+          properties:
+            rollback:
+              properties: {result: {const: succeeded}}
+              required: [result]
+          required: [rollback]
+        then:
+          properties:
+            original_pair_restored: {const: true}
+  transition_recovery_target:
+    type: object
+    additionalProperties: false
+    required:
+      - target_id
+      - artifact_type
+      - path
+      - operation
+      - retained_blob_sha
+      - retained_content_digest
+      - proposed_content_digest
+      - observed_blob_sha
+      - observed_content_digest
+      - write_result
+      - failure_detail
+    properties:
+      target_id: {type: string, pattern: '^PT-[0-9]{3,}$'}
+      artifact_type: {type: string, minLength: 1}
+      path: {type: string, minLength: 1}
+      operation: {type: string, enum: [create, update]}
+      retained_blob_sha: {type: [string, 'null']}
+      retained_content_digest: {type: [string, 'null'], pattern: '^[0-9a-f]{64}$'}
+      proposed_content_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      observed_blob_sha: {type: [string, 'null']}
+      observed_content_digest: {type: [string, 'null'], pattern: '^[0-9a-f]{64}$'}
+      write_result: {type: string, enum: [succeeded, failed, not-attempted]}
+      failure_detail: {type: [string, 'null']}
+    allOf:
+      - if:
+          properties: {operation: {const: update}}
+          required: [operation]
+        then:
+          properties:
+            retained_blob_sha: {type: string, minLength: 1}
+            retained_content_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+            observed_blob_sha: {type: string, minLength: 1}
+            observed_content_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+      - if:
+          properties: {operation: {const: create}}
+          required: [operation]
+        then:
+          properties:
+            retained_blob_sha: {type: 'null'}
+            retained_content_digest: {type: 'null'}
+      - if:
+          properties: {write_result: {const: succeeded}}
+          required: [write_result]
+        then:
+          properties:
+            observed_blob_sha: {type: string, minLength: 1}
+            observed_content_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+            failure_detail: {type: 'null'}
+      - if:
+          properties: {write_result: {enum: [failed, not-attempted]}}
+          required: [write_result]
+        then:
+          properties:
+            failure_detail: {type: string, minLength: 1}
+  transition_recovery_rollback:
+    type: object
+    additionalProperties: false
+    required: [attempted, target_ids, result, restored_content_digest, state_mutated, detail]
+    properties:
+      attempted: {type: boolean}
+      target_ids:
+        type: array
+        uniqueItems: true
+        items: {type: string, pattern: '^PT-[0-9]{3,}$'}
+      result: {type: string, enum: [not-required, succeeded, failed, blocked]}
+      restored_content_digest: {type: [string, 'null'], pattern: '^[0-9a-f]{64}$'}
+      state_mutated: {type: boolean}
+      detail: {type: string, minLength: 1}
+    allOf:
+      - if:
+          properties: {attempted: {const: false}}
+          required: [attempted]
+        then:
+          properties:
+            target_ids: {maxItems: 0}
+            result: {const: not-required}
+            restored_content_digest: {type: 'null'}
+      - if:
+          properties: {attempted: {const: true}}
+          required: [attempted]
+        then:
+          properties:
+            target_ids: {minItems: 1}
+            result: {enum: [succeeded, failed, blocked]}
+      - if:
+          properties: {result: {const: succeeded}}
+          required: [result]
+        then:
+          properties:
+            restored_content_digest: {type: string, pattern: '^[0-9a-f]{64}$'}
+            state_mutated: {const: false}
+      - if:
+          properties: {result: {enum: [failed, blocked]}}
+          required: [result]
+        then:
+          properties:
+            restored_content_digest: {type: 'null'}
+  validation_disposition:
+    type: object
+    additionalProperties: false
+    required: [validation_ref, finding_ref, status, permits_persistence, scope, recovery_action, approval_required, approval_refs]
+    properties:
+      validation_ref: {type: string, pattern: '^VAL-[0-9]{3,}$'}
+      finding_ref: {type: string, minLength: 1}
+      status: {type: string, enum: [retry-required, adaptation-required, accepted-risk, waived]}
+      permits_persistence: {type: boolean}
+      scope: {type: array, minItems: 1, uniqueItems: true, items: {type: string, minLength: 1}}
+      recovery_action: {type: string, minLength: 1}
+      approval_required: {type: boolean}
+      approval_refs: {type: array, uniqueItems: true, items: {type: string, minLength: 1}}
+    allOf:
+      - if: {properties: {status: {enum: [retry-required, adaptation-required]}}, required: [status]}
+        then: {properties: {permits_persistence: {const: false}}}
+      - if: {properties: {status: {enum: [accepted-risk, waived]}}, required: [status]}
+        then: {properties: {permits_persistence: {const: true}}}
+      - if: {properties: {approval_required: {const: false}}, required: [approval_required]}
+        then: {properties: {approval_refs: {maxItems: 0}}}
+      - if: {properties: {approval_required: {const: true}}, required: [approval_required]}
+        then: {properties: {approval_refs: {minItems: 1}}}
