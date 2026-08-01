@@ -1,0 +1,30 @@
+schema_version: 1
+id: EVIDENCE-063
+mission_id: implement-programmatic-flywheel-operations
+goal_id: 005-implement-atomic-transitions-and-recovery
+execution_id: EX-20260801T182800Z-005
+type: interruption-retry-idempotency-validation
+summary: Interruption recovery, deterministic retry, and duplicate-transition prevention were implemented and validated for start-execution, advance-lifecycle, and their shared mutation boundary.
+details:
+  implemented_changes:
+    - Added injectable before-replace and after-replace interruption points to the shared mutation boundary.
+    - Restored canonical bytes and removed temporary or newly created files after interrupted persistence.
+    - Added expected-stage retry protection to advance-lifecycle and exposed it through the CLI.
+    - Documented exact supported-operation guarantees and unsupported cases.
+  test_result:
+    command: PYTHONPATH=src pytest -q
+    passed: 40
+    failed: 0
+    coverage:
+      - interruption after a partial multi-file replacement
+      - retry after restored interruption
+      - stale-source and validation rejection
+      - duplicate execution prevention
+      - lifecycle transition replay rejection
+  repository_validation:
+    status: passed
+    issue_count: 0
+  scope:
+    supported_operations: [start-execution, advance-lifecycle, shared mutation boundary]
+    broader_programmatic_coverage_claimed: false
+recorded_at: "2026-08-01T18:36:00Z"
