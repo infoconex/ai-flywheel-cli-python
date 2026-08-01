@@ -1,0 +1,24 @@
+schema_version: 1
+framework_owned_files:
+  modification_handling: preserve-and-stop
+  conflict_report_required: true
+  silent_overwrite_allowed: false
+  baseline_comparison_required: true
+mutable_operational_content:
+  treat_as_framework_conflict: false
+  examples:
+    - state
+    - missions
+    - goals
+    - executions
+    - evidence
+    - findings
+    - knowledge
+decisions:
+  - id: UPGRADE-CONFLICT-SAFETY-001
+    status: confirmed
+    origin: provided
+    statement: >-
+      Detect locally modified framework-owned files, preserve them unchanged, and
+      stop the upgrade with a clear conflict report rather than overwriting them.
+    evidence_ref: EVIDENCE-023
