@@ -1,0 +1,86 @@
+schema_version: 1
+id: EX-20260802T051700Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 002-apply-local-quality-gates
+status: in-progress
+intended_outcome: Establish and document justified local linting, formatting, typing,
+  and package-build quality gates that run through one command without hosted automation.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+started_at: '2026-08-02T05:43:52Z'
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: '2026-08-02T05:43:52Z'
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  observe:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  evaluate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  classify:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  adapt:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  validate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  persist:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  reuse:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+actions: []
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
