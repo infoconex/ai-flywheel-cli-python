@@ -87,15 +87,21 @@ lifecycle:
     - EVIDENCE-RELEASE-BASELINE-002
     reason: null
   persist:
-    status: in-progress
+    status: completed
     started_at: '2026-08-02T04:55:03Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-02T04:58:31Z'
+    summary: Persisted the validated release baseline, lifecycle transition fix, regression
+      coverage, and supporting evidence for reuse by the remaining release-readiness
+      goals.
+    refs:
+    - ADAPT-001
+    - VAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    - EVIDENCE-RELEASE-BASELINE-002
     reason: null
   reuse:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-02T04:58:31Z'
     completed_at: null
     summary: null
     refs: []
