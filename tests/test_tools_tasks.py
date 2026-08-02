@@ -3,7 +3,6 @@ from __future__ import annotations
 import sys
 
 import pytest
-
 from tools.__main__ import BUILD_OUTPUT, main, task_commands
 
 
