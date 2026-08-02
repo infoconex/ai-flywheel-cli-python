@@ -16,3 +16,16 @@ acceptance_criteria:
   statement: The package build backend is validated against actual release needs.
 - id: AC-004
   statement: Adopted checks run locally through one documented command.
+evidence_required:
+- criterion_id: AC-001
+  evidence_types:
+  - Ruff lint and formatting results
+- criterion_id: AC-002
+  evidence_types:
+  - strict mypy results
+- criterion_id: AC-003
+  evidence_types:
+  - package build backend validation results
+- criterion_id: AC-004
+  evidence_types:
+  - documented single-command local quality-gate result
