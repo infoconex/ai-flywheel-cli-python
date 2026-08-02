@@ -49,15 +49,21 @@ lifecycle:
     - EVIDENCE-RELEASE-BASELINE-001
     reason: null
   classify:
-    status: in-progress
+    status: completed
     started_at: '2026-08-02T04:22:30Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-02T04:27:57Z'
+    summary: 'Classified the release baseline as validated learning: the current local
+      quality gates and repository validation provide a reliable starting point for
+      the remaining release-readiness goals, with hosted CI and external publication
+      intentionally out of scope.'
+    refs:
+    - CLASS-001
+    - EVAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
     reason: null
   adapt:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-02T04:27:57Z'
     completed_at: null
     summary: null
     refs: []
