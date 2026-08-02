@@ -120,13 +120,33 @@ evaluations:
   rationale: Package metadata and entry points were inspected, the complete local
     quality gate passed, gaps and constraints were recorded, and the remaining goals
     define the bounded follow-on work.
-classifications: []
+classifications:
+- id: CLASS-001
+  type: decision
+  statement: Accept the passing local Python 3.13.14 baseline as the reproducible
+    starting point for the remaining release-readiness goals, while retaining the
+    stated limitation that no hosted CI or external publication has been proven.
+  evaluation_refs:
+  - EVAL-001
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  rationale: The evidence supports AC-001 through AC-004 and establishes a bounded,
+    locally reproducible baseline without expanding the mission into hosted automation
+    or package publication.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: DECISION-RELEASE-BASELINE-001
+  finding_ref: null
+  validation_refs: []
 adaptations: []
 blockers: []
 approval_refs: []
 evidence_refs:
 - EVIDENCE-RELEASE-BASELINE-001
-decision_refs: []
+decision_refs:
+- DECISION-RELEASE-BASELINE-001
 finding_refs: []
 validation_results: []
 outcome: null
