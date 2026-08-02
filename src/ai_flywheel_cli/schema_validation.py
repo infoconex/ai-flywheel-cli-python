@@ -82,18 +82,21 @@ def validate_declared_artifacts(
     for schema_name, relative_path in CORE_SCHEMAS.items():
         _validate_schema(root, Path(relative_path), schema_name, issues)
 
-    missions_root = root / ".flywheel/operations/missions"
-    if missions_root.is_dir():
-        for mission_path in missions_root.glob("*/mission.yaml"):
-            _validate_schema(root, mission_path.relative_to(root), "mission", issues)
-        for goal_path in missions_root.glob("*/goals/*.yaml"):
-            _validate_schema(root, goal_path.relative_to(root), "goal", issues)
-
     if not isinstance(state, dict):
         return
     mission_id = state.get("active_mission")
     goal_id = state.get("active_goal")
     execution_id = state.get("active_execution")
+    if isinstance(mission_id, str):
+        mission_root = root / ".flywheel/operations/missions" / mission_id
+        _validate_schema(
+            root,
+            mission_root.joinpath("mission.yaml").relative_to(root),
+            "mission",
+            issues,
+        )
+        for goal_path in mission_root.glob("goals/*.yaml"):
+            _validate_schema(root, goal_path.relative_to(root), "goal", issues)
     if mission_id and goal_id and execution_id:
         _validate_schema(
             root,
