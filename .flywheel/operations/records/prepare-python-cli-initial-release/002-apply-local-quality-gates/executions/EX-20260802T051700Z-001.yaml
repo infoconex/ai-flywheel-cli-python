@@ -123,14 +123,33 @@ evaluations:
   rationale: Ruff linting and formatting, strict mypy, pytest with coverage, repository
     validation, and isolated Hatchling source and wheel builds all passed through
     the documented python -m tools validate command.
-classifications: []
+classifications:
+- id: CLASS-001
+  type: finding
+  statement: Goal 002 has confirmed the local quality gate, while clean external
+    installation proof remains outside this goal and is deferred to Goal 003.
+  evaluation_refs:
+  - EVAL-001
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  rationale: The successful gate directly satisfies Goal 002, and its documented
+    platform limitation defines the remaining release-proof boundary without blocking
+    this goal.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-002-PLATFORM-SCOPE
+  validation_refs: []
 adaptations: []
 blockers: []
 approval_refs: []
 evidence_refs:
 - EVIDENCE-002-LOCAL-QUALITY-GATE
 decision_refs: []
-finding_refs: []
+finding_refs:
+- FINDING-002-PLATFORM-SCOPE
 validation_results: []
 outcome: null
 completion:
