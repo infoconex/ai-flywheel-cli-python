@@ -19,7 +19,11 @@ EXECUTION_ID = "EX-20260802T051700Z-001"
 def test_checked_in_repository_can_start_ready_goal(tmp_path: Path) -> None:
     source = Path(__file__).resolve().parents[1] / ".flywheel"
     repository = tmp_path / "repository"
-    shutil.copytree(source, repository / ".flywheel")
+    shutil.copytree(
+        source,
+        repository / ".flywheel",
+        ignore=shutil.ignore_patterns(".runtime", "records"),
+    )
 
     try:
         result = start_execution(
