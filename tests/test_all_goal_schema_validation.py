@@ -50,8 +50,7 @@ required:
 """,
     )
     _write(
-        tmp_path
-        / ".flywheel/operations/missions/sample-mission/goals/002-invalid-goal.yaml",
+        tmp_path / ".flywheel/operations/missions/sample-mission/goals/002-invalid-goal.yaml",
         """schema_version: 1
 id: 002-invalid-goal
 mission_id: sample-mission
@@ -69,8 +68,7 @@ acceptance_criteria:
     matching = [
         issue
         for issue in issues
-        if issue.code == "SCHEMA_VALIDATION_FAILED"
-        and issue.path.endswith("002-invalid-goal.yaml")
+        if issue.code == "SCHEMA_VALIDATION_FAILED" and issue.path.endswith("002-invalid-goal.yaml")
     ]
     assert matching
     assert "evidence_required" in matching[0].message
