@@ -75,14 +75,28 @@ lifecycle:
     summary: null
     refs: []
     reason: null
-actions: []
-observations: []
+actions:
+- Added the build frontend to development dependencies.
+- Added isolated sdist and wheel builds to python -m tools validate.
+- Documented the complete local quality gate in README.md.
+observations:
+- id: OBS-001
+  statement: The complete documented local quality gate passed and produced both source and wheel distributions using the declared Hatchling backend.
+  type: direct
+  status: complete
+  observed_at: '2026-08-02T06:05:00Z'
+  source_or_method: Executed python -m tools validate in the repository virtual environment on Windows with Python 3.13.14.
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  uncertainty: null
+  conflicts_with: []
 evaluations: []
 classifications: []
 adaptations: []
 blockers: []
 approval_refs: []
-evidence_refs: []
+evidence_refs:
+- EVIDENCE-002-LOCAL-QUALITY-GATE
 decision_refs: []
 finding_refs: []
 validation_results: []
