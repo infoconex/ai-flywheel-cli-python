@@ -20,9 +20,7 @@ def _load_yaml(path: Path) -> dict[str, object]:
     return value
 
 
-def test_advance_lifecycle_carries_refs_into_validate_stage(
-    tmp_path: Path, monkeypatch
-) -> None:
+def test_advance_lifecycle_carries_refs_into_validate_stage(tmp_path: Path, monkeypatch) -> None:
     repository = tmp_path / "repository"
     repository.mkdir()
     execution_id = "EX-20260802T043000Z-001"
