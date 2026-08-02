@@ -195,7 +195,7 @@ adaptations:
   disposition: approved
   implementation_status: completed
   validation_status: passed
-  persistence_status: not-persisted
+  persistence_status: persisted
   reuse_status: reusable
 blockers: []
 approval_refs: []
