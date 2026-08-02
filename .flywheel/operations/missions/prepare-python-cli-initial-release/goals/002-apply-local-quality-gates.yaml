@@ -2,16 +2,17 @@ schema_version: 1
 id: 002-apply-local-quality-gates
 mission_id: prepare-python-cli-initial-release
 title: Apply Local Quality Gates
-status: proposed
-objective: Evaluate and apply justified local linting, formatting, typing, and build checks without introducing hosted automation.
+status: ready
+objective: Evaluate and apply justified local linting, formatting, typing, and build
+  checks without introducing hosted automation.
 depends_on:
-  - 001-establish-release-baseline
+- 001-establish-release-baseline
 acceptance_criteria:
-  - id: AC-001
-    statement: Ruff is adopted, corrected, or rejected with explicit rationale.
-  - id: AC-002
-    statement: mypy is adopted, corrected, or rejected with explicit rationale.
-  - id: AC-003
-    statement: The package build backend is validated against actual release needs.
-  - id: AC-004
-    statement: Adopted checks run locally through one documented command.
+- id: AC-001
+  statement: Ruff is adopted, corrected, or rejected with explicit rationale.
+- id: AC-002
+  statement: mypy is adopted, corrected, or rejected with explicit rationale.
+- id: AC-003
+  statement: The package build backend is validated against actual release needs.
+- id: AC-004
+  statement: Adopted checks run locally through one documented command.
