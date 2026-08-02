@@ -18,7 +18,7 @@ python -m pip install -e ".[dev]"
 python -m tools validate
 ```
 
-`python -m tools validate` runs Ruff linting, Ruff formatting checks, mypy, pytest, coverage, and the repository artifact validator.
+`python -m tools validate` is the single local quality-gate command. It runs Ruff linting, Ruff formatting checks, strict mypy, pytest with coverage enforcement, and an isolated source-distribution and wheel build through the declared Hatchling backend. Build output is written under `.flywheel/.runtime/dist/` and is not committed.
 
 ## Commands
 
@@ -119,7 +119,7 @@ The metadata records the framework version, archive checksum, source identity, i
 
 ## Runtime files
 
-`.flywheel/.runtime/` contains temporary locks and staging information. It must not be committed.
+`.flywheel/.runtime/` contains temporary locks, staging information, and local build output. It must not be committed.
 
 ## Current limitations
 
