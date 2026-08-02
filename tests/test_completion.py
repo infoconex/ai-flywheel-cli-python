@@ -78,9 +78,7 @@ def _repository(
             "status": "active",
             "objective": "Complete the sample goal.",
             "acceptance_criteria": [{"id": "AC-001", "statement": "The goal completes."}],
-            "evidence_required": [
-                {"criterion_id": "AC-001", "evidence_types": ["test result"]}
-            ],
+            "evidence_required": [{"criterion_id": "AC-001", "evidence_types": ["test result"]}],
         },
     )
     _write_yaml(
@@ -93,12 +91,8 @@ def _repository(
             "status": "proposed",
             "objective": "Continue the mission.",
             "depends_on": [GOAL_ID],
-            "acceptance_criteria": [
-                {"id": "AC-001", "statement": "The next goal completes."}
-            ],
-            "evidence_required": [
-                {"criterion_id": "AC-001", "evidence_types": ["test result"]}
-            ],
+            "acceptance_criteria": [{"id": "AC-001", "statement": "The next goal completes."}],
+            "evidence_required": [{"criterion_id": "AC-001", "evidence_types": ["test result"]}],
         },
     )
     completed_stage = {
