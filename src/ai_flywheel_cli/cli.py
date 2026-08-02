@@ -12,6 +12,7 @@ from ai_flywheel_cli.deterministic_operations import (
     advance_lifecycle,
     start_execution,
 )
+from ai_flywheel_cli.mutation import MutationRejectedError
 from ai_flywheel_cli.operations import (
     LockContentionError,
     OperationError,
@@ -51,10 +52,14 @@ def _operation_exit(error: OperationError, *, command: str, as_json: bool) -> No
     else:
         code = 8
         category = "operation-failed"
-    _emit(
-        {"command": command, "status": category, "error": str(error)},
-        as_json=as_json,
-    )
+    payload: dict[str, object] = {
+        "command": command,
+        "status": category,
+        "error": str(error),
+    }
+    if isinstance(error, MutationRejectedError):
+        payload["failures"] = [failure.as_dict() for failure in error.failures]
+    _emit(payload, as_json=as_json)
     raise typer.Exit(code=code)
 
 
