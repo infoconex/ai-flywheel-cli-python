@@ -96,7 +96,28 @@ observations:
   - EVIDENCE-002-LOCAL-QUALITY-GATE
   uncertainty: null
   conflicts_with: []
-evaluations: []
+evaluations:
+- id: EVAL-001
+  statement: The adopted local quality gate satisfies all four acceptance criteria for
+    linting and formatting, strict typing, package-backend validation, and one-command
+    local execution.
+  result: supports
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  limitations:
+  - The evidence proves the gate on Windows with Python 3.13.14 and does not yet prove
+    installation into a clean external environment, which is reserved for Goal 003.
+  rationale: Ruff linting and formatting, strict mypy, pytest with coverage, repository
+    validation, and isolated Hatchling source and wheel builds all passed through the
+    documented python -m tools validate command.
 classifications: []
 adaptations: []
 blockers: []
