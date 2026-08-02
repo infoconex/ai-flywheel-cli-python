@@ -38,7 +38,15 @@ last_durable_update:
         tmp_path / ".flywheel/operating-model/schemas/goal.schema.yaml",
         """$schema: https://json-schema.org/draft/2020-12/schema
 type: object
-required: [schema_version, id, mission_id, title, status, objective, acceptance_criteria, evidence_required]
+required:
+  - schema_version
+  - id
+  - mission_id
+  - title
+  - status
+  - objective
+  - acceptance_criteria
+  - evidence_required
 """,
     )
     _write(
