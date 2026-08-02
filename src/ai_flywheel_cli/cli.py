@@ -6,6 +6,7 @@ from pathlib import Path
 import typer
 
 from ai_flywheel_cli import __version__
+from ai_flywheel_cli.completion import complete_execution
 from ai_flywheel_cli.deterministic_operations import (
     UnsupportedDeterministicOperationError,
     advance_lifecycle,
@@ -181,6 +182,22 @@ def advance_lifecycle_command(
         )
     except OperationError as error:
         _operation_exit(error, command="advance-lifecycle", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
+
+
+@app.command("complete-execution")
+def complete_execution_command(
+    summary: str = typer.Option(..., "--summary"),
+    ref: list[str] | None = typer.Option(None, "--ref"),
+    repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Complete reuse, close the active execution, and ready the next dependent goal."""
+    try:
+        result = complete_execution(repository, summary, tuple(ref or ()))
+    except OperationError as error:
+        _operation_exit(error, command="complete-execution", as_json=json_output)
         return
     _emit(result.as_dict(), as_json=json_output)
 
