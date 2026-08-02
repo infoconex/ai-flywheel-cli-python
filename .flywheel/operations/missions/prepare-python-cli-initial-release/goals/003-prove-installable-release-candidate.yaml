@@ -17,3 +17,19 @@ acceptance_criteria:
     statement: Representative commands operate successfully from the installed package.
   - id: AC-005
     statement: Release artifacts are inspected for expected files and absence of repository-only content.
+evidence_required:
+  - criterion_id: AC-001
+    evidence_types:
+      - source and wheel build results
+  - criterion_id: AC-002
+    evidence_types:
+      - clean-environment wheel installation results
+  - criterion_id: AC-003
+    evidence_types:
+      - installed console and module entry-point results
+  - criterion_id: AC-004
+    evidence_types:
+      - installed representative command results
+  - criterion_id: AC-005
+    evidence_types:
+      - built artifact content inspection
