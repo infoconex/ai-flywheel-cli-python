@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from datetime import UTC, datetime, timedelta
+from itertools import pairwise
 from pathlib import Path
 
 import pytest
@@ -233,7 +235,7 @@ def _repository(tmp_path: Path, stage: str) -> tuple[Path, Path, Path]:
 
 @pytest.mark.parametrize(
     ("current_stage", "next_stage"),
-    list(zip(LIFECYCLE_ORDER[:-1], LIFECYCLE_ORDER[1:], strict=True)),
+    list(pairwise(LIFECYCLE_ORDER)),
 )
 def test_each_supported_lifecycle_transition_completes_current_and_starts_next(
     tmp_path: Path,
