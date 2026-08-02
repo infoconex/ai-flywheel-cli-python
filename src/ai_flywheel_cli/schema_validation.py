@@ -103,12 +103,6 @@ def validate_declared_artifacts(
             f".flywheel/operations/records/{mission_id}/{goal_id}/executions/"
             f"{execution_id}.yaml"
         )
-        _validate_schema(
-            root,
-            active_execution_relative,
-            "execution",
-            issues,
-        )
 
     records_root = root / ".flywheel/operations/records"
     if not records_root.is_dir():
