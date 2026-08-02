@@ -77,9 +77,7 @@ def _repository(
             "title": "Sample Goal",
             "status": "active",
             "objective": "Complete the sample goal.",
-            "acceptance_criteria": [
-                {"id": "AC-001", "statement": "The goal completes."}
-            ],
+            "acceptance_criteria": [{"id": "AC-001", "statement": "The goal completes."}],
             "evidence_required": [
                 {"criterion_id": "AC-001", "evidence_types": ["test result"]}
             ],
@@ -168,9 +166,7 @@ def test_complete_execution_closes_goal_and_readies_next_goal(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    repository, state_path, goal_path, next_goal_path, execution_path = _repository(
-        tmp_path
-    )
+    repository, state_path, goal_path, next_goal_path, execution_path = _repository(tmp_path)
     monkeypatch.setattr(
         "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(issues=()),
@@ -236,9 +232,7 @@ def test_complete_execution_validation_rejection_is_atomic(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    repository, state_path, goal_path, next_goal_path, execution_path = _repository(
-        tmp_path
-    )
+    repository, state_path, goal_path, next_goal_path, execution_path = _repository(tmp_path)
     paths = (state_path, goal_path, next_goal_path, execution_path)
     originals = _read_all(paths)
     monkeypatch.setattr(
