@@ -1,0 +1,86 @@
+schema_version: 1
+id: EX-20260801T234900Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 001-establish-release-baseline
+status: in-progress
+intended_outcome: Establish and record a reproducible release baseline with passing
+  local quality gates and repository validation.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+started_at: '2026-08-01T23:49:28Z'
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: '2026-08-01T23:49:28Z'
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  observe:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  evaluate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  classify:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  adapt:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  validate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  persist:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  reuse:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+actions: []
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
