@@ -10,7 +10,7 @@ def _write(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def test_inactive_goal_is_schema_validated(tmp_path: Path) -> None:
+def _baseline(tmp_path: Path) -> None:
     _write(
         tmp_path / ".flywheel/manifest.yaml",
         "schema_version: 1\nrequired_files:\n  - .flywheel/state.yaml\n",
@@ -49,6 +49,10 @@ required:
   - evidence_required
 """,
     )
+
+
+def test_inactive_goal_in_active_mission_is_schema_validated(tmp_path: Path) -> None:
+    _baseline(tmp_path)
     _write(
         tmp_path / ".flywheel/operations/missions/sample-mission/goals/002-invalid-goal.yaml",
         """schema_version: 1
@@ -72,3 +76,23 @@ acceptance_criteria:
     ]
     assert matching
     assert "evidence_required" in matching[0].message
+
+
+def test_goal_in_historical_mission_is_not_revalidated(tmp_path: Path) -> None:
+    _baseline(tmp_path)
+    _write(
+        tmp_path / ".flywheel/operations/missions/historical-mission/goals/001-legacy.yaml",
+        """schema_version: 1
+id: 001-legacy
+mission_id: historical-mission
+title: Legacy Goal
+status: deferred
+objective: Preserve historical data.
+completion:
+  summary: accepted under an earlier schema
+""",
+    )
+
+    issues = validate_repository(tmp_path).issues
+
+    assert not any(issue.path.endswith("001-legacy.yaml") for issue in issues)
