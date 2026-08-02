@@ -68,11 +68,7 @@ def _repository_at_evaluate(
         },
     )
     _write_yaml(
-        repository
-        / ".flywheel/operations/missions"
-        / MISSION_ID
-        / "goals"
-        / f"{GOAL_ID}.yaml",
+        repository / ".flywheel/operations/missions" / MISSION_ID / "goals" / f"{GOAL_ID}.yaml",
         {
             "schema_version": 1,
             "id": GOAL_ID,
@@ -80,9 +76,7 @@ def _repository_at_evaluate(
             "title": "Sample Goal",
             "status": "proposed",
             "objective": "Exercise deterministic operations.",
-            "acceptance_criteria": [
-                {"id": "AC-001", "statement": "The operation succeeds."}
-            ],
+            "acceptance_criteria": [{"id": "AC-001", "statement": "The operation succeeds."}],
         },
     )
     monkeypatch.setattr(
