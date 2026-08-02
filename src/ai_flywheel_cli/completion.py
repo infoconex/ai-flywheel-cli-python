@@ -46,6 +46,25 @@ def _timestamp(value: datetime | None = None) -> str:
     return current.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _dependencies_completed(
+    goals_directory: Path,
+    dependencies: list[object],
+    completing_goal_id: str,
+) -> bool:
+    for dependency_id in dependencies:
+        if not isinstance(dependency_id, str):
+            return False
+        if dependency_id == completing_goal_id:
+            continue
+        dependency_path = goals_directory / f"{dependency_id}.yaml"
+        if not dependency_path.is_file():
+            return False
+        dependency = _load_mapping(dependency_path)
+        if dependency.get("status") != "completed":
+            return False
+    return True
+
+
 def complete_execution(
     repository: Path,
     summary: str,
@@ -144,6 +163,7 @@ def complete_execution(
             candidate.get("status") == "proposed"
             and isinstance(dependencies, list)
             and goal_id in dependencies
+            and _dependencies_completed(goals_directory, dependencies, goal_id)
         )
         if is_next_goal:
             next_goal_id = str(candidate.get("id"))
