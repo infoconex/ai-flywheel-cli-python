@@ -242,13 +242,14 @@ def advance_lifecycle(
         )
     if not summary.strip():
         raise TransitionRejectedError("A lifecycle completion summary is required.")
+    unique_refs = list(dict.fromkeys(refs))
     timestamp = _timestamp(completed_at)
     stage.update(
         {
             "status": "completed",
             "completed_at": timestamp,
             "summary": summary.strip(),
-            "refs": list(dict.fromkeys(refs)),
+            "refs": unique_refs,
             "reason": None,
         }
     )
@@ -262,13 +263,14 @@ def advance_lifecycle(
     next_value = lifecycle.get(next_stage)
     if not isinstance(next_value, dict) or next_value.get("status") != "pending":
         raise TransitionRejectedError(f"Next lifecycle stage is not pending: {next_stage}")
+    next_stage_refs = unique_refs if next_stage == "validate" else []
     next_value.update(
         {
             "status": "in-progress",
             "started_at": timestamp,
             "completed_at": None,
             "summary": None,
-            "refs": [],
+            "refs": next_stage_refs,
             "reason": None,
         }
     )
