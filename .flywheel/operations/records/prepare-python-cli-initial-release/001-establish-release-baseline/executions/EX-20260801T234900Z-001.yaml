@@ -146,7 +146,43 @@ classifications:
   decision_ref: DECISION-RELEASE-BASELINE-001
   finding_ref: null
   validation_refs: []
-adaptations: []
+adaptations:
+- id: ADAPT-001
+  type: plan
+  statement: Use the established local Python 3.13.14 baseline and the existing goals
+    as the bounded plan for applying quality gates, proving an installable release
+    candidate, and finalizing release readiness.
+  classification_refs:
+  - CLASS-001
+  evaluation_refs:
+  - EVAL-001
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  affected_scope:
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/002-apply-local-quality-gates.yaml
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/003-prove-installable-release-candidate.yaml
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/004-finalize-release-readiness.yaml
+  rationale: The baseline already satisfies this goal, so no corrective implementation
+    is required. The appropriate adaptation is to carry the validated constraints and
+    evidence into the remaining approved goals.
+  intended_effect: Preserve a reproducible starting point and prevent unnecessary scope
+    expansion while completing the remaining release-readiness work.
+  alternatives:
+  - Introduce hosted CI or external package publication during this goal.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: DECISION-RELEASE-BASELINE-001
+  disposition: approved
+  implementation_status: completed
+  validation_status: pending
+  persistence_status: not-persisted
+  reuse_status: reusable
 blockers: []
 approval_refs: []
 evidence_refs:
