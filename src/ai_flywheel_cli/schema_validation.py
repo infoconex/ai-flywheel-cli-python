@@ -87,6 +87,7 @@ def validate_declared_artifacts(
     mission_id = state.get("active_mission")
     goal_id = state.get("active_goal")
     execution_id = state.get("active_execution")
+    active_execution_relative: Path | None = None
     if isinstance(mission_id, str):
         mission_root = root / ".flywheel/operations/missions" / mission_id
         _validate_schema(
@@ -98,12 +99,13 @@ def validate_declared_artifacts(
         for goal_path in mission_root.glob("goals/*.yaml"):
             _validate_schema(root, goal_path.relative_to(root), "goal", issues)
     if mission_id and goal_id and execution_id:
+        active_execution_relative = Path(
+            f".flywheel/operations/records/{mission_id}/{goal_id}/executions/"
+            f"{execution_id}.yaml"
+        )
         _validate_schema(
             root,
-            Path(
-                f".flywheel/operations/records/{mission_id}/{goal_id}/executions/"
-                f"{execution_id}.yaml"
-            ),
+            active_execution_relative,
             "execution",
             issues,
         )
@@ -148,7 +150,8 @@ def validate_declared_artifacts(
         relative = execution_path.relative_to(root)
         if not isinstance(value, dict):
             continue
-        _validate_schema(root, relative, "execution", issues)
+        if relative == active_execution_relative:
+            _validate_schema(root, relative, "execution", issues)
         execution_id = value.get("id")
         if execution_path.stem != execution_id:
             issues.append(
