@@ -317,9 +317,7 @@ def test_non_pending_next_stage_is_rejected_without_file_changes(tmp_path: Path)
     assert execution_path.read_bytes() == original_execution
 
 
-def test_validation_rejection_is_atomic(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
+def test_validation_rejection_is_atomic(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     repository, state_path, execution_path = _repository(tmp_path, "observe")
     original_state = state_path.read_bytes()
     original_execution = execution_path.read_bytes()
