@@ -190,7 +190,40 @@ evidence_refs:
 decision_refs:
 - DECISION-RELEASE-BASELINE-001
 finding_refs: []
-validation_results: []
+validation_results:
+- id: VAL-001
+  phase: planned
+  domain: repository
+  status: pending
+  severity: info
+  adaptation_refs:
+  - ADAPT-001
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  method: Run the complete local quality gate and repository validation after entering
+    the validate stage.
+  scope:
+  - Python package metadata and CLI entry points
+  - Ruff lint and formatting
+  - strict mypy type checking
+  - pytest suite and coverage threshold
+  - Flywheel repository validation
+  expected_outcome: All local release-baseline checks pass with no repository validation
+    errors.
+  actual_outcome: null
+  expected_evidence:
+  - EVIDENCE-RELEASE-BASELINE-001
+  evidence_refs: []
+  eligible: true
+  exclusion_reason: null
+  executed_at: null
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
 outcome: null
 completion:
   disposition: null
