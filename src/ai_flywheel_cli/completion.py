@@ -67,6 +67,9 @@ def complete_execution(
         raise CompletionRejectedError(
             "An active mission, goal, and execution are required for completion."
         )
+    assert isinstance(mission_id, str)
+    assert isinstance(goal_id, str)
+    assert isinstance(execution_id, str)
     if lifecycle_stage != "reuse":
         raise CompletionRejectedError(
             f"Execution completion requires lifecycle stage reuse, found {lifecycle_stage}."
