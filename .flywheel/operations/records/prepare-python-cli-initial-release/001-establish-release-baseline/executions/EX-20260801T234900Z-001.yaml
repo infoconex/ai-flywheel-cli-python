@@ -62,18 +62,24 @@ lifecycle:
     - EVIDENCE-RELEASE-BASELINE-001
     reason: null
   adapt:
-    status: in-progress
+    status: completed
     started_at: '2026-08-02T04:27:57Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-02T04:50:40Z'
+    summary: Adapted the remaining mission plan to use the established local release
+      baseline, preserve the approved scope boundaries, and carry forward the recorded
+      Windows and Python 3.13.14 validation limitation.
+    refs: &id001
+    - ADAPT-001
+    - VAL-001
+    - CLASS-001
+    - EVIDENCE-RELEASE-BASELINE-001
     reason: null
   validate:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-02T04:50:40Z'
     completed_at: null
     summary: null
-    refs: []
+    refs: *id001
     reason: null
   persist:
     status: pending
@@ -165,10 +171,10 @@ adaptations:
   - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/003-prove-installable-release-candidate.yaml
   - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/004-finalize-release-readiness.yaml
   rationale: The baseline already satisfies this goal, so no corrective implementation
-    is required. The appropriate adaptation is to carry the validated constraints and
-    evidence into the remaining approved goals.
-  intended_effect: Preserve a reproducible starting point and prevent unnecessary scope
-    expansion while completing the remaining release-readiness work.
+    is required. The appropriate adaptation is to carry the validated constraints
+    and evidence into the remaining approved goals.
+  intended_effect: Preserve a reproducible starting point and prevent unnecessary
+    scope expansion while completing the remaining release-readiness work.
   alternatives:
   - Introduce hosted CI or external package publication during this goal.
   certainty: confirmed
