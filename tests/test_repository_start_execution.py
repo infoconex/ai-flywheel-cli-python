@@ -30,13 +30,7 @@ def _write_pre_start_state(repository: Path) -> None:
     )
     state_path.write_text(yaml.safe_dump(state, sort_keys=False), encoding="utf-8")
 
-    goal_path = (
-        repository
-        / ".flywheel/operations/missions"
-        / MISSION_ID
-        / "goals"
-        / f"{GOAL_ID}.yaml"
-    )
+    goal_path = repository / ".flywheel/operations/missions" / MISSION_ID / "goals" / f"{GOAL_ID}.yaml"
     goal = yaml.safe_load(goal_path.read_text(encoding="utf-8"))
     goal["status"] = "ready"
     goal_path.write_text(yaml.safe_dump(goal, sort_keys=False), encoding="utf-8")
