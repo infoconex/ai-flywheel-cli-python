@@ -17,3 +17,19 @@ acceptance_criteria:
     statement: A reproducible local release checklist is available.
   - id: AC-005
     statement: Tagging, GitHub release creation, and publication remain explicit human approval boundaries.
+evidence_required:
+  - criterion_id: AC-001
+    evidence_types:
+      - verified README installation and usage review
+  - criterion_id: AC-002
+    evidence_types:
+      - version and implementation-status review
+  - criterion_id: AC-003
+    evidence_types:
+      - documented limitations and deferred decisions
+  - criterion_id: AC-004
+    evidence_types:
+      - reproducible local release checklist
+  - criterion_id: AC-005
+    evidence_types:
+      - documented human approval boundaries
