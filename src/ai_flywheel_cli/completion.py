@@ -118,7 +118,10 @@ def complete_execution(
             "outcome": summary.strip(),
             "completion": {
                 "disposition": "goal-completed",
-                "rationale": "All acceptance criteria were supported by recorded evidence and passed validation.",
+                "rationale": (
+                    "All acceptance criteria were supported by recorded evidence "
+                    "and passed validation."
+                ),
             },
         }
     )
@@ -134,7 +137,12 @@ def complete_execution(
             continue
         candidate = _load_mapping(candidate_path)
         dependencies = candidate.get("depends_on", [])
-        if candidate.get("status") == "proposed" and isinstance(dependencies, list) and goal_id in dependencies:
+        is_next_goal = (
+            candidate.get("status") == "proposed"
+            and isinstance(dependencies, list)
+            and goal_id in dependencies
+        )
+        if is_next_goal:
             next_goal_id = str(candidate.get("id"))
             next_goal_relative = candidate_path.relative_to(root).as_posix()
             next_goal_bytes = candidate_path.read_bytes()
@@ -163,7 +171,9 @@ def complete_execution(
         state_relative: state,
     }
     expected_sha256 = {
-        execution_relative: sha256_bytes(execution_bytes) if execution_bytes is not None else None,
+        execution_relative: (
+            sha256_bytes(execution_bytes) if execution_bytes is not None else None
+        ),
         goal_relative: sha256_bytes(goal_bytes) if goal_bytes is not None else None,
         state_relative: sha256_bytes(state_bytes) if state_bytes is not None else None,
     }
