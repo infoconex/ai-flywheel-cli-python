@@ -100,8 +100,7 @@ def validate_declared_artifacts(
             _validate_schema(root, goal_path.relative_to(root), "goal", issues)
     if mission_id and goal_id and execution_id:
         active_execution_relative = Path(
-            f".flywheel/operations/records/{mission_id}/{goal_id}/executions/"
-            f"{execution_id}.yaml"
+            f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
         )
 
     records_root = root / ".flywheel/operations/records"
