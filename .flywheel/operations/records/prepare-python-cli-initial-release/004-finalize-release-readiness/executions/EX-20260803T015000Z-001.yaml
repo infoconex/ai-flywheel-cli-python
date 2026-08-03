@@ -73,13 +73,24 @@ lifecycle:
     refs: []
     reason: null
 actions: []
-observations: []
+observations:
+- id: OBS-004
+  statement: The release-facing documentation now matches the verified 0.1.0 command surface and release-candidate behavior, including lifecycle operations, current limitations, a reproducible local release checklist, and explicit human approval boundaries.
+  type: direct
+  status: complete
+  observed_at: '2026-08-03T01:59:00Z'
+  source_or_method: README, package version metadata, installed CLI command help, and complete local quality-gate review.
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  uncertainty: null
+  conflicts_with: []
 evaluations: []
 classifications: []
 adaptations: []
 blockers: []
 approval_refs: []
-evidence_refs: []
+evidence_refs:
+- EVIDENCE-004-RELEASE-READINESS
 decision_refs: []
 finding_refs: []
 validation_results: []
