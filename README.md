@@ -1,6 +1,6 @@
 # AI Flywheel CLI for Python
 
-A cross-platform command-line application for inspecting, installing, validating, and safely upgrading AI Flywheel operating artifacts in a repository.
+A cross-platform command-line application for inspecting, installing, validating, upgrading, and safely operating AI Flywheel artifacts in a repository.
 
 ## Requirements
 
@@ -9,6 +9,12 @@ A cross-platform command-line application for inspecting, installing, validating
 - A verified AI Flywheel framework ZIP archive and its published SHA-256 checksum for installation or upgrade
 
 Hosted execution is not enabled. All validation is performed locally.
+
+## Implementation status
+
+Version `0.1.0` is a locally validated release candidate. The package builds successfully as both a wheel and source distribution, installs into a clean Python environment, exposes the `flywheel` console command and `python -m ai_flywheel_cli` module entrypoint, and passes representative installed-command checks.
+
+This status does not mean the package has been published. Tagging, GitHub release creation, and package-index publication remain pending explicit human approval.
 
 ## Development setup
 
@@ -49,6 +55,46 @@ flywheel validate . --json
 ```
 
 Validation failures return exit code `2`.
+
+### Execution lifecycle
+
+Start an execution for a ready goal:
+
+```text
+flywheel start-execution <mission-id> <goal-id> <execution-id> \
+  --intended-outcome "<outcome>" \
+  --repository .
+```
+
+Advance the active execution through Execute, Observe, Evaluate, Classify, Adapt, and Validate:
+
+```text
+flywheel advance-lifecycle \
+  --summary "<summary>" \
+  --ref <record-id> \
+  --expected-stage <stage> \
+  --repository .
+```
+
+Persist a validated execution and activate Reuse:
+
+```text
+flywheel persist-execution \
+  --summary "<summary>" \
+  --reuse-id <reuse-id> \
+  --repository .
+```
+
+Complete Reuse, close the execution, and ready the next dependent goal:
+
+```text
+flywheel complete-execution \
+  --summary "<summary>" \
+  --ref <record-id> \
+  --repository .
+```
+
+These commands enforce schema validation, active-stage boundaries, reference integrity, and atomic state updates.
 
 ### Install
 
@@ -125,8 +171,45 @@ The metadata records the framework version, archive checksum, source identity, i
 
 - Release discovery and download are not performed implicitly; the first implementation accepts an already downloaded immutable archive and expected checksum.
 - Offline release bundles and standalone executable distribution remain deferred.
-- Mission, goal, execution, and full lifecycle-management commands remain deferred.
+- Mission and goal creation, editing, listing, and broader administrative management remain deferred; execution lifecycle transitions are supported.
 - A dedicated stale-lock recovery command remains deferred.
+- Release-candidate proof has been completed on Windows with Python 3.13.14; other supported platforms require their own execution evidence.
+
+## Local release checklist
+
+Run this checklist from a clean working tree before requesting release approval:
+
+```text
+python -m tools validate
+python -m build
+python -m venv .release-proof
+.release-proof\Scripts\python -m pip install --upgrade pip
+.release-proof\Scripts\python -m pip install dist\ai_flywheel_cli-0.1.0-py3-none-any.whl
+.release-proof\Scripts\flywheel --version
+.release-proof\Scripts\python -m ai_flywheel_cli --version
+.release-proof\Scripts\flywheel doctor .
+.release-proof\Scripts\flywheel status .
+.release-proof\Scripts\flywheel validate .
+```
+
+Then inspect both files under `dist/` and confirm:
+
+- the wheel and source distribution contain only expected package and metadata files
+- repository-only content such as `.flywheel`, tests, tools, local environments, caches, and Git metadata is absent
+- the installed version reports `0.1.0`
+- the working tree contains no uncommitted release changes
+
+The `.release-proof` environment is disposable and must not be committed.
+
+## Release approval boundary
+
+The local checklist establishes technical readiness only. The following actions require separate, explicit human approval and are not performed automatically:
+
+- creating or pushing a version tag
+- creating a GitHub release
+- uploading artifacts to GitHub or a package index
+- publishing release notes
+- enabling hosted release automation or GitHub Actions
 
 ## License
 
