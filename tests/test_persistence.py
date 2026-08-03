@@ -160,11 +160,7 @@ def test_persist_execution_applies_plan_and_starts_reuse(
     assert execution["lifecycle"]["reuse"]["status"] == "in-progress"
     assert execution["adaptations"][0]["persistence_status"] == "persisted"
     reuse_path = (
-        repository
-        / ".flywheel/operations/records"
-        / MISSION_ID
-        / GOAL_ID
-        / "reuse/REUSE-001.yaml"
+        repository / ".flywheel/operations/records" / MISSION_ID / GOAL_ID / "reuse/REUSE-001.yaml"
     )
     reuse = _load_yaml(reuse_path)
     assert reuse["status"] == "planned"
