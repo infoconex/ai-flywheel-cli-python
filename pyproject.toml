@@ -30,6 +30,14 @@ dev = [
 [project.scripts]
 flywheel = "ai_flywheel_cli.cli:app"
 
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.flywheel",
+  "/.gitignore",
+  "/tests",
+  "/tools",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/ai_flywheel_cli"]
 
