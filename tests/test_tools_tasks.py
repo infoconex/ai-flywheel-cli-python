@@ -36,7 +36,13 @@ def test_source_distribution_excludes_repository_only_content() -> None:
     configuration = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
     exclusions = configuration["tool"]["hatch"]["build"]["targets"]["sdist"]["exclude"]
 
-    assert exclusions == ["/.flywheel", "/.gitignore", "/tests", "/tools"]
+    assert exclusions == [
+        "/.flywheel",
+        "/.gitignore",
+        "/.release-proof",
+        "/tests",
+        "/tools",
+    ]
 
 
 def test_main_stops_after_first_failed_command(monkeypatch: pytest.MonkeyPatch) -> None:
