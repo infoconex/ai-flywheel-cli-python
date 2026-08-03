@@ -12,7 +12,7 @@ from ai_flywheel_cli.operations import OperationError
 from ai_flywheel_cli.persistence import PersistenceRejectedError, persist_execution
 
 app = base_cli.app
-_original_advance_lifecycle = base_cli.advance_lifecycle
+_original_advance_lifecycle = base_cli.advance_lifecycle  # type: ignore[attr-defined]
 
 
 def _guarded_advance_lifecycle(
@@ -23,8 +23,9 @@ def _guarded_advance_lifecycle(
     completed_at: datetime | None = None,
     expected_stage: str | None = None,
 ) -> DeterministicOperationResult:
-    state_path = repository.resolve() / ".flywheel/state.yaml"
-    state = load_yaml_mapping(state_path, PersistenceRejectedError)
+    state = load_yaml_mapping(
+        repository.resolve() / ".flywheel/state.yaml", PersistenceRejectedError
+    )
     if state.get("lifecycle_stage") == "persist":
         raise PersistenceRejectedError(
             "Persist requires flywheel persist-execution because completion must use "
@@ -39,7 +40,7 @@ def _guarded_advance_lifecycle(
     )
 
 
-base_cli.advance_lifecycle = _guarded_advance_lifecycle
+base_cli.advance_lifecycle = _guarded_advance_lifecycle  # type: ignore[attr-defined]
 
 
 @app.command("persist-execution")
