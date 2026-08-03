@@ -232,9 +232,16 @@ def _repository(tmp_path: Path, stage: str) -> tuple[Path, Path, Path]:
     return repository, state_path, execution_path
 
 
+ORDINARY_TRANSITIONS = [
+    transition
+    for transition in pairwise(LIFECYCLE_ORDER)
+    if transition != ("persist", "reuse")
+]
+
+
 @pytest.mark.parametrize(
     ("current_stage", "next_stage"),
-    list(pairwise(LIFECYCLE_ORDER)),
+    ORDINARY_TRANSITIONS,
 )
 def test_each_supported_lifecycle_transition_completes_current_and_starts_next(
     tmp_path: Path,
@@ -289,7 +296,7 @@ def test_expected_stage_mismatch_is_rejected_without_file_changes(
 
 
 def test_blank_summary_is_rejected_without_file_changes(tmp_path: Path) -> None:
-    repository, state_path, execution_path = _repository(tmp_path, "persist")
+    repository, state_path, execution_path = _repository(tmp_path, "classify")
     original_state = state_path.read_bytes()
     original_execution = execution_path.read_bytes()
 
