@@ -96,7 +96,24 @@ observations:
   - EVIDENCE-004-RELEASE-READINESS
   uncertainty: null
   conflicts_with: []
-evaluations: []
+evaluations:
+- id: EVAL-004
+  statement: The release-facing documentation and verified command behavior satisfy all five Goal 004 acceptance criteria for an approval-ready 0.1.0 release candidate.
+  result: supports
+  observation_refs:
+  - OBS-004
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  rule_refs: []
+  limitations:
+  - The release candidate is locally validated on Windows with Python 3.13; tagging, GitHub release creation, artifact upload, and package-index publication remain unexecuted human decisions.
+  rationale: The README now reflects the implemented installation, validation, upgrade, and lifecycle command surface; identifies version 0.1.0 as a locally validated but unpublished release candidate; records current limitations and deferred decisions; provides a reproducible local release checklist; and explicitly reserves publication actions for human approval.
 classifications: []
 adaptations: []
 blockers: []
