@@ -50,15 +50,21 @@ lifecycle:
     - EVIDENCE-002-LOCAL-QUALITY-GATE
     reason: null
   classify:
-    status: in-progress
+    status: completed
     started_at: '2026-08-02T16:14:22Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-02T22:28:45Z'
+    summary: Classified the successful local quality gate as satisfying Goal 002,
+      with clean external installation proof recorded as a confirmed scope finding
+      deferred to Goal 003.
+    refs:
+    - CLASS-001
+    - FINDING-002-PLATFORM-SCOPE
+    - EVAL-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
     reason: null
   adapt:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-02T22:28:45Z'
     completed_at: null
     summary: null
     refs: []
@@ -126,15 +132,15 @@ evaluations:
 classifications:
 - id: CLASS-001
   type: finding
-  statement: Goal 002 has confirmed the local quality gate, while clean external
-    installation proof remains outside this goal and is deferred to Goal 003.
+  statement: Goal 002 has confirmed the local quality gate, while clean external installation
+    proof remains outside this goal and is deferred to Goal 003.
   evaluation_refs:
   - EVAL-001
   evidence_refs:
   - EVIDENCE-002-LOCAL-QUALITY-GATE
-  rationale: The successful gate directly satisfies Goal 002, and its documented
-    platform limitation defines the remaining release-proof boundary without blocking
-    this goal.
+  rationale: The successful gate directly satisfies Goal 002, and its documented platform
+    limitation defines the remaining release-proof boundary without blocking this
+    goal.
   certainty: confirmed
   uncertainty: null
   conflicts_with: []
