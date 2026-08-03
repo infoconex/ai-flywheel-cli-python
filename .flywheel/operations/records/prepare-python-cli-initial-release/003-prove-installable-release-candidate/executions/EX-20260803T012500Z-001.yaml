@@ -52,15 +52,22 @@ lifecycle:
     - EVIDENCE-003-RELEASE-CANDIDATE
     reason: null
   classify:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T01:40:09Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T01:41:54Z'
+    summary: 'Classified Goal 003 as successfully proving the installable release
+      candidate while also recording a confirmed packaging defect: the initial source
+      distribution included repository-only content. The defect is resolved through
+      explicit Hatchling exclusions and regression coverage.'
+    refs:
+    - CLASS-003
+    - FINDING-003-SDIST-CONTENT
+    - EVAL-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
     reason: null
   adapt:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T01:41:54Z'
     completed_at: null
     summary: null
     refs: []
@@ -124,14 +131,34 @@ evaluations:
   rationale: Both distributions built successfully, the wheel installed into an isolated
     environment, console and module entrypoints returned version 0.1.0, doctor, status,
     and validate passed, and final archive inspection found no repository-only content.
-classifications: []
+classifications:
+- id: CLASS-003
+  type: finding
+  statement: Goal 003 confirms the Python CLI release candidate is installable and
+    operational, and it also identified and resolved a packaging defect that allowed
+    repository-only content into the source distribution.
+  evaluation_refs:
+  - EVAL-003
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  rationale: The final evidence supports all five acceptance criteria, while the earlier
+    oversized source distributions demonstrate a real packaging defect that required
+    configuration and regression-test changes before the goal could pass.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-003-SDIST-CONTENT
+  validation_refs: []
 adaptations: []
 blockers: []
 approval_refs: []
 evidence_refs:
 - EVIDENCE-003-RELEASE-CANDIDATE
 decision_refs: []
-finding_refs: []
+finding_refs:
+- FINDING-003-SDIST-CONTENT
 validation_results: []
 outcome: null
 completion:
