@@ -165,7 +165,8 @@ classifications:
   related_classification_refs: []
   decision_ref: null
   finding_ref: FINDING-004-RELEASE-DOCUMENTATION
-  validation_refs: []
+  validation_refs:
+  - VAL-004
 adaptations:
 - id: ADAPT-004
   type: guidance
@@ -200,7 +201,7 @@ adaptations:
   decision_ref: null
   disposition: approved
   implementation_status: completed
-  validation_status: pending
+  validation_status: passed
   persistence_status: not-persisted
   reuse_status: not-assessed
 blockers: []
@@ -210,7 +211,47 @@ evidence_refs:
 decision_refs: []
 finding_refs:
 - FINDING-004-RELEASE-DOCUMENTATION
-validation_results: []
+validation_results:
+- id: VAL-004
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-004
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  rule_refs: []
+  method: Run python -m tools validate from the active repository virtual environment
+    after finalizing the release-facing README guidance.
+  scope:
+  - Ruff linting and formatting
+  - strict mypy
+  - pytest with coverage
+  - repository validation
+  - isolated source and wheel package builds
+  - release-facing README guidance and approval boundaries
+  expected_outcome: Every configured local quality check passes, both distributions
+    build successfully, and the finalized README remains consistent with the verified
+    command surface and release approval boundary.
+  actual_outcome: Every configured local quality check passed, repository validation
+    succeeded, both source and wheel distributions were built successfully, and the
+    finalized release-facing guidance remained valid.
+  expected_evidence:
+  - Complete python -m tools validate output
+  - EVIDENCE-004-RELEASE-READINESS
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-03T02:38:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
 outcome: null
 completion:
   disposition: null
