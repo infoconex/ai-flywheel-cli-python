@@ -32,15 +32,21 @@ lifecycle:
     - 0153843faa4af3ffe372198d67a033a30a1ef44c
     reason: null
   observe:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T02:01:19Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T02:03:08Z'
+    summary: Observed that the release-facing documentation, package version, implemented
+      command surface, current limitations, local release checklist, and explicit
+      human approval boundaries are now aligned and collectively support all five
+      Goal 004 acceptance criteria.
+    refs:
+    - OBS-004
+    - EVAL-004
+    - EVIDENCE-004-RELEASE-READINESS
     reason: null
   evaluate:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T02:03:08Z'
     completed_at: null
     summary: null
     refs: []
@@ -98,7 +104,8 @@ observations:
   conflicts_with: []
 evaluations:
 - id: EVAL-004
-  statement: The release-facing documentation and verified command behavior satisfy all five Goal 004 acceptance criteria for an approval-ready 0.1.0 release candidate.
+  statement: The release-facing documentation and verified command behavior satisfy
+    all five Goal 004 acceptance criteria for an approval-ready 0.1.0 release candidate.
   result: supports
   observation_refs:
   - OBS-004
@@ -112,8 +119,14 @@ evaluations:
   - AC-005
   rule_refs: []
   limitations:
-  - The release candidate is locally validated on Windows with Python 3.13; tagging, GitHub release creation, artifact upload, and package-index publication remain unexecuted human decisions.
-  rationale: The README now reflects the implemented installation, validation, upgrade, and lifecycle command surface; identifies version 0.1.0 as a locally validated but unpublished release candidate; records current limitations and deferred decisions; provides a reproducible local release checklist; and explicitly reserves publication actions for human approval.
+  - The release candidate is locally validated on Windows with Python 3.13; tagging,
+    GitHub release creation, artifact upload, and package-index publication remain
+    unexecuted human decisions.
+  rationale: The README now reflects the implemented installation, validation, upgrade,
+    and lifecycle command surface; identifies version 0.1.0 as a locally validated
+    but unpublished release candidate; records current limitations and deferred decisions;
+    provides a reproducible local release checklist; and explicitly reserves publication
+    actions for human approval.
 classifications: []
 adaptations: []
 blockers: []
