@@ -1,0 +1,40 @@
+schema_version: 1
+id: 005-define-stable-exit-code-contract
+mission_id: prepare-python-cli-initial-release
+title: Define Stable Exit Code Contract
+status: ready
+objective: Define, implement, test, and document a single-purpose public exit-code contract for the Python CLI before the initial release.
+depends_on:
+- 004-finalize-release-readiness
+acceptance_criteria:
+- id: AC-001
+  statement: Each Flywheel-defined exit code has one stable meaning and no code is intentionally reused for unrelated outcomes.
+- id: AC-002
+  statement: Exit codes 0, 1, and 2 are documented accurately as success, runtime or abort behavior, and Typer or Click usage errors.
+- id: AC-003
+  statement: Flywheel-defined failures use sequential assigned codes without speculative gaps or category ranges.
+- id: AC-004
+  statement: Structured output exposes stable category and reason details where callers need more specificity than the numeric exit code.
+- id: AC-005
+  statement: Runtime and shell statuses that may be observed outside normal Flywheel handling are documented separately and identified as platform-dependent.
+- id: AC-006
+  statement: Regression tests verify every deliberately emitted Flywheel exit code and prevent dual-purpose assignments.
+evidence_required:
+- criterion_id: AC-001
+  evidence_types:
+  - reviewed exit-code registry and implementation mapping
+- criterion_id: AC-002
+  evidence_types:
+  - README runtime and Typer exit-code documentation
+- criterion_id: AC-003
+  evidence_types:
+  - sequential Flywheel exit-code assignments
+- criterion_id: AC-004
+  evidence_types:
+  - structured error-output tests
+- criterion_id: AC-005
+  evidence_types:
+  - separate runtime and shell troubleshooting documentation
+- criterion_id: AC-006
+  evidence_types:
+  - passing exit-code regression tests and complete local quality gate
