@@ -94,18 +94,26 @@ lifecycle:
     - FINDING-003-SDIST-CONTENT
     reason: null
   persist:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T01:45:14Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T01:46:24Z'
+    summary: Persisted the validated Goal 003 release-candidate proof, including clean
+      installation, packaged entrypoint execution, representative command results,
+      corrected source-distribution exclusions, regression coverage, and final clean
+      artifact contents.
+    refs:
+    - PERSIST-20260803T014624Z-001
+    - REUSE-003
+    - VAL-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
     reason: null
   reuse:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T01:46:24Z'
     completed_at: null
     summary: null
-    refs: []
+    refs:
+    - REUSE-003
     reason: null
 actions: []
 observations:
@@ -199,7 +207,7 @@ adaptations:
   disposition: approved
   implementation_status: completed
   validation_status: passed
-  persistence_status: not-persisted
+  persistence_status: persisted
   reuse_status: not-assessed
 blockers: []
 approval_refs: []

@@ -1,0 +1,59 @@
+schema_version: 1
+id: PERSIST-20260803T014624Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 003-prove-installable-release-candidate
+execution_id: EX-20260803T012500Z-001
+created_at: '2026-08-03T01:46:24Z'
+operator: ai-flywheel-cli
+status: applied
+targets:
+- id: PT-001
+  artifact_type: reuse-assessment
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/003-prove-installable-release-candidate/reuse/REUSE-003.yaml
+  operation: create
+  mutability: create-only
+  dependency_refs: []
+  expected_precondition:
+    absence: true
+  proposed_content_digest: 505d226521a1257f6d484b310c64a1933a11aa3ecb4dc741780f2aafd9c136e0
+  rollback:
+    mode: delete-created
+    retained_content_digest: null
+- id: PT-002
+  artifact_type: execution
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/003-prove-installable-release-candidate/executions/EX-20260803T012500Z-001.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-001
+  expected_precondition:
+    blob_sha: 6bc0b6690e57adc8efc60c0f1866bb33f9c8f7b23f88250cd0b326326f3f5aa9
+  proposed_content_digest: aad39377239374f919861d7587eb1c18b1b4e7cf22ef0eb339d3b5b08f4b7d32
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 6bc0b6690e57adc8efc60c0f1866bb33f9c8f7b23f88250cd0b326326f3f5aa9
+- id: PT-003
+  artifact_type: state
+  path: .flywheel/state.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-002
+  expected_precondition:
+    blob_sha: 895fac2a6fbfe9d795167be55cf0e8c6c4bef8b6bce34a78e5bf7e7606a83e0e
+  proposed_content_digest: baf391e59ca0827314fea89b285f1c3354dd11b5e58eb3e7140d2821181c30f9
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 895fac2a6fbfe9d795167be55cf0e8c6c4bef8b6bce34a78e5bf7e7606a83e0e
+write_order:
+- PT-001
+- PT-002
+- PT-003
+recovery:
+  mode: not-started
+  finding_ref: null
+  blocker: null
+final_verification:
+  required: true
+  verified_at: '2026-08-03T01:46:24Z'
+  result: passed
