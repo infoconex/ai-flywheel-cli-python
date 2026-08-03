@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import sys
+import tomllib
+from pathlib import Path
 
 import pytest
 from tools.__main__ import BUILD_OUTPUT, main, task_commands
@@ -28,6 +30,13 @@ def test_build_task_uses_ignored_runtime_output() -> None:
     assert task_commands("build") == [
         [sys.executable, "-m", "build", "--outdir", ".flywheel/.runtime/dist"]
     ]
+
+
+def test_source_distribution_excludes_repository_only_content() -> None:
+    configuration = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+    exclusions = configuration["tool"]["hatch"]["build"]["targets"]["sdist"]["exclude"]
+
+    assert exclusions == ["/.flywheel", "/.gitignore", "/tests", "/tools"]
 
 
 def test_main_stops_after_first_failed_command(monkeypatch: pytest.MonkeyPatch) -> None:
