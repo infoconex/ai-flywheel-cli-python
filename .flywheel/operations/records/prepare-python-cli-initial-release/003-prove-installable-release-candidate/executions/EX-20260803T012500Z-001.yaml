@@ -72,7 +72,7 @@ lifecycle:
     summary: Adopted and validated the packaging safeguard that excludes repository-only
       content from source distributions and preserves the behavior through regression
       coverage.
-    refs: &id001
+    refs:
     - ADAPT-003
     - VAL-003
     - CLASS-003
@@ -80,15 +80,22 @@ lifecycle:
     - EVIDENCE-003-RELEASE-CANDIDATE
     reason: null
   validate:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T01:44:23Z'
-    completed_at: null
-    summary: null
-    refs: *id001
+    completed_at: '2026-08-03T01:45:14Z'
+    summary: Validated the corrected release candidate and packaging safeguard. The
+      complete quality gate passed with 90 tests and 85.10 percent coverage; both
+      distributions built; the wheel installed cleanly; packaged entrypoints and representative
+      commands succeeded; and both final archives contained only the expected 15 files.
+    refs:
+    - VAL-003
+    - ADAPT-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    - FINDING-003-SDIST-CONTENT
     reason: null
   persist:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T01:45:14Z'
     completed_at: null
     summary: null
     refs: []

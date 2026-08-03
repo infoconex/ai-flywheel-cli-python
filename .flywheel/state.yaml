@@ -5,11 +5,11 @@ status: active
 active_mission: prepare-python-cli-initial-release
 active_goal: 003-prove-installable-release-candidate
 active_execution: EX-20260803T012500Z-001
-lifecycle_stage: validate
+lifecycle_stage: persist
 implementation_available: true
 application_missions_allowed: true
 blockers: []
 last_durable_update:
-  at: '2026-08-03T01:44:23Z'
+  at: '2026-08-03T01:45:14Z'
   by: ai-flywheel-cli
-  reason: Completed adapt and started validate.
+  reason: Completed validate and started persist.
