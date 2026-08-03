@@ -233,9 +233,7 @@ def _repository(tmp_path: Path, stage: str) -> tuple[Path, Path, Path]:
 
 
 ORDINARY_TRANSITIONS = [
-    transition
-    for transition in pairwise(LIFECYCLE_ORDER)
-    if transition != ("persist", "reuse")
+    transition for transition in pairwise(LIFECYCLE_ORDER) if transition != ("persist", "reuse")
 ]
 
 
