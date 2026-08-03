@@ -2,7 +2,7 @@ schema_version: 1
 id: 003-prove-installable-release-candidate
 mission_id: prepare-python-cli-initial-release
 title: Prove Installable Release Candidate
-status: ready
+status: active
 objective: Build the package and prove installation, console entry points, and core
   commands in a clean local environment.
 depends_on:
