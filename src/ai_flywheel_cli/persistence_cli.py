@@ -23,7 +23,8 @@ def _guarded_advance_lifecycle(
     completed_at: datetime | None = None,
     expected_stage: str | None = None,
 ) -> DeterministicOperationResult:
-    state = load_yaml_mapping(repository.resolve() / ".flywheel/state.yaml", PersistenceRejectedError)
+    state_path = repository.resolve() / ".flywheel/state.yaml"
+    state = load_yaml_mapping(state_path, PersistenceRejectedError)
     if state.get("lifecycle_stage") == "persist":
         raise PersistenceRejectedError(
             "Persist requires flywheel persist-execution because completion must use "
