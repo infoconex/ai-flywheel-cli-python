@@ -156,7 +156,43 @@ classifications:
   decision_ref: null
   finding_ref: FINDING-004-RELEASE-DOCUMENTATION
   validation_refs: []
-adaptations: []
+adaptations:
+- id: ADAPT-004
+  type: guidance
+  statement: Retain the finalized README release-readiness sections as the authoritative
+    local guidance for version 0.1.0 readiness, limitations, reproducible release checks,
+    and human approval boundaries.
+  classification_refs:
+  - CLASS-004
+  evaluation_refs:
+  - EVAL-004
+  observation_refs:
+  - OBS-004
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  affected_scope:
+  - README.md
+  rationale: The prior README understated implemented lifecycle capabilities and lacked
+    an explicit release-candidate status, reproducible release checklist, and complete
+    publication approval boundary.
+  intended_effect: Keep release-facing guidance aligned with verified CLI behavior and
+    prevent technical readiness from being confused with authorization to tag, publish,
+    create a GitHub release, upload artifacts, or enable hosted automation.
+  alternatives:
+  - Keep release procedures as undocumented operator knowledge.
+  - Treat technical validation as implicit approval to publish.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: pending
+  persistence_status: not-persisted
+  reuse_status: not-assessed
 blockers: []
 approval_refs: []
 evidence_refs:
