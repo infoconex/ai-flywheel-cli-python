@@ -154,7 +154,8 @@ classifications:
   related_classification_refs: []
   decision_ref: null
   finding_ref: FINDING-002-PLATFORM-SCOPE
-  validation_refs: []
+  validation_refs:
+  - VAL-001
 adaptations:
 - id: ADAPT-001
   type: tooling
@@ -190,21 +191,22 @@ adaptations:
   decision_ref: null
   disposition: approved
   implementation_status: completed
-  validation_status: pending
+  validation_status: passed
   persistence_status: not-persisted
   reuse_status: not-assessed
 blockers: []
 approval_refs: []
 evidence_refs:
 - EVIDENCE-002-LOCAL-QUALITY-GATE
+- EVIDENCE-003-VALIDATION
 decision_refs: []
 finding_refs:
 - FINDING-002-PLATFORM-SCOPE
 validation_results:
 - id: VAL-001
-  phase: planned
+  phase: executed
   domain: implementation
-  status: pending
+  status: passed
   severity: info
   adaptation_refs:
   - ADAPT-001
@@ -223,14 +225,17 @@ validation_results:
   - isolated source and wheel package builds
   expected_outcome: Every configured local quality check passes and both distributions
     are built successfully.
-  actual_outcome: null
+  actual_outcome: Ruff lint and formatting passed, strict mypy passed, 83 tests passed
+    with 85.83 percent coverage, repository validation passed, and isolated Hatchling
+    builds produced both the source distribution and wheel.
   expected_evidence:
   - Complete python -m tools validate output
   - EVIDENCE-002-LOCAL-QUALITY-GATE
-  evidence_refs: []
+  evidence_refs:
+  - EVIDENCE-003-VALIDATION
   eligible: true
   exclusion_reason: null
-  executed_at: null
+  executed_at: '2026-08-03T00:49:00Z'
   finding_ref: null
   recovery_action: null
   supersedes_ref: null
