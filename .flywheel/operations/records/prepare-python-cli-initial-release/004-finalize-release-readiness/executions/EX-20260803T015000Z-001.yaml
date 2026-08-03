@@ -1,0 +1,89 @@
+schema_version: 1
+id: EX-20260803T015000Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 004-finalize-release-readiness
+status: in-progress
+intended_outcome: Produce an approval-ready release candidate by reconciling README
+  installation and usage guidance, version and implementation status, known limitations,
+  deferred publication decisions, a reproducible local release checklist, and explicit
+  human approval boundaries for tagging, GitHub release creation, and publication.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+started_at: '2026-08-03T01:50:44Z'
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: '2026-08-03T01:50:44Z'
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  observe:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  evaluate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  classify:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  adapt:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  validate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  persist:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  reuse:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+actions: []
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
