@@ -26,15 +26,21 @@ lifecycle:
     - 396ab0fcd93e42338fc21d195914a3ac50b00432
     reason: null
   observe:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T01:33:13Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T01:38:36Z'
+    summary: Observed that the initial wheel installed and operated correctly, but
+      the first source distribution included repository-only content. Packaging exclusions
+      were corrected and regression-tested. The final clean rebuild produced a 15-file
+      wheel and 15-file source distribution, both free of repository-only content.
+    refs:
+    - OBS-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    - 396ab0fcd93e42338fc21d195914a3ac50b00432
     reason: null
   evaluate:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T01:38:36Z'
     completed_at: null
     summary: null
     refs: []
@@ -75,13 +81,27 @@ lifecycle:
     refs: []
     reason: null
 actions: []
-observations: []
+observations:
+- id: OBS-003
+  statement: The corrected release candidate installs and operates successfully from
+    its packaged wheel, and both final distribution archives contain only the expected
+    15 release files.
+  type: direct
+  status: complete
+  observed_at: '2026-08-03T01:33:00Z'
+  source_or_method: Clean Python 3.13 virtual-environment installation, packaged entrypoint
+    execution, representative CLI commands, and direct archive-content inspection.
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  uncertainty: null
+  conflicts_with: []
 evaluations: []
 classifications: []
 adaptations: []
 blockers: []
 approval_refs: []
-evidence_refs: []
+evidence_refs:
+- EVIDENCE-003-RELEASE-CANDIDATE
 decision_refs: []
 finding_refs: []
 validation_results: []

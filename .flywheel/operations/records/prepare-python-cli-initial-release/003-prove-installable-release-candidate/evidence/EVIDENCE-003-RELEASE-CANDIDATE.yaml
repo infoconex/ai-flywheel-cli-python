@@ -1,0 +1,41 @@
+schema_version: 1
+id: EVIDENCE-003-RELEASE-CANDIDATE
+kind: evidence
+mission_id: prepare-python-cli-initial-release
+goal_id: 003-prove-installable-release-candidate
+execution_id: EX-20260803T012500Z-001
+created_at: '2026-08-03T01:33:00Z'
+created_by: ai-flywheel-operator
+summary: The corrected 0.1.0 release candidate built, installed, executed, and passed final artifact-content
+  inspection.
+status: accepted
+classification: release-candidate-installation-proof
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+source_refs:
+- python -m build
+- .release-proof packaged execution
+- direct wheel and sdist archive inspection
+artifact_refs:
+- pyproject.toml
+- dist/ai_flywheel_cli-0.1.0.tar.gz
+- dist/ai_flywheel_cli-0.1.0-py3-none-any.whl
+evidence:
+  evidence_type: local-command-result
+  supported_claim: The Python CLI release candidate installs cleanly and operates through its packaged
+    entrypoints, and its final distributions exclude repository-only content.
+  source_or_method: Built the distributions, installed the wheel into a clean Python 3.13 virtual environment,
+    executed the console and module entrypoints, ran doctor, status, and validate, and inspected both
+    archives.
+  actual_result: The wheel installed successfully; both entrypoints returned version 0.1.0; doctor, status,
+    and validate passed; and the final wheel and source distribution each contained 15 files with no repository-only
+    content.
+  observed_at: '2026-08-03T01:33:00Z'
+  storage_location: .flywheel/operations/records/prepare-python-cli-initial-release/003-prove-installable-release-candidate/evidence/EVIDENCE-003-RELEASE-CANDIDATE.yaml
+decision: null
+finding: null
+approval: null
