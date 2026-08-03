@@ -45,15 +45,24 @@ lifecycle:
     - EVIDENCE-004-RELEASE-READINESS
     reason: null
   evaluate:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T02:03:08Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T02:33:06Z'
+    summary: Evaluated the finalized release-readiness documentation against all five
+      Goal 004 acceptance criteria and classified the prior README mismatch as a resolved
+      release-documentation finding. The 0.1.0 candidate is technically approval-ready,
+      while tagging, GitHub release creation, artifact upload, publication, and hosted
+      automation remain explicit human decisions.
+    refs:
+    - CLASS-004
+    - FINDING-004-RELEASE-DOCUMENTATION
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
     reason: null
   classify:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T02:33:06Z'
     completed_at: null
     summary: null
     refs: []
@@ -138,8 +147,8 @@ classifications:
   evidence_refs:
   - EVIDENCE-004-RELEASE-READINESS
   rationale: The verified README and command surface satisfy all five acceptance criteria,
-    and the resolved documentation mismatch is recorded so release-facing guidance remains
-    aligned with implemented lifecycle capabilities.
+    and the resolved documentation mismatch is recorded so release-facing guidance
+    remains aligned with implemented lifecycle capabilities.
   certainty: confirmed
   uncertainty: null
   conflicts_with: []
