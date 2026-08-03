@@ -83,12 +83,43 @@ def test_advance_adapt_with_completed_adaptation_starts_validate(
             "reuse_status": "not-assessed",
         }
     ]
+    execution["validation_results"] = [
+        {
+            "id": "VAL-001",
+            "phase": "planned",
+            "domain": "implementation",
+            "status": "pending",
+            "severity": "info",
+            "adaptation_refs": ["ADAPT-001"],
+            "criterion_refs": ["AC-001"],
+            "rule_refs": [],
+            "method": "Run the local validation command.",
+            "scope": ["local quality gate"],
+            "expected_outcome": "Every configured check passes.",
+            "actual_outcome": None,
+            "expected_evidence": ["Local validation output"],
+            "evidence_refs": [],
+            "eligible": True,
+            "exclusion_reason": None,
+            "executed_at": None,
+            "finding_ref": None,
+            "recovery_action": None,
+            "supersedes_ref": None,
+        }
+    ]
     _write_yaml(execution_path, execution)
 
     result = advance_lifecycle(
         repository,
         "Recorded the completed local quality-gate adaptation.",
-        ("ADAPT-001", "CLASS-001", "EVAL-001", "OBS-001", "EVIDENCE-001"),
+        (
+            "ADAPT-001",
+            "VAL-001",
+            "CLASS-001",
+            "EVAL-001",
+            "OBS-001",
+            "EVIDENCE-001",
+        ),
         completed_at=datetime(2026, 8, 1, 17, 8, tzinfo=UTC),
         expected_stage="adapt",
     )
@@ -101,6 +132,7 @@ def test_advance_adapt_with_completed_adaptation_starts_validate(
     assert lifecycle["validate"]["status"] == "in-progress"
     assert lifecycle["validate"]["refs"] == [
         "ADAPT-001",
+        "VAL-001",
         "CLASS-001",
         "EVAL-001",
         "OBS-001",
