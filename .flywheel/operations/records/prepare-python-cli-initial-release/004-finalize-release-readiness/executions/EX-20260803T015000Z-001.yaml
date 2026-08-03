@@ -61,15 +61,25 @@ lifecycle:
     - EVIDENCE-004-RELEASE-READINESS
     reason: null
   classify:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T02:33:06Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T02:35:15Z'
+    summary: Adopted the finalized README as the release-facing guidance for version
+      0.1.0, including verified command behavior, accurate implementation status and
+      limitations, a reproducible local release checklist, and explicit human approval
+      boundaries for tagging, GitHub release creation, artifact upload, publication,
+      and hosted automation.
+    refs:
+    - ADAPT-004
+    - CLASS-004
+    - FINDING-004-RELEASE-DOCUMENTATION
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
     reason: null
   adapt:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T02:35:15Z'
     completed_at: null
     summary: null
     refs: []
@@ -160,8 +170,8 @@ adaptations:
 - id: ADAPT-004
   type: guidance
   statement: Retain the finalized README release-readiness sections as the authoritative
-    local guidance for version 0.1.0 readiness, limitations, reproducible release checks,
-    and human approval boundaries.
+    local guidance for version 0.1.0 readiness, limitations, reproducible release
+    checks, and human approval boundaries.
   classification_refs:
   - CLASS-004
   evaluation_refs:
@@ -175,9 +185,9 @@ adaptations:
   rationale: The prior README understated implemented lifecycle capabilities and lacked
     an explicit release-candidate status, reproducible release checklist, and complete
     publication approval boundary.
-  intended_effect: Keep release-facing guidance aligned with verified CLI behavior and
-    prevent technical readiness from being confused with authorization to tag, publish,
-    create a GitHub release, upload artifacts, or enable hosted automation.
+  intended_effect: Keep release-facing guidance aligned with verified CLI behavior
+    and prevent technical readiness from being confused with authorization to tag,
+    publish, create a GitHub release, upload artifacts, or enable hosted automation.
   alternatives:
   - Keep release procedures as undocumented operator knowledge.
   - Treat technical validation as implicit approval to publish.
