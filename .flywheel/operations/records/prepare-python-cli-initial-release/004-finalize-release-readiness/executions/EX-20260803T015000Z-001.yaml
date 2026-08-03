@@ -86,7 +86,7 @@ lifecycle:
       the README remained aligned with the verified 0.1.0 command surface, and all
       five Goal 004 acceptance criteria are supported while publication actions remain
       human approval boundaries.
-    refs: &id001
+    refs:
     - VAL-004
     - ADAPT-004
     - CLASS-004
@@ -95,15 +95,25 @@ lifecycle:
     - EVIDENCE-004-RELEASE-READINESS
     reason: null
   validate:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T02:39:52Z'
-    completed_at: null
-    summary: null
-    refs: *id001
+    completed_at: '2026-08-03T02:41:07Z'
+    summary: Confirmed that the finalized release-readiness guidance, version status,
+      documented limitations, reproducible local release checklist, and explicit human
+      approval boundaries satisfy all five Goal 004 acceptance criteria. The validated
+      outcome is ready to be persisted without performing any tag, GitHub release,
+      artifact upload, publication, or hosted automation action.
+    refs:
+    - VAL-004
+    - ADAPT-004
+    - CLASS-004
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
     reason: null
   persist:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T02:41:07Z'
     completed_at: null
     summary: null
     refs: []
