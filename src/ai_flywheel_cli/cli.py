@@ -20,6 +20,7 @@ from ai_flywheel_cli.operations import (
     install_from_archive,
     plan_install,
 )
+from ai_flywheel_cli.persistence import persist_execution
 from ai_flywheel_cli.upgrade import upgrade_from_archive
 from ai_flywheel_cli.validation import validate_repository
 
@@ -187,6 +188,23 @@ def advance_lifecycle_command(
         )
     except OperationError as error:
         _operation_exit(error, command="advance-lifecycle", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
+
+
+@app.command("persist-execution")
+def persist_execution_command(
+    summary: str = typer.Option(..., "--summary"),
+    reuse_id: str = typer.Option(..., "--reuse-id"),
+    operator: str = typer.Option("ai-flywheel-cli", "--operator"),
+    repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Persist validated execution records and atomically activate Reuse."""
+    try:
+        result = persist_execution(repository, summary, reuse_id, operator=operator)
+    except OperationError as error:
+        _operation_exit(error, command="persist-execution", as_json=json_output)
         return
     _emit(result.as_dict(), as_json=json_output)
 
