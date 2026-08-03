@@ -2,7 +2,7 @@ schema_version: 1
 id: 002-apply-local-quality-gates
 mission_id: prepare-python-cli-initial-release
 title: Apply Local Quality Gates
-status: active
+status: completed
 objective: Evaluate and apply justified local linting, formatting, typing, and build
   checks without introducing hosted automation.
 depends_on:
