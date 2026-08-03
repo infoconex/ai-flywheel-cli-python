@@ -28,7 +28,7 @@ dev = [
 ]
 
 [project.scripts]
-flywheel = "ai_flywheel_cli.cli:app"
+flywheel = "ai_flywheel_cli.persistence_cli:app"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ai_flywheel_cli"]
@@ -61,3 +61,4 @@ mypy_path = "src"
 packages = ["ai_flywheel_cli", "tools"]
 [tool.ruff.lint.per-file-ignores]
 "src/ai_flywheel_cli/cli.py" = ["B008"]
+"src/ai_flywheel_cli/persistence_cli.py" = ["B008"]
