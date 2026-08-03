@@ -15,15 +15,19 @@ started_at: '2026-08-03T01:25:31Z'
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T01:25:31Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T01:33:13Z'
+    summary: Built the 0.1.0 source and wheel distributions, installed the wheel into
+      a clean Python 3.13 environment, verified both packaged entrypoints, successfully
+      ran doctor, status, and validate, and confirmed both release artifacts contain
+      only the expected 15 files with no repository-only content.
+    refs:
+    - 396ab0fcd93e42338fc21d195914a3ac50b00432
     reason: null
   observe:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T01:33:13Z'
     completed_at: null
     summary: null
     refs: []
