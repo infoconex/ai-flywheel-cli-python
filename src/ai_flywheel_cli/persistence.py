@@ -2,14 +2,20 @@ from __future__ import annotations
 
 import shutil
 import tempfile
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 import yaml
 
-from ai_flywheel_cli.mutation import MutationFailure, MutationRejectedError, load_yaml_mapping, sha256_bytes
+from ai_flywheel_cli.mutation import (
+    MutationFailure,
+    MutationRejectedError,
+    load_yaml_mapping,
+    sha256_bytes,
+)
 from ai_flywheel_cli.operations import RepositoryLock
 from ai_flywheel_cli.validation import validate_repository
 
@@ -85,7 +91,9 @@ def _validate_final_repository(
         failures = tuple(
             MutationFailure(issue.code, issue.path, issue.message) for issue in result.issues
         )
-        raise PersistenceRejectedError("Proposed persistence transaction failed validation.", failures)
+        raise PersistenceRejectedError(
+            "Proposed persistence transaction failed validation.", failures
+        )
     finally:
         shutil.rmtree(shadow_parent, ignore_errors=True)
 
@@ -186,7 +194,9 @@ def persist_execution(
         if not isinstance(adaptation, dict) or not isinstance(adaptation.get("id"), str):
             raise PersistenceRejectedError("Every adaptation must have a stable identity.")
         if adaptation.get("validation_status") != "passed":
-            raise PersistenceRejectedError("Every persisted adaptation must have passed validation.")
+            raise PersistenceRejectedError(
+                "Every persisted adaptation must have passed validation."
+            )
         adaptation["persistence_status"] = "persisted"
         adaptation_refs.append(adaptation["id"])
 
@@ -212,7 +222,8 @@ def persist_execution(
         "validation_refs": validation_refs,
         "applicability": ["Python CLI repositories using the AI Flywheel operating model"],
         "limitations": [
-            "Validated on Windows with Python 3.13.14; clean external installation remains Goal 003."
+            "Validated on Windows with Python 3.13.14; clean external installation "
+            "remains Goal 003."
         ],
         "reuse_guidance": None,
         "duplicate_refs": [],
@@ -353,7 +364,13 @@ def persist_execution(
                 )
             _write_yaml(root / plan_relative, applied_plan)
         except Exception:
-            for relative_path in (state_relative, execution_relative, reuse_relative, plan_relative):
+            rollback_paths = (
+                state_relative,
+                execution_relative,
+                reuse_relative,
+                plan_relative,
+            )
+            for relative_path in rollback_paths:
                 prior = retained[relative_path]
                 target_path = root / relative_path
                 if prior is None:
