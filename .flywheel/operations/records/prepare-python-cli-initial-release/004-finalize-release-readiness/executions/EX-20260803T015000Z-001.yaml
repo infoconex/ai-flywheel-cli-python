@@ -127,14 +127,34 @@ evaluations:
     but unpublished release candidate; records current limitations and deferred decisions;
     provides a reproducible local release checklist; and explicitly reserves publication
     actions for human approval.
-classifications: []
+classifications:
+- id: CLASS-004
+  type: finding
+  statement: Goal 004 confirms the 0.1.0 release candidate is technically approval-ready,
+    while tagging, GitHub release creation, artifact upload, and publication remain
+    explicit human approval boundaries.
+  evaluation_refs:
+  - EVAL-004
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  rationale: The verified README and command surface satisfy all five acceptance criteria,
+    and the resolved documentation mismatch is recorded so release-facing guidance remains
+    aligned with implemented lifecycle capabilities.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-004-RELEASE-DOCUMENTATION
+  validation_refs: []
 adaptations: []
 blockers: []
 approval_refs: []
 evidence_refs:
 - EVIDENCE-004-RELEASE-READINESS
 decision_refs: []
-finding_refs: []
+finding_refs:
+- FINDING-004-RELEASE-DOCUMENTATION
 validation_results: []
 outcome: null
 completion:
