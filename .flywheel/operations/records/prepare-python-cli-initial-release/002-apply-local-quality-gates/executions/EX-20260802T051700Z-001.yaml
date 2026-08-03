@@ -192,7 +192,40 @@ evidence_refs:
 decision_refs: []
 finding_refs:
 - FINDING-002-PLATFORM-SCOPE
-validation_results: []
+validation_results:
+- id: VAL-001
+  phase: planned
+  domain: implementation
+  status: pending
+  severity: info
+  adaptation_refs:
+  - ADAPT-001
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  method: Run python -m tools validate from the active repository virtual environment.
+  scope:
+  - Ruff linting and formatting
+  - strict mypy
+  - pytest with coverage
+  - repository validation
+  - isolated source and wheel package builds
+  expected_outcome: Every configured local quality check passes and both distributions
+    are built successfully.
+  actual_outcome: null
+  expected_evidence:
+  - Complete python -m tools validate output
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  evidence_refs: []
+  eligible: true
+  exclusion_reason: null
+  executed_at: null
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
 outcome: null
 completion:
   disposition: null
