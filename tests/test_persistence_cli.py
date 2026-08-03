@@ -12,9 +12,7 @@ from ai_flywheel_cli.persistence_cli import app
 runner = CliRunner()
 
 
-def test_persist_execution_command_emits_transaction_result(
-    tmp_path: Path, monkeypatch
-) -> None:
+def test_persist_execution_command_emits_transaction_result(tmp_path: Path, monkeypatch) -> None:
     def persist(
         repository: Path,
         summary: str,
