@@ -68,7 +68,7 @@ lifecycle:
     completed_at: '2026-08-03T00:49:10Z'
     summary: Recorded the implemented local quality gate as the approved Goal 002
       tooling adaptation, with validation planned through VAL-001.
-    refs: &id001
+    refs:
     - ADAPT-001
     - VAL-001
     - CLASS-001
@@ -77,15 +77,21 @@ lifecycle:
     - EVIDENCE-002-LOCAL-QUALITY-GATE
     reason: null
   validate:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T00:49:10Z'
-    completed_at: null
-    summary: null
-    refs: *id001
+    completed_at: '2026-08-03T00:53:02Z'
+    summary: Validated the approved local quality-gate adaptation through VAL-001;
+      every configured check passed and the planned source and wheel distributions
+      were built successfully.
+    refs:
+    - VAL-001
+    - ADAPT-001
+    - EVIDENCE-003-VALIDATION
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
     reason: null
   persist:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T00:53:02Z'
     completed_at: null
     summary: null
     refs: []
