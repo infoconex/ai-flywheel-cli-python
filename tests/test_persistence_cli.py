@@ -6,13 +6,14 @@ from pathlib import Path
 import yaml
 from typer.testing import CliRunner
 
+from ai_flywheel_cli import cli
 from ai_flywheel_cli.persistence import PersistenceResult
-from ai_flywheel_cli.persistence_cli import app
+from ai_flywheel_cli.persistence_cli import app as guarded_app
 
 runner = CliRunner()
 
 
-def test_persist_execution_command_emits_transaction_result(tmp_path: Path, monkeypatch) -> None:
+def test_primary_cli_registers_persist_execution_command(tmp_path: Path, monkeypatch) -> None:
     def persist(
         repository: Path,
         summary: str,
@@ -34,10 +35,10 @@ def test_persist_execution_command_emits_transaction_result(tmp_path: Path, monk
             reuse_assessment_id="REUSE-001",
         )
 
-    monkeypatch.setattr("ai_flywheel_cli.persistence_cli.persist_execution", persist)
+    monkeypatch.setattr(cli, "persist_execution", persist)
 
     result = runner.invoke(
-        app,
+        cli.app,
         [
             "persist-execution",
             "--summary",
@@ -73,7 +74,7 @@ def test_advance_lifecycle_rejects_direct_persist_completion(tmp_path: Path) -> 
     )
 
     result = runner.invoke(
-        app,
+        guarded_app,
         [
             "advance-lifecycle",
             "--summary",
