@@ -1,0 +1,59 @@
+schema_version: 1
+id: PERSIST-20260803T024223Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 004-finalize-release-readiness
+execution_id: EX-20260803T015000Z-001
+created_at: '2026-08-03T02:42:23Z'
+operator: ai-flywheel-cli
+status: applied
+targets:
+- id: PT-001
+  artifact_type: reuse-assessment
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/004-finalize-release-readiness/reuse/REUSE-004.yaml
+  operation: create
+  mutability: create-only
+  dependency_refs: []
+  expected_precondition:
+    absence: true
+  proposed_content_digest: d4d348754725e88ad781ea4165c76c5459f18468c410f4c3580632196deb3c24
+  rollback:
+    mode: delete-created
+    retained_content_digest: null
+- id: PT-002
+  artifact_type: execution
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/004-finalize-release-readiness/executions/EX-20260803T015000Z-001.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-001
+  expected_precondition:
+    blob_sha: f121edb17011039bc157437864bc6c82199c2c20038e641c4ef58cea1d1cca94
+  proposed_content_digest: 30bdbf9cb59a2b1f244f700a45a9aa4720f3802f088e40b4ff23c1bea792141c
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: f121edb17011039bc157437864bc6c82199c2c20038e641c4ef58cea1d1cca94
+- id: PT-003
+  artifact_type: state
+  path: .flywheel/state.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-002
+  expected_precondition:
+    blob_sha: 9a9184869f53c6988d34acee7f6df880fdee6a4598121ac5748050732b9de851
+  proposed_content_digest: 2601f75ce86e9fb52eff5012ac2813252e3747afbdf94cb38d3cfb99aec5602b
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 9a9184869f53c6988d34acee7f6df880fdee6a4598121ac5748050732b9de851
+write_order:
+- PT-001
+- PT-002
+- PT-003
+recovery:
+  mode: not-started
+  finding_ref: null
+  blocker: null
+final_verification:
+  required: true
+  verified_at: '2026-08-03T02:42:23Z'
+  result: passed

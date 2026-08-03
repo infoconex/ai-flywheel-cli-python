@@ -112,18 +112,26 @@ lifecycle:
     - EVIDENCE-004-RELEASE-READINESS
     reason: null
   persist:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T02:41:07Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-03T02:42:23Z'
+    summary: Persist the validated Goal 004 release-readiness outcome, including authoritative
+      README guidance for version 0.1.0, documented limitations, a reproducible local
+      release checklist, and explicit human approval boundaries for tagging, GitHub
+      release creation, artifact upload, publication, and hosted automation.
+    refs:
+    - PERSIST-20260803T024223Z-001
+    - REUSE-004
+    - VAL-004
+    - EVIDENCE-004-RELEASE-READINESS
     reason: null
   reuse:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-03T02:42:23Z'
     completed_at: null
     summary: null
-    refs: []
+    refs:
+    - REUSE-004
     reason: null
 actions: []
 observations:
@@ -222,7 +230,7 @@ adaptations:
   disposition: approved
   implementation_status: completed
   validation_status: passed
-  persistence_status: not-persisted
+  persistence_status: persisted
   reuse_status: not-assessed
 blockers: []
 approval_refs: []
