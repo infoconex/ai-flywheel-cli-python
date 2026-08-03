@@ -148,7 +148,43 @@ classifications:
   decision_ref: null
   finding_ref: FINDING-002-PLATFORM-SCOPE
   validation_refs: []
-adaptations: []
+adaptations:
+- id: ADAPT-001
+  type: tooling
+  statement: Retain the implemented python -m tools validate command as the local release-quality
+    gate for the Python CLI.
+  classification_refs:
+  - CLASS-001
+  evaluation_refs:
+  - EVAL-001
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  affected_scope:
+  - pyproject.toml
+  - tools/__main__.py
+  - tests/test_tools_tasks.py
+  - README.md
+  rationale: The implemented gate satisfies all Goal 002 acceptance criteria and preserves
+    the clean-environment installation boundary assigned to Goal 003.
+  intended_effect: Provide one documented and repeatable local command that proves linting,
+    formatting, strict typing, tests with coverage, repository validity, and package builds.
+  alternatives:
+  - Keep separate undocumented commands for each quality check.
+  - Introduce hosted automation before the initial release mission authorizes it.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: pending
+  persistence_status: not-persisted
+  reuse_status: not-assessed
 blockers: []
 approval_refs: []
 evidence_refs:
