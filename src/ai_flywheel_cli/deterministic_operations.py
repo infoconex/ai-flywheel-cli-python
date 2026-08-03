@@ -226,6 +226,11 @@ def advance_lifecycle(
             "Lifecycle stage changed before retry: "
             f"expected {expected_stage}, found {current_stage}."
         )
+    if current_stage == "persist":
+        raise TransitionRejectedError(
+            "Persist requires flywheel persist-execution because completion must use "
+            "an applied persistence plan and a planned reuse assessment."
+        )
     execution_relative = (
         f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
     )
