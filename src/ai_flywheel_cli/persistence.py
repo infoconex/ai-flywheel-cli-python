@@ -116,9 +116,7 @@ def _target(
         "mutability": "create-only" if is_create else "cas-update",
         "dependency_refs": dependency_refs,
         "expected_precondition": (
-            {"absence": True}
-            if is_create
-            else {"blob_sha": sha256_bytes(retained or b"")}
+            {"absence": True} if is_create else {"blob_sha": sha256_bytes(retained or b"")}
         ),
         "proposed_content_digest": sha256_bytes(_yaml_bytes(proposed)),
         "rollback": {
@@ -381,6 +379,7 @@ def persist_execution(
                 target_path.with_suffix(target_path.suffix + ".tmp").unlink(missing_ok=True)
             raise
 
+    assert isinstance(execution_id, str)
     return PersistenceResult(
         operation="persist-execution",
         status="completed",
