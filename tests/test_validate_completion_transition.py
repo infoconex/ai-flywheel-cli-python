@@ -148,8 +148,7 @@ def test_advance_validate_rejects_pending_result(
         execution = _load_yaml(_execution_path(candidate))
         results = execution.get("validation_results")
         if isinstance(results, list) and all(
-            isinstance(result, dict) and result.get("status") != "pending"
-            for result in results
+            isinstance(result, dict) and result.get("status") != "pending" for result in results
         ):
             return ValidationResult(issues=())
         return ValidationResult(
