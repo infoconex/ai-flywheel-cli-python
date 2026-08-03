@@ -8,7 +8,6 @@ from typer.testing import CliRunner
 
 from ai_flywheel_cli import cli
 from ai_flywheel_cli.persistence import PersistenceResult
-from ai_flywheel_cli.persistence_cli import app as guarded_app
 
 runner = CliRunner()
 
@@ -66,7 +65,21 @@ def test_advance_lifecycle_rejects_direct_persist_completion(tmp_path: Path) -> 
         yaml.safe_dump(
             {
                 "schema_version": 1,
+                "phase": "operating",
+                "readiness": "ready-for-missions",
+                "status": "active",
+                "active_mission": "sample-mission",
+                "active_goal": "001-sample-goal",
+                "active_execution": "EX-20260803T010000Z-001",
                 "lifecycle_stage": "persist",
+                "implementation_available": True,
+                "application_missions_allowed": True,
+                "blockers": [],
+                "last_durable_update": {
+                    "at": "2026-08-03T01:00:00Z",
+                    "by": "test",
+                    "reason": "Fixture at persist.",
+                },
             },
             sort_keys=False,
         ),
@@ -74,7 +87,7 @@ def test_advance_lifecycle_rejects_direct_persist_completion(tmp_path: Path) -> 
     )
 
     result = runner.invoke(
-        guarded_app,
+        cli.app,
         [
             "advance-lifecycle",
             "--summary",
