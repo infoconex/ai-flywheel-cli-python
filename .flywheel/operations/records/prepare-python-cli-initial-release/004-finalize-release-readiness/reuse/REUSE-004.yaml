@@ -4,12 +4,12 @@ mission_id: prepare-python-cli-initial-release
 goal_id: 004-finalize-release-readiness
 execution_id: EX-20260803T015000Z-001
 subject_type: candidate-learning
-subject_ref: local-quality-gate
+subject_ref: release-readiness-guidance
 adaptation_refs:
 - ADAPT-004
-status: planned
-disposition: null
-statement: Assess the validated local quality gate for reusable project guidance.
+status: completed
+disposition: promote
+statement: Assess the validated release-readiness guidance for reuse across Python CLI release candidates.
 evidence_refs:
 - EVIDENCE-004-RELEASE-READINESS
 validation_refs:
@@ -17,9 +17,9 @@ validation_refs:
 applicability:
 - Python CLI repositories using the AI Flywheel operating model
 limitations:
-- Validated on Windows with Python 3.13.14; clean external installation remains Goal
-  003.
-reuse_guidance: null
+- Validated on Windows with Python 3.13.14; other supported platforms still require their own execution evidence.
+- The guidance establishes technical readiness but does not authorize tagging, GitHub release creation, artifact upload, package-index publication, or hosted automation.
+reuse_guidance: For Python CLI release candidates, keep release-facing documentation aligned with the verified command surface and package version, explicitly identify whether the candidate is unpublished or released, record known limitations and deferred decisions, provide a reproducible local release checklist, and preserve explicit human approval boundaries for tagging, GitHub release creation, artifact upload, publication, and hosted automation.
 duplicate_refs: []
 conflict_refs: []
 proposed_knowledge_ref: null
@@ -27,6 +27,6 @@ supersedes_refs: []
 approval_required: false
 approval_refs: []
 decision_ref: null
-rationale: null
-assessed_at: null
-assessed_by: null
+rationale: Goal 004 demonstrated that technical validation alone is insufficient for release readiness unless documentation accurately reflects implemented behavior, release status, limitations, reproducible checks, and the separation between technical readiness and human authorization to publish.
+assessed_at: '2026-08-03T02:43:00Z'
+assessed_by: ai-flywheel-cli
