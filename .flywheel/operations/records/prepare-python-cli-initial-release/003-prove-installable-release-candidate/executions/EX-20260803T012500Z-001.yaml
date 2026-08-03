@@ -2,7 +2,7 @@ schema_version: 1
 id: EX-20260803T012500Z-001
 mission_id: prepare-python-cli-initial-release
 goal_id: 003-prove-installable-release-candidate
-status: in-progress
+status: succeeded
 intended_outcome: Prove the Python CLI release candidate installs cleanly into an
   isolated environment and operates through its packaged entrypoint.
 acceptance_criteria:
@@ -12,7 +12,7 @@ acceptance_criteria:
 - AC-004
 - AC-005
 started_at: '2026-08-03T01:25:31Z'
-completed_at: null
+completed_at: '2026-08-03T01:47:41Z'
 lifecycle:
   execute:
     status: completed
@@ -108,12 +108,18 @@ lifecycle:
     - EVIDENCE-003-RELEASE-CANDIDATE
     reason: null
   reuse:
-    status: in-progress
+    status: completed
     started_at: '2026-08-03T01:46:24Z'
-    completed_at: null
-    summary: null
+    completed_at: '2026-08-03T01:47:41Z'
+    summary: Completed Goal 003 after proving clean installation and packaged execution,
+      resolving the source-distribution content defect, validating the corrected release
+      candidate, and promoting the resulting clean-install and artifact-inspection
+      checks as reusable Python CLI release guidance.
     refs:
     - REUSE-003
+    - PERSIST-20260803T014624Z-001
+    - VAL-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
     reason: null
 actions: []
 observations:
@@ -257,7 +263,11 @@ validation_results:
   finding_ref: null
   recovery_action: null
   supersedes_ref: null
-outcome: null
+outcome: Completed Goal 003 after proving clean installation and packaged execution,
+  resolving the source-distribution content defect, validating the corrected release
+  candidate, and promoting the resulting clean-install and artifact-inspection checks
+  as reusable Python CLI release guidance.
 completion:
-  disposition: null
-  rationale: null
+  disposition: goal-completed
+  rationale: All acceptance criteria were supported by recorded evidence and passed
+    validation.
