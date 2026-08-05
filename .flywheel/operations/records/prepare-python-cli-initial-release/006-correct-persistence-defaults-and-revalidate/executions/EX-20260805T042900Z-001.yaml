@@ -157,7 +157,8 @@ classifications:
   related_classification_refs: []
   decision_ref: null
   finding_ref: FINDING-006-FINAL-REVALIDATION
-  validation_refs: []
+  validation_refs:
+  - VAL-006
 adaptations:
 - id: ADAPT-006
   type: guidance
@@ -195,7 +196,7 @@ adaptations:
   decision_ref: null
   disposition: approved
   implementation_status: completed
-  validation_status: pending
+  validation_status: passed
   persistence_status: not-persisted
   reuse_status: not-assessed
 blockers: []
@@ -205,7 +206,50 @@ evidence_refs:
 decision_refs: []
 finding_refs:
 - FINDING-006-FINAL-REVALIDATION
-validation_results: []
+validation_results:
+- id: VAL-006
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-006
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+  - AC-007
+  rule_refs: []
+  method: Run targeted persistence tests and python -m tools validate from the active
+    editable virtual-environment installation, then verify source and wheel distribution
+    builds.
+  scope:
+  - neutral persistence defaults
+  - release exit-code and approval documentation
+  - complete local quality gate
+  - source and wheel distribution builds
+  expected_outcome: Neutral persistence defaults remain enforced, release documentation
+    matches the implemented exit-code and approval contracts, all configured local
+    quality checks pass, and release actions remain unperformed without explicit human
+    approval.
+  actual_outcome: Three targeted persistence tests passed; the complete local quality
+    gate passed with 94 tests and 85.71 percent coverage; Ruff formatting and linting,
+    strict mypy, source-distribution build, and wheel build all succeeded; no approval-bound
+    release action was performed.
+  expected_evidence:
+  - Complete python -m tools validate output
+  - EVIDENCE-006-FINAL-REVALIDATION
+  evidence_refs:
+  - EVIDENCE-006-FINAL-REVALIDATION
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-05T04:47:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
 outcome: null
 completion:
   disposition: null
