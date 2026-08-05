@@ -99,7 +99,34 @@ observations:
   - EVIDENCE-006-FINAL-REVALIDATION
   uncertainty: null
   conflicts_with: []
-evaluations: []
+evaluations:
+- id: EVAL-006
+  statement: Goal 006 acceptance criteria are satisfied by the neutral persistence defaults,
+    aligned release documentation, and passing final local release-candidate proof.
+  result: supports
+  observation_refs:
+  - OBS-006
+  evidence_refs:
+  - EVIDENCE-006-FINAL-REVALIDATION
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+  - AC-007
+  rule_refs: []
+  limitations:
+  - Release-candidate proof was executed on Windows with Python 3.13.14; other supported
+    platforms still require their own execution evidence.
+  - Tagging, GitHub release creation, artifact upload, package-index publication, release-note
+    publication, and hosted automation remain unperformed and approval-bound.
+  rationale: Exact persistence regression assertions confirm neutral reusable-assessment
+    defaults without prior-goal leakage. README guidance matches the implemented exit-code
+    and release-approval boundaries. The authoritative local quality gate passed with
+    94 tests, 85.71 percent coverage, strict typing, Ruff checks, and successful source
+    and wheel builds.
 classifications: []
 adaptations: []
 blockers: []
