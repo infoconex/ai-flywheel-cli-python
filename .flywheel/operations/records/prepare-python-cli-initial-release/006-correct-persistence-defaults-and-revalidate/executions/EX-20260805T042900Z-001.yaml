@@ -218,7 +218,7 @@ adaptations:
   implementation_status: completed
   validation_status: passed
   persistence_status: persisted
-  reuse_status: not-assessed
+  reuse_status: promoted
 blockers: []
 approval_refs: []
 evidence_refs:
