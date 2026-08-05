@@ -133,7 +133,26 @@ evaluations:
     and release-approval boundaries. The authoritative local quality gate passed with
     94 tests, 85.71 percent coverage, strict typing, Ruff checks, and successful source
     and wheel builds.
-classifications: []
+classifications:
+- id: CLASS-006
+  type: finding
+  statement: The persistence default correction and final local release-candidate
+    revalidation are complete and satisfy Goal 006, while all external release actions
+    remain subject to explicit human approval.
+  evaluation_refs:
+  - EVAL-006
+  evidence_refs:
+  - EVIDENCE-006-FINAL-REVALIDATION
+  rationale: Exact regression tests enforce neutral persistence defaults without prior-goal
+    leakage, documentation matches the implemented exit-code and approval boundaries,
+    and the complete local quality gate passed with successful package builds.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: null
+  validation_refs: []
 adaptations: []
 blockers: []
 approval_refs: []
