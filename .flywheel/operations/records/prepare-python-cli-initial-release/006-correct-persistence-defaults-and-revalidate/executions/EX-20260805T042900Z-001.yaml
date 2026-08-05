@@ -72,22 +72,27 @@ lifecycle:
       retaining the documented exit-code contract and approval boundaries, and recording
       the editable-installation requirement as an operator safeguard against stale
       local package code.
-    refs: &id001
+    refs:
     - ADAPT-006
     - VAL-006
     - REUSE-006
     - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   validate:
-    status: in-progress
+    status: completed
     started_at: '2026-08-05T04:51:11Z'
-    completed_at: null
-    summary: null
-    refs: *id001
+    completed_at: '2026-08-05T04:52:07Z'
+    summary: Validated Goal 006 through targeted persistence regression tests, the
+      complete local quality gate, strict typing and Ruff checks, successful source
+      and wheel builds, and confirmation that all external release actions remain
+      approval-bound.
+    refs:
+    - VAL-006
+    - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   persist:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-05T04:52:07Z'
     completed_at: null
     summary: null
     refs: []
