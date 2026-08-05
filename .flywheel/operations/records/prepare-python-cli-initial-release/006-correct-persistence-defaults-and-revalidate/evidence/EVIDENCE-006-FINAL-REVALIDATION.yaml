@@ -1,0 +1,40 @@
+schema_version: 1
+id: EVIDENCE-006-FINAL-REVALIDATION
+kind: evidence
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+execution_id: EX-20260805T042900Z-001
+created_at: '2026-08-05T04:33:00Z'
+created_by: ai-flywheel-operator
+summary: Confirmed neutral persistence reuse defaults and completed the final local release-candidate quality gate after the exit-code and persistence corrections.
+status: accepted
+classification: final-release-revalidation-proof
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+- AC-007
+source_refs:
+- src/ai_flywheel_cli/persistence.py implementation review
+- tests/test_persistence.py targeted regression run
+- README.md release and exit-code contract review
+- python -m tools validate
+artifact_refs:
+- src/ai_flywheel_cli/persistence.py
+- tests/test_persistence.py
+- README.md
+- .flywheel/operations/missions/prepare-python-cli-initial-release/mission.yaml
+- .flywheel/operations/missions/prepare-python-cli-initial-release/goals/006-correct-persistence-defaults-and-revalidate.yaml
+evidence:
+  evidence_type: local-command-result
+  supported_claim: Persistence now generates neutral reusable-assessment defaults, release-facing documentation matches the final exit-code implementation, and the corrected release candidate passes the complete local quality gate.
+  source_or_method: Reviewed persistence implementation and README guidance, ran the targeted persistence regression tests, reinstalled the repository package in editable mode to eliminate a stale site-packages copy, and executed the authoritative local validation command.
+  actual_result: Targeted persistence tests passed 3 of 3. The full local quality gate passed with Ruff linting and formatting, strict mypy, 94 passing tests, 85.71 percent coverage, isolated source-distribution and wheel builds, and successful creation of ai_flywheel_cli-0.1.0.tar.gz and ai_flywheel_cli-0.1.0-py3-none-any.whl. No tag, release, artifact upload, package publication, or hosted automation action was performed.
+  observed_at: '2026-08-05T04:33:00Z'
+  storage_location: .flywheel/operations/records/prepare-python-cli-initial-release/006-correct-persistence-defaults-and-revalidate/evidence/EVIDENCE-006-FINAL-REVALIDATION.yaml
+decision: null
+finding: null
+approval: null
