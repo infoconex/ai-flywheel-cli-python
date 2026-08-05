@@ -1,0 +1,49 @@
+schema_version: 1
+id: VAL-006
+kind: validation
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+execution_id: EX-20260805T042900Z-001
+created_at: '2026-08-05T04:47:00Z'
+created_by: ai-flywheel-operator
+summary: Validated the neutral persistence defaults, aligned release documentation, complete local quality gate, and approval-bound release posture for Goal 006.
+status: accepted
+validation: final-release-candidate-revalidation
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+- AC-007
+source_refs:
+- ADAPT-006
+- CLASS-006
+- FINDING-006-FINAL-REVALIDATION
+- EVAL-006
+- OBS-006
+- EVIDENCE-006-FINAL-REVALIDATION
+validation_result:
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  method: Run targeted persistence tests and python -m tools validate from the active editable virtual-environment installation, then verify source and wheel distribution builds.
+  expected_outcome: Neutral persistence defaults remain enforced, release documentation matches the implemented exit-code and approval contracts, all configured local quality checks pass, and release actions remain unperformed without explicit human approval.
+  actual_outcome: Three targeted persistence tests passed; the complete local quality gate passed with 94 tests and 85.71 percent coverage; Ruff formatting and linting, strict mypy, source-distribution build, and wheel build all succeeded; no tag, release, artifact upload, package publication, hosted automation, or other approval-bound release action was performed.
+  eligible: true
+  exclusion_reason: null
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
+evidence_refs:
+- EVIDENCE-006-FINAL-REVALIDATION
+adaptation_refs:
+- ADAPT-006
+classification_refs:
+- CLASS-006
+evaluation_refs:
+- EVAL-006
+observation_refs:
+- OBS-006
