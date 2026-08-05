@@ -1,0 +1,32 @@
+schema_version: 1
+id: FINDING-002-PLATFORM-SCOPE
+kind: finding
+mission_id: prepare-python-cli-initial-release
+goal_id: 002-apply-local-quality-gates
+execution_id: EX-20260802T051700Z-001
+created_at: '2026-08-02T16:16:00Z'
+created_by: ai-flywheel-operator
+summary: The local quality gate is proven on Windows with Python 3.13.14, while clean external installation remains to be proven by Goal 003.
+status: accepted
+classification: release-proof-scope
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+source_refs:
+- EVAL-001
+- OBS-001
+- EVIDENCE-002-LOCAL-QUALITY-GATE
+artifact_refs:
+- .flywheel/operations/missions/prepare-python-cli-initial-release/goals/003-prove-installable-release-candidate.yaml
+evidence: null
+decision: null
+finding:
+  finding_type: release-proof-scope
+  description: The documented local quality gate passed on Windows with Python 3.13.14, but it does not prove installation and execution from built artifacts in a clean external environment.
+  impact: Goal 002 can complete because all of its acceptance criteria are satisfied, while release-candidate installation readiness must remain unclaimed until Goal 003 succeeds.
+  discovered_at: '2026-08-02T16:16:00Z'
+  disposition: deferred
+  transition_recovery: null
+approval: null

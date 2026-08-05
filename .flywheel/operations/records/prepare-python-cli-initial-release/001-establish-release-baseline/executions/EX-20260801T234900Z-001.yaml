@@ -1,0 +1,264 @@
+schema_version: 1
+id: EX-20260801T234900Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 001-establish-release-baseline
+status: succeeded
+intended_outcome: Establish and record a reproducible release baseline with passing
+  local quality gates and repository validation.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+started_at: '2026-08-01T23:49:28Z'
+completed_at: '2026-08-02T05:15:49Z'
+lifecycle:
+  execute:
+    status: completed
+    started_at: '2026-08-01T23:49:28Z'
+    completed_at: '2026-08-02T03:27:06Z'
+    summary: Applied local quality-gate corrections, added focused schema-validation
+      coverage, corrected Flywheel repository-state defects, and established a passing
+      release baseline.
+    refs:
+    - commit:60b6e9f
+    - commit:ba99679
+    - commit:de00fcdd
+    - commit:8638e78
+    - validation:python -m tools validate
+    reason: null
+  observe:
+    status: completed
+    started_at: '2026-08-02T03:27:06Z'
+    completed_at: '2026-08-02T03:37:13Z'
+    summary: Observed that Ruff, formatting, strict mypy, repository validation, CLI
+      entry-point checks, 44 tests, and the 80 percent coverage gate all pass locally
+      on Python 3.13.14.
+    refs:
+    - EVIDENCE-RELEASE-BASELINE-001
+    reason: null
+  evaluate:
+    status: completed
+    started_at: '2026-08-02T03:37:13Z'
+    completed_at: '2026-08-02T04:22:30Z'
+    summary: Evaluated the release baseline against AC-001 through AC-004. The available
+      evidence supports all criteria and confirms a reproducible local release baseline
+      with no blocking gaps.
+    refs:
+    - EVAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    reason: null
+  classify:
+    status: completed
+    started_at: '2026-08-02T04:22:30Z'
+    completed_at: '2026-08-02T04:27:57Z'
+    summary: 'Classified the release baseline as validated learning: the current local
+      quality gates and repository validation provide a reliable starting point for
+      the remaining release-readiness goals, with hosted CI and external publication
+      intentionally out of scope.'
+    refs:
+    - CLASS-001
+    - EVAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    reason: null
+  adapt:
+    status: completed
+    started_at: '2026-08-02T04:27:57Z'
+    completed_at: '2026-08-02T04:50:40Z'
+    summary: Adapted the remaining mission plan to use the established local release
+      baseline, preserve the approved scope boundaries, and carry forward the recorded
+      Windows and Python 3.13.14 validation limitation.
+    refs:
+    - ADAPT-001
+    - VAL-001
+    - CLASS-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    reason: null
+  validate:
+    status: completed
+    started_at: '2026-08-02T04:50:40Z'
+    completed_at: '2026-08-02T04:55:03Z'
+    summary: Validated the release baseline through Ruff lint and formatting, strict
+      mypy, repository validation, 58 passing tests, and 81.86 percent coverage on
+      Python 3.13.14 for Windows.
+    refs:
+    - VAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    - EVIDENCE-RELEASE-BASELINE-002
+    reason: null
+  persist:
+    status: completed
+    started_at: '2026-08-02T04:55:03Z'
+    completed_at: '2026-08-02T04:58:31Z'
+    summary: Persisted the validated release baseline, lifecycle transition fix, regression
+      coverage, and supporting evidence for reuse by the remaining release-readiness
+      goals.
+    refs:
+    - ADAPT-001
+    - VAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    - EVIDENCE-RELEASE-BASELINE-002
+    reason: null
+  reuse:
+    status: completed
+    started_at: '2026-08-02T04:58:31Z'
+    completed_at: '2026-08-02T05:15:49Z'
+    summary: Established a reproducible Python CLI release baseline with passing local
+      quality gates, repository validation, lifecycle regression coverage, and reusable
+      evidence for the remaining release-readiness goals.
+    refs:
+    - ADAPT-001
+    - VAL-001
+    - EVIDENCE-RELEASE-BASELINE-001
+    - EVIDENCE-RELEASE-BASELINE-002
+    reason: null
+actions: []
+observations:
+- id: OBS-001
+  statement: The Python CLI release baseline passed Ruff lint and formatting, strict
+    mypy, repository validation, 44 tests, and the configured 80 percent coverage
+    gate.
+  type: quantitative
+  status: complete
+  observed_at: '2026-08-02T03:33:00Z'
+  source_or_method: Local execution of python -m tools validate and CLI validation
+    commands.
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  uncertainty: null
+  conflicts_with: []
+evaluations:
+- id: EVAL-001
+  statement: The recorded release baseline supports all four acceptance criteria for
+    establishing a reproducible and bounded starting point for the remaining mission
+    goals.
+  result: supports
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  limitations:
+  - Validation is local to Python 3.13.14 on Windows and does not represent hosted
+    CI or publication to an external package index.
+  rationale: Package metadata and entry points were inspected, the complete local
+    quality gate passed, gaps and constraints were recorded, and the remaining goals
+    define the bounded follow-on work.
+classifications:
+- id: CLASS-001
+  type: decision
+  statement: Accept the passing local Python 3.13.14 baseline as the reproducible
+    starting point for the remaining release-readiness goals, while retaining the
+    stated limitation that no hosted CI or external publication has been proven.
+  evaluation_refs:
+  - EVAL-001
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  - EVIDENCE-RELEASE-BASELINE-002
+  rationale: The evidence supports AC-001 through AC-004 and establishes a bounded,
+    locally reproducible baseline without expanding the mission into hosted automation
+    or package publication.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: DECISION-RELEASE-BASELINE-001
+  finding_ref: null
+  validation_refs:
+  - VAL-001
+adaptations:
+- id: ADAPT-001
+  type: plan
+  statement: Use the established local Python 3.13.14 baseline and the existing goals
+    as the bounded plan for applying quality gates, proving an installable release
+    candidate, and finalizing release readiness.
+  classification_refs:
+  - CLASS-001
+  evaluation_refs:
+  - EVAL-001
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  - EVIDENCE-RELEASE-BASELINE-002
+  affected_scope:
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/002-apply-local-quality-gates.yaml
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/003-prove-installable-release-candidate.yaml
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/004-finalize-release-readiness.yaml
+  rationale: The baseline already satisfies this goal, so no corrective implementation
+    is required. The appropriate adaptation is to carry the validated constraints
+    and evidence into the remaining approved goals.
+  intended_effect: Preserve a reproducible starting point and prevent unnecessary
+    scope expansion while completing the remaining release-readiness work.
+  alternatives:
+  - Introduce hosted CI or external package publication during this goal.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: DECISION-RELEASE-BASELINE-001
+  disposition: approved
+  implementation_status: completed
+  validation_status: passed
+  persistence_status: persisted
+  reuse_status: reusable
+blockers: []
+approval_refs: []
+evidence_refs:
+- EVIDENCE-RELEASE-BASELINE-001
+- EVIDENCE-RELEASE-BASELINE-002
+decision_refs:
+- DECISION-RELEASE-BASELINE-001
+finding_refs: []
+validation_results:
+- id: VAL-001
+  phase: executed
+  domain: repository
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-001
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  method: Run the complete local quality gate and repository validation after entering
+    the validate stage.
+  scope:
+  - Python package metadata and CLI entry points
+  - Ruff lint and formatting
+  - strict mypy type checking
+  - pytest suite and coverage threshold
+  - Flywheel repository validation
+  expected_outcome: All local release-baseline checks pass with no repository validation
+    errors.
+  actual_outcome: Ruff lint and formatting passed, strict mypy passed, 58 tests passed,
+    lifecycle transition scenarios passed, and coverage reached 81.86 percent against
+    the required 80 percent threshold.
+  expected_evidence:
+  - EVIDENCE-RELEASE-BASELINE-001
+  evidence_refs:
+  - EVIDENCE-RELEASE-BASELINE-001
+  - EVIDENCE-RELEASE-BASELINE-002
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-02T04:52:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
+outcome: Established a reproducible Python CLI release baseline with passing local
+  quality gates, repository validation, lifecycle regression coverage, and reusable
+  evidence for the remaining release-readiness goals.
+completion:
+  disposition: goal-completed
+  rationale: All acceptance criteria were supported by recorded evidence and passed
+    validation.

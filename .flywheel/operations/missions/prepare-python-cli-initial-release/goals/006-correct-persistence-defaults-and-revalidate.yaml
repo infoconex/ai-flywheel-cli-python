@@ -1,0 +1,45 @@
+schema_version: 1
+id: 006-correct-persistence-defaults-and-revalidate
+mission_id: prepare-python-cli-initial-release
+title: Correct Persistence Defaults and Revalidate Release
+status: proposed
+objective: Remove goal-specific reuse defaults from persistence, add regression coverage, and rerun final release-candidate validation after all human-review corrections.
+depends_on:
+- 005-define-stable-exit-code-contract
+acceptance_criteria:
+- id: AC-001
+  statement: persist-execution creates neutral reusable-assessment defaults that are valid for any goal.
+- id: AC-002
+  statement: Generated reuse records do not contain Goal 002-specific local-quality-gate wording or references to Goal 003.
+- id: AC-003
+  statement: Reuse-stage operators can refine neutral generated content without correcting misleading goal-specific claims.
+- id: AC-004
+  statement: Regression tests verify the exact neutral defaults and reject reintroduction of goal-specific persistence content.
+- id: AC-005
+  statement: README exit-code documentation and all release-facing guidance match the final verified implementation.
+- id: AC-006
+  statement: The complete local quality gate, clean installation proof, representative installed commands, and distribution-content inspection pass after the corrections.
+- id: AC-007
+  statement: Final mission records accurately state that all release-preparation goals are complete while tagging, release creation, artifact upload, publication, and hosted automation remain unperformed and approval-bound.
+evidence_required:
+- criterion_id: AC-001
+  evidence_types:
+  - persistence implementation review and generated reuse fixture
+- criterion_id: AC-002
+  evidence_types:
+  - regression test excluding goal-specific persistence wording
+- criterion_id: AC-003
+  evidence_types:
+  - validated neutral reuse-stage workflow
+- criterion_id: AC-004
+  evidence_types:
+  - passing persistence regression tests
+- criterion_id: AC-005
+  evidence_types:
+  - final README and implementation consistency review
+- criterion_id: AC-006
+  evidence_types:
+  - complete local quality-gate and release-proof results
+- criterion_id: AC-007
+  evidence_types:
+  - final state, mission, goal, and approval-boundary review

@@ -1,0 +1,33 @@
+schema_version: 1
+id: REUSE-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 002-apply-local-quality-gates
+execution_id: EX-20260802T051700Z-001
+subject_type: candidate-learning
+subject_ref: local-quality-gate
+adaptation_refs:
+- ADAPT-001
+status: completed
+disposition: defer
+statement: Assess the validated local quality gate for reusable project guidance.
+evidence_refs:
+- EVIDENCE-002-LOCAL-QUALITY-GATE
+- EVIDENCE-003-VALIDATION
+validation_refs:
+- VAL-001
+applicability:
+- Python CLI repositories using the AI Flywheel operating model
+limitations:
+- Validated on Windows with Python 3.13.14; clean external installation remains Goal
+  003.
+reuse_guidance: Retain the validated local quality gate as project-local evidence and reassess promotion after Goal 003 provides clean external installation proof.
+duplicate_refs: []
+conflict_refs: []
+proposed_knowledge_ref: null
+supersedes_refs: []
+approval_required: false
+approval_refs: []
+decision_ref: null
+rationale: The local quality gate is validated and useful within this repository, but promotion to reusable guidance is premature until Goal 003 confirms installation and execution from a clean external environment.
+assessed_at: '2026-08-03T01:22:00Z'
+assessed_by: ai-flywheel-cli

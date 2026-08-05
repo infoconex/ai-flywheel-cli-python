@@ -69,12 +69,8 @@ def _legacy_evidence_valid(value: Any) -> bool:
     evidence_id = value.get("id", value.get("evidence_id"))
     if not isinstance(evidence_id, str) or not evidence_id.startswith("EVIDENCE-"):
         return False
-    timestamp_present = any(
-        key in value for key in ("recorded_at", "created_at", "captured_at")
-    )
-    content_present = any(
-        key in value for key in ("details", "evidence", "observations", "source")
-    )
+    timestamp_present = any(key in value for key in ("recorded_at", "created_at", "captured_at"))
+    content_present = any(key in value for key in ("details", "evidence", "observations", "source"))
     return timestamp_present or content_present
 
 
@@ -83,37 +79,28 @@ def validate_declared_artifacts(
     state: Any,
     issues: list[ValidationIssue],
 ) -> None:
-    for schema_name, relative in CORE_SCHEMAS.items():
-        _validate_schema(root, Path(relative), schema_name, issues)
+    for schema_name, relative_path in CORE_SCHEMAS.items():
+        _validate_schema(root, Path(relative_path), schema_name, issues)
 
     if not isinstance(state, dict):
         return
     mission_id = state.get("active_mission")
     goal_id = state.get("active_goal")
     execution_id = state.get("active_execution")
-    if mission_id:
+    active_execution_relative: Path | None = None
+    if isinstance(mission_id, str):
+        mission_root = root / ".flywheel/operations/missions" / mission_id
         _validate_schema(
             root,
-            Path(f".flywheel/operations/missions/{mission_id}/mission.yaml"),
+            mission_root.joinpath("mission.yaml").relative_to(root),
             "mission",
             issues,
         )
-    if mission_id and goal_id:
-        _validate_schema(
-            root,
-            Path(f".flywheel/operations/missions/{mission_id}/goals/{goal_id}.yaml"),
-            "goal",
-            issues,
-        )
+        for goal_path in mission_root.glob("goals/*.yaml"):
+            _validate_schema(root, goal_path.relative_to(root), "goal", issues)
     if mission_id and goal_id and execution_id:
-        _validate_schema(
-            root,
-            Path(
-                f".flywheel/operations/records/{mission_id}/{goal_id}/executions/"
-                f"{execution_id}.yaml"
-            ),
-            "execution",
-            issues,
+        active_execution_relative = Path(
+            f".flywheel/operations/records/{mission_id}/{goal_id}/executions/{execution_id}.yaml"
         )
 
     records_root = root / ".flywheel/operations/records"
@@ -130,8 +117,7 @@ def validate_declared_artifacts(
         if isinstance(evidence_id, str):
             known_evidence.add(evidence_id)
         if isinstance(evidence_id, str) and not (
-            evidence_path.stem == evidence_id
-            or evidence_path.stem.startswith(evidence_id + "-")
+            evidence_path.stem == evidence_id or evidence_path.stem.startswith(evidence_id + "-")
         ):
             issues.append(
                 ValidationIssue(
@@ -157,6 +143,8 @@ def validate_declared_artifacts(
         relative = execution_path.relative_to(root)
         if not isinstance(value, dict):
             continue
+        if relative == active_execution_relative:
+            _validate_schema(root, relative, "execution", issues)
         execution_id = value.get("id")
         if execution_path.stem != execution_id:
             issues.append(
@@ -168,10 +156,7 @@ def validate_declared_artifacts(
             )
         parts = relative.parts
         expected_mission, expected_goal = parts[-4], parts[-3]
-        if (
-            value.get("mission_id") != expected_mission
-            or value.get("goal_id") != expected_goal
-        ):
+        if value.get("mission_id") != expected_mission or value.get("goal_id") != expected_goal:
             issues.append(
                 ValidationIssue(
                     "EXECUTION_PARENT_MISMATCH",
@@ -190,8 +175,7 @@ def validate_declared_artifacts(
             )
         if value.get("status") in TERMINAL_EXECUTION_STATUSES:
             if not isinstance(lifecycle, dict) or any(
-                not isinstance(stage, dict)
-                or stage.get("status") not in TERMINAL_STAGE_STATUSES
+                not isinstance(stage, dict) or stage.get("status") not in TERMINAL_STAGE_STATUSES
                 for stage in lifecycle.values()
             ):
                 issues.append(

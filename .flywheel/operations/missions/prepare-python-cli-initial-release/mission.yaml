@@ -1,0 +1,32 @@
+schema_version: 1
+id: prepare-python-cli-initial-release
+title: Prepare Python CLI for Initial Release
+status: active
+objective: Produce a locally validated, installable release candidate for the Python CLI without enabling hosted automation or publishing a release.
+constraints:
+  - Do not enable GitHub Actions or other hosted execution.
+  - Do not publish to PyPI, create a tag, or create a GitHub release without explicit human approval.
+  - Adopt quality tools only when they provide clear repository value.
+  - Preserve current deterministic operation behavior and framework compatibility.
+success_criteria:
+  - id: MSC-001
+    statement: Package metadata, dependencies, and CLI entry points are internally consistent and documented.
+  - id: MSC-002
+    statement: Local linting, formatting, strict typing, testing, and coverage gates pass reproducibly.
+  - id: MSC-003
+    statement: An installable release candidate is built and validated without publishing or hosted automation.
+  - id: MSC-004
+    statement: Release readiness, remaining risks, and approval boundaries are recorded for human review.
+  - id: MSC-005
+    statement: The public CLI exit-code contract is single-purpose, tested, and documented before release.
+  - id: MSC-006
+    statement: Human-review defects are corrected and the final release candidate is revalidated.
+goals:
+  - 001-establish-release-baseline
+  - 002-apply-local-quality-gates
+  - 003-prove-installable-release-candidate
+  - 004-finalize-release-readiness
+  - 005-define-stable-exit-code-contract
+  - 006-correct-persistence-defaults-and-revalidate
+approvals_required:
+  - Approval before publishing, tagging, or creating a release

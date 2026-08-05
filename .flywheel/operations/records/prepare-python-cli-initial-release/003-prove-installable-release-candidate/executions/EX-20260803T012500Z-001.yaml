@@ -1,0 +1,273 @@
+schema_version: 1
+id: EX-20260803T012500Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 003-prove-installable-release-candidate
+status: succeeded
+intended_outcome: Prove the Python CLI release candidate installs cleanly into an
+  isolated environment and operates through its packaged entrypoint.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+started_at: '2026-08-03T01:25:31Z'
+completed_at: '2026-08-03T01:47:41Z'
+lifecycle:
+  execute:
+    status: completed
+    started_at: '2026-08-03T01:25:31Z'
+    completed_at: '2026-08-03T01:33:13Z'
+    summary: Built the 0.1.0 source and wheel distributions, installed the wheel into
+      a clean Python 3.13 environment, verified both packaged entrypoints, successfully
+      ran doctor, status, and validate, and confirmed both release artifacts contain
+      only the expected 15 files with no repository-only content.
+    refs:
+    - 396ab0fcd93e42338fc21d195914a3ac50b00432
+    reason: null
+  observe:
+    status: completed
+    started_at: '2026-08-03T01:33:13Z'
+    completed_at: '2026-08-03T01:38:36Z'
+    summary: Observed that the initial wheel installed and operated correctly, but
+      the first source distribution included repository-only content. Packaging exclusions
+      were corrected and regression-tested. The final clean rebuild produced a 15-file
+      wheel and 15-file source distribution, both free of repository-only content.
+    refs:
+    - OBS-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    - 396ab0fcd93e42338fc21d195914a3ac50b00432
+    reason: null
+  evaluate:
+    status: completed
+    started_at: '2026-08-03T01:38:36Z'
+    completed_at: '2026-08-03T01:40:09Z'
+    summary: Evaluated the corrected release candidate against all five Goal 003 acceptance
+      criteria and confirmed that the built distributions, clean installation, packaged
+      entrypoints, representative commands, and final archive contents support the
+      intended outcome.
+    refs:
+    - EVAL-003
+    - OBS-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    reason: null
+  classify:
+    status: completed
+    started_at: '2026-08-03T01:40:09Z'
+    completed_at: '2026-08-03T01:41:54Z'
+    summary: 'Classified Goal 003 as successfully proving the installable release
+      candidate while also recording a confirmed packaging defect: the initial source
+      distribution included repository-only content. The defect is resolved through
+      explicit Hatchling exclusions and regression coverage.'
+    refs:
+    - CLASS-003
+    - FINDING-003-SDIST-CONTENT
+    - EVAL-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    reason: null
+  adapt:
+    status: completed
+    started_at: '2026-08-03T01:41:54Z'
+    completed_at: '2026-08-03T01:44:23Z'
+    summary: Adopted and validated the packaging safeguard that excludes repository-only
+      content from source distributions and preserves the behavior through regression
+      coverage.
+    refs:
+    - ADAPT-003
+    - VAL-003
+    - CLASS-003
+    - FINDING-003-SDIST-CONTENT
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    reason: null
+  validate:
+    status: completed
+    started_at: '2026-08-03T01:44:23Z'
+    completed_at: '2026-08-03T01:45:14Z'
+    summary: Validated the corrected release candidate and packaging safeguard. The
+      complete quality gate passed with 90 tests and 85.10 percent coverage; both
+      distributions built; the wheel installed cleanly; packaged entrypoints and representative
+      commands succeeded; and both final archives contained only the expected 15 files.
+    refs:
+    - VAL-003
+    - ADAPT-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    - FINDING-003-SDIST-CONTENT
+    reason: null
+  persist:
+    status: completed
+    started_at: '2026-08-03T01:45:14Z'
+    completed_at: '2026-08-03T01:46:24Z'
+    summary: Persisted the validated Goal 003 release-candidate proof, including clean
+      installation, packaged entrypoint execution, representative command results,
+      corrected source-distribution exclusions, regression coverage, and final clean
+      artifact contents.
+    refs:
+    - PERSIST-20260803T014624Z-001
+    - REUSE-003
+    - VAL-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    reason: null
+  reuse:
+    status: completed
+    started_at: '2026-08-03T01:46:24Z'
+    completed_at: '2026-08-03T01:47:41Z'
+    summary: Completed Goal 003 after proving clean installation and packaged execution,
+      resolving the source-distribution content defect, validating the corrected release
+      candidate, and promoting the resulting clean-install and artifact-inspection
+      checks as reusable Python CLI release guidance.
+    refs:
+    - REUSE-003
+    - PERSIST-20260803T014624Z-001
+    - VAL-003
+    - EVIDENCE-003-RELEASE-CANDIDATE
+    reason: null
+actions: []
+observations:
+- id: OBS-003
+  statement: The corrected release candidate installs and operates successfully from
+    its packaged wheel, and both final distribution archives contain only the expected
+    15 release files.
+  type: direct
+  status: complete
+  observed_at: '2026-08-03T01:33:00Z'
+  source_or_method: Clean Python 3.13 virtual-environment installation, packaged entrypoint
+    execution, representative CLI commands, and direct archive-content inspection.
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  uncertainty: null
+  conflicts_with: []
+evaluations:
+- id: EVAL-003
+  statement: The corrected Python CLI release candidate satisfies all five Goal 003
+    acceptance criteria for distribution builds, clean installation, packaged entrypoints,
+    representative commands, and artifact contents.
+  result: supports
+  observation_refs:
+  - OBS-003
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  rule_refs: []
+  limitations:
+  - The proof was executed locally on Windows using Python 3.13 and does not establish
+    cross-platform compatibility beyond the declared release scope.
+  rationale: Both distributions built successfully, the wheel installed into an isolated
+    environment, console and module entrypoints returned version 0.1.0, doctor, status,
+    and validate passed, and final archive inspection found no repository-only content.
+classifications:
+- id: CLASS-003
+  type: finding
+  statement: Goal 003 confirms the Python CLI release candidate is installable and
+    operational, and it also identified and resolved a packaging defect that allowed
+    repository-only content into the source distribution.
+  evaluation_refs:
+  - EVAL-003
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  rationale: The final evidence supports all five acceptance criteria, while the earlier
+    oversized source distributions demonstrate a real packaging defect that required
+    configuration and regression-test changes before the goal could pass.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-003-SDIST-CONTENT
+  validation_refs: []
+adaptations:
+- id: ADAPT-003
+  type: tooling
+  statement: Retain the explicit Hatchling source-distribution exclusions and regression
+    test as the release-packaging safeguard for the Python CLI.
+  classification_refs:
+  - CLASS-003
+  evaluation_refs:
+  - EVAL-003
+  observation_refs:
+  - OBS-003
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  affected_scope:
+  - pyproject.toml
+  - tests/test_tools_tasks.py
+  rationale: The initial source distribution included repository-only content and
+    could not satisfy AC-005. The exclusions and regression test corrected the defect
+    and produced clean 15-file release archives.
+  intended_effect: Prevent repository operating state, tests, tools, temporary installation
+    environments, and other repository-only content from entering future source distributions.
+  alternatives:
+  - Rely on developer cleanup before each build.
+  - Inspect archives manually without enforcing packaging configuration.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: passed
+  persistence_status: persisted
+  reuse_status: not-assessed
+blockers: []
+approval_refs: []
+evidence_refs:
+- EVIDENCE-003-RELEASE-CANDIDATE
+decision_refs: []
+finding_refs:
+- FINDING-003-SDIST-CONTENT
+validation_results:
+- id: VAL-003
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-003
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  rule_refs: []
+  method: Run the complete local quality gate, build fresh distributions, install
+    the wheel into a clean Python 3.13 environment, execute both packaged entrypoints
+    and representative commands, and inspect wheel and source-distribution contents.
+  scope:
+  - source and wheel builds
+  - clean wheel installation
+  - console and module entrypoints
+  - doctor, status, and validate commands
+  - wheel and source-distribution archive contents
+  expected_outcome: Both distributions build, the wheel installs and operates through
+    packaged entrypoints, representative commands pass, and neither archive contains
+    repository-only content.
+  actual_outcome: The complete quality gate passed with 90 tests and 85.10 percent
+    coverage; both distributions built; the wheel installed cleanly; both entrypoints
+    returned version 0.1.0; doctor, status, and validate passed; and both final archives
+    contained 15 files with no repository-only content.
+  expected_evidence:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-03T01:33:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
+outcome: Completed Goal 003 after proving clean installation and packaged execution,
+  resolving the source-distribution content defect, validating the corrected release
+  candidate, and promoting the resulting clean-install and artifact-inspection checks
+  as reusable Python CLI release guidance.
+completion:
+  disposition: goal-completed
+  rationale: All acceptance criteria were supported by recorded evidence and passed
+    validation.

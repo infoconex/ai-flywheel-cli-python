@@ -1,0 +1,38 @@
+schema_version: 1
+id: 004-finalize-release-readiness
+mission_id: prepare-python-cli-initial-release
+title: Finalize Release Readiness
+status: completed
+objective: Reconcile documentation, versioning, limitations, and release procedures
+  into an approval-ready release candidate.
+depends_on:
+- 003-prove-installable-release-candidate
+acceptance_criteria:
+- id: AC-001
+  statement: README installation and usage instructions match verified behavior.
+- id: AC-002
+  statement: Version and implementation status accurately reflect release-candidate
+    readiness.
+- id: AC-003
+  statement: Known limitations and deferred publication decisions are documented.
+- id: AC-004
+  statement: A reproducible local release checklist is available.
+- id: AC-005
+  statement: Tagging, GitHub release creation, and publication remain explicit human
+    approval boundaries.
+evidence_required:
+- criterion_id: AC-001
+  evidence_types:
+  - verified README installation and usage review
+- criterion_id: AC-002
+  evidence_types:
+  - version and implementation-status review
+- criterion_id: AC-003
+  evidence_types:
+  - documented limitations and deferred decisions
+- criterion_id: AC-004
+  evidence_types:
+  - reproducible local release checklist
+- criterion_id: AC-005
+  evidence_types:
+  - documented human approval boundaries

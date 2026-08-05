@@ -6,11 +6,13 @@ from pathlib import Path
 import typer
 
 from ai_flywheel_cli import __version__
+from ai_flywheel_cli.completion import complete_execution
 from ai_flywheel_cli.deterministic_operations import (
     UnsupportedDeterministicOperationError,
     advance_lifecycle,
     start_execution,
 )
+from ai_flywheel_cli.mutation import MutationRejectedError
 from ai_flywheel_cli.operations import (
     LockContentionError,
     OperationError,
@@ -18,6 +20,7 @@ from ai_flywheel_cli.operations import (
     install_from_archive,
     plan_install,
 )
+from ai_flywheel_cli.persistence import persist_execution
 from ai_flywheel_cli.upgrade import upgrade_from_archive
 from ai_flywheel_cli.validation import validate_repository
 
@@ -50,16 +53,22 @@ def _operation_exit(error: OperationError, *, command: str, as_json: bool) -> No
     else:
         code = 8
         category = "operation-failed"
-    _emit(
-        {"command": command, "status": category, "error": str(error)},
-        as_json=as_json,
-    )
+    payload: dict[str, object] = {
+        "command": command,
+        "status": category,
+        "error": str(error),
+    }
+    if isinstance(error, MutationRejectedError):
+        payload["failures"] = [failure.as_dict() for failure in error.failures]
+    _emit(payload, as_json=as_json)
     raise typer.Exit(code=code)
 
 
 @app.callback()
 def main(
-    version: bool = typer.Option(False, "--version", help="Show the CLI version and exit.", is_eager=True),
+    version: bool = typer.Option(
+        False, "--version", help="Show the CLI version and exit.", is_eager=True
+    ),
 ) -> None:
     if version:
         typer.echo(__version__)
@@ -179,6 +188,39 @@ def advance_lifecycle_command(
         )
     except OperationError as error:
         _operation_exit(error, command="advance-lifecycle", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
+
+
+@app.command("persist-execution")
+def persist_execution_command(
+    summary: str = typer.Option(..., "--summary"),
+    reuse_id: str = typer.Option(..., "--reuse-id"),
+    operator: str = typer.Option("ai-flywheel-cli", "--operator"),
+    repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Persist validated execution records and atomically activate Reuse."""
+    try:
+        result = persist_execution(repository, summary, reuse_id, operator=operator)
+    except OperationError as error:
+        _operation_exit(error, command="persist-execution", as_json=json_output)
+        return
+    _emit(result.as_dict(), as_json=json_output)
+
+
+@app.command("complete-execution")
+def complete_execution_command(
+    summary: str = typer.Option(..., "--summary"),
+    ref: list[str] | None = typer.Option(None, "--ref"),
+    repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
+    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
+) -> None:
+    """Complete reuse, close the active execution, and ready the next dependent goal."""
+    try:
+        result = complete_execution(repository, summary, tuple(ref or ()))
+    except OperationError as error:
+        _operation_exit(error, command="complete-execution", as_json=json_output)
         return
     _emit(result.as_dict(), as_json=json_output)
 

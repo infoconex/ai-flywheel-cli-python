@@ -1,0 +1,294 @@
+schema_version: 1
+id: EX-20260803T015000Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 004-finalize-release-readiness
+status: succeeded
+intended_outcome: Produce an approval-ready release candidate by reconciling README
+  installation and usage guidance, version and implementation status, known limitations,
+  deferred publication decisions, a reproducible local release checklist, and explicit
+  human approval boundaries for tagging, GitHub release creation, and publication.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+started_at: '2026-08-03T01:50:44Z'
+completed_at: '2026-08-03T02:45:04Z'
+lifecycle:
+  execute:
+    status: completed
+    started_at: '2026-08-03T01:50:44Z'
+    completed_at: '2026-08-03T02:01:19Z'
+    summary: Updated and verified the release-facing README so installation and usage
+      guidance match implemented behavior, version 0.1.0 is identified as a locally
+      validated release candidate, current limitations and deferred publication decisions
+      are accurate, a reproducible local release checklist is documented, and tagging,
+      GitHub release creation, artifact upload, publication, and hosted automation
+      remain explicit human approval boundaries.
+    refs:
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
+    - 0153843faa4af3ffe372198d67a033a30a1ef44c
+    reason: null
+  observe:
+    status: completed
+    started_at: '2026-08-03T02:01:19Z'
+    completed_at: '2026-08-03T02:03:08Z'
+    summary: Observed that the release-facing documentation, package version, implemented
+      command surface, current limitations, local release checklist, and explicit
+      human approval boundaries are now aligned and collectively support all five
+      Goal 004 acceptance criteria.
+    refs:
+    - OBS-004
+    - EVAL-004
+    - EVIDENCE-004-RELEASE-READINESS
+    reason: null
+  evaluate:
+    status: completed
+    started_at: '2026-08-03T02:03:08Z'
+    completed_at: '2026-08-03T02:33:06Z'
+    summary: Evaluated the finalized release-readiness documentation against all five
+      Goal 004 acceptance criteria and classified the prior README mismatch as a resolved
+      release-documentation finding. The 0.1.0 candidate is technically approval-ready,
+      while tagging, GitHub release creation, artifact upload, publication, and hosted
+      automation remain explicit human decisions.
+    refs:
+    - CLASS-004
+    - FINDING-004-RELEASE-DOCUMENTATION
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
+    reason: null
+  classify:
+    status: completed
+    started_at: '2026-08-03T02:33:06Z'
+    completed_at: '2026-08-03T02:35:15Z'
+    summary: Adopted the finalized README as the release-facing guidance for version
+      0.1.0, including verified command behavior, accurate implementation status and
+      limitations, a reproducible local release checklist, and explicit human approval
+      boundaries for tagging, GitHub release creation, artifact upload, publication,
+      and hosted automation.
+    refs:
+    - ADAPT-004
+    - CLASS-004
+    - FINDING-004-RELEASE-DOCUMENTATION
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
+    reason: null
+  adapt:
+    status: completed
+    started_at: '2026-08-03T02:35:15Z'
+    completed_at: '2026-08-03T02:39:52Z'
+    summary: Validated the release-readiness guidance through the complete local quality
+      gate. All configured checks passed, package distributions built successfully,
+      the README remained aligned with the verified 0.1.0 command surface, and all
+      five Goal 004 acceptance criteria are supported while publication actions remain
+      human approval boundaries.
+    refs:
+    - VAL-004
+    - ADAPT-004
+    - CLASS-004
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
+    reason: null
+  validate:
+    status: completed
+    started_at: '2026-08-03T02:39:52Z'
+    completed_at: '2026-08-03T02:41:07Z'
+    summary: Confirmed that the finalized release-readiness guidance, version status,
+      documented limitations, reproducible local release checklist, and explicit human
+      approval boundaries satisfy all five Goal 004 acceptance criteria. The validated
+      outcome is ready to be persisted without performing any tag, GitHub release,
+      artifact upload, publication, or hosted automation action.
+    refs:
+    - VAL-004
+    - ADAPT-004
+    - CLASS-004
+    - EVAL-004
+    - OBS-004
+    - EVIDENCE-004-RELEASE-READINESS
+    reason: null
+  persist:
+    status: completed
+    started_at: '2026-08-03T02:41:07Z'
+    completed_at: '2026-08-03T02:42:23Z'
+    summary: Persist the validated Goal 004 release-readiness outcome, including authoritative
+      README guidance for version 0.1.0, documented limitations, a reproducible local
+      release checklist, and explicit human approval boundaries for tagging, GitHub
+      release creation, artifact upload, publication, and hosted automation.
+    refs:
+    - PERSIST-20260803T024223Z-001
+    - REUSE-004
+    - VAL-004
+    - EVIDENCE-004-RELEASE-READINESS
+    reason: null
+  reuse:
+    status: completed
+    started_at: '2026-08-03T02:42:23Z'
+    completed_at: '2026-08-03T02:45:04Z'
+    summary: Completed Goal 004 after validating and persisting the version 0.1.0
+      release-readiness guidance and promoting reusable release practices for accurate
+      status, reproducible local checks, documented limitations, and explicit human
+      approval boundaries. No tag, GitHub release, artifact upload, package publication,
+      or hosted automation action was performed.
+    refs: []
+    reason: null
+actions: []
+observations:
+- id: OBS-004
+  statement: The release-facing documentation now matches the verified 0.1.0 command
+    surface and release-candidate behavior, including lifecycle operations, current
+    limitations, a reproducible local release checklist, and explicit human approval
+    boundaries.
+  type: direct
+  status: complete
+  observed_at: '2026-08-03T01:59:00Z'
+  source_or_method: README, package version metadata, installed CLI command help,
+    and complete local quality-gate review.
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  uncertainty: null
+  conflicts_with: []
+evaluations:
+- id: EVAL-004
+  statement: The release-facing documentation and verified command behavior satisfy
+    all five Goal 004 acceptance criteria for an approval-ready 0.1.0 release candidate.
+  result: supports
+  observation_refs:
+  - OBS-004
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  rule_refs: []
+  limitations:
+  - The release candidate is locally validated on Windows with Python 3.13; tagging,
+    GitHub release creation, artifact upload, and package-index publication remain
+    unexecuted human decisions.
+  rationale: The README now reflects the implemented installation, validation, upgrade,
+    and lifecycle command surface; identifies version 0.1.0 as a locally validated
+    but unpublished release candidate; records current limitations and deferred decisions;
+    provides a reproducible local release checklist; and explicitly reserves publication
+    actions for human approval.
+classifications:
+- id: CLASS-004
+  type: finding
+  statement: Goal 004 confirms the 0.1.0 release candidate is technically approval-ready,
+    while tagging, GitHub release creation, artifact upload, and publication remain
+    explicit human approval boundaries.
+  evaluation_refs:
+  - EVAL-004
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  rationale: The verified README and command surface satisfy all five acceptance criteria,
+    and the resolved documentation mismatch is recorded so release-facing guidance
+    remains aligned with implemented lifecycle capabilities.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-004-RELEASE-DOCUMENTATION
+  validation_refs:
+  - VAL-004
+adaptations:
+- id: ADAPT-004
+  type: guidance
+  statement: Retain the finalized README release-readiness sections as the authoritative
+    local guidance for version 0.1.0 readiness, limitations, reproducible release
+    checks, and human approval boundaries.
+  classification_refs:
+  - CLASS-004
+  evaluation_refs:
+  - EVAL-004
+  observation_refs:
+  - OBS-004
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  affected_scope:
+  - README.md
+  rationale: The prior README understated implemented lifecycle capabilities and lacked
+    an explicit release-candidate status, reproducible release checklist, and complete
+    publication approval boundary.
+  intended_effect: Keep release-facing guidance aligned with verified CLI behavior
+    and prevent technical readiness from being confused with authorization to tag,
+    publish, create a GitHub release, upload artifacts, or enable hosted automation.
+  alternatives:
+  - Keep release procedures as undocumented operator knowledge.
+  - Treat technical validation as implicit approval to publish.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: passed
+  persistence_status: persisted
+  reuse_status: not-assessed
+blockers: []
+approval_refs: []
+evidence_refs:
+- EVIDENCE-004-RELEASE-READINESS
+decision_refs: []
+finding_refs:
+- FINDING-004-RELEASE-DOCUMENTATION
+validation_results:
+- id: VAL-004
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-004
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  rule_refs: []
+  method: Run python -m tools validate from the active repository virtual environment
+    after finalizing the release-facing README guidance.
+  scope:
+  - Ruff linting and formatting
+  - strict mypy
+  - pytest with coverage
+  - repository validation
+  - isolated source and wheel package builds
+  - release-facing README guidance and approval boundaries
+  expected_outcome: Every configured local quality check passes, both distributions
+    build successfully, and the finalized README remains consistent with the verified
+    command surface and release approval boundary.
+  actual_outcome: Every configured local quality check passed, repository validation
+    succeeded, both source and wheel distributions were built successfully, and the
+    finalized release-facing guidance remained valid.
+  expected_evidence:
+  - Complete python -m tools validate output
+  - EVIDENCE-004-RELEASE-READINESS
+  evidence_refs:
+  - EVIDENCE-004-RELEASE-READINESS
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-03T02:38:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
+outcome: Completed Goal 004 after validating and persisting the version 0.1.0 release-readiness
+  guidance and promoting reusable release practices for accurate status, reproducible
+  local checks, documented limitations, and explicit human approval boundaries. No
+  tag, GitHub release, artifact upload, package publication, or hosted automation
+  action was performed.
+completion:
+  disposition: goal-completed
+  rationale: All acceptance criteria were supported by recorded evidence and passed
+    validation.

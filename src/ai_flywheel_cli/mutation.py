@@ -3,9 +3,10 @@ from __future__ import annotations
 import hashlib
 import shutil
 import tempfile
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Mapping, TypeVar
+from typing import Any, TypeVar
 
 import yaml
 
@@ -43,7 +44,9 @@ class MutationRejectedError(OperationError):
 
 def load_yaml_mapping(path: Path, error_type: type[TMutationError]) -> dict[str, Any]:
     if not path.is_file():
-        failure = MutationFailure("MISSING_ARTIFACT", str(path), "Required artifact does not exist.")
+        failure = MutationFailure(
+            "MISSING_ARTIFACT", str(path), "Required artifact does not exist."
+        )
         raise error_type(f"Required artifact does not exist: {path}", (failure,))
     try:
         value = yaml.safe_load(path.read_text(encoding="utf-8"))
@@ -51,7 +54,9 @@ def load_yaml_mapping(path: Path, error_type: type[TMutationError]) -> dict[str,
         failure = MutationFailure("INVALID_ARTIFACT", str(path), str(error))
         raise error_type(f"Unable to load YAML artifact: {path}", (failure,)) from error
     if not isinstance(value, dict):
-        failure = MutationFailure("INVALID_ARTIFACT_SHAPE", str(path), "Artifact must be a YAML mapping.")
+        failure = MutationFailure(
+            "INVALID_ARTIFACT_SHAPE", str(path), "Artifact must be a YAML mapping."
+        )
         raise error_type(f"Artifact must be a YAML mapping: {path}", (failure,))
     return value
 
@@ -90,7 +95,9 @@ def commit_validated_yaml(
                     relative_path,
                     f"Expected SHA-256 {expected_digest!r}, found {actual_digest!r}.",
                 )
-                raise error_type(f"Source artifact changed before persistence: {relative_path}", (failure,))
+                raise error_type(
+                    f"Source artifact changed before persistence: {relative_path}", (failure,)
+                )
 
         shadow_parent = Path(tempfile.mkdtemp(prefix="flywheel-shadow-"))
         shadow = shadow_parent / "repository"
@@ -101,7 +108,9 @@ def commit_validated_yaml(
                 _write_yaml(shadow / relative_path, value)
             validation = validate_repository(shadow)
             if not validation.passed:
-                raise error_type("Proposed mutation failed validation.", _validation_failures(validation.issues))
+                raise error_type(
+                    "Proposed mutation failed validation.", _validation_failures(validation.issues)
+                )
             for index, (relative_path, value) in enumerate(changes.items()):
                 target = root / relative_path
                 backups[relative_path] = target.read_bytes() if target.is_file() else None

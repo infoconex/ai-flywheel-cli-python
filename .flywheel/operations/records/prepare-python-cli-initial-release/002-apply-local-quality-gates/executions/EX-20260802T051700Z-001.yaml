@@ -1,0 +1,266 @@
+schema_version: 1
+id: EX-20260802T051700Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 002-apply-local-quality-gates
+status: succeeded
+intended_outcome: Establish and document justified local linting, formatting, typing,
+  and package-build quality gates that run through one command without hosted automation.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+started_at: '2026-08-02T05:43:52Z'
+completed_at: '2026-08-03T01:24:19Z'
+lifecycle:
+  execute:
+    status: completed
+    started_at: '2026-08-02T05:43:52Z'
+    completed_at: '2026-08-02T06:04:39Z'
+    summary: Implemented the documented local quality gate using Ruff linting and
+      formatting, strict mypy, pytest with coverage, repository validation, and isolated
+      Hatchling package builds through python -m tools validate.
+    refs:
+    - pyproject.toml
+    - tools/__main__.py
+    - tests/test_tools_tasks.py
+    - README.md
+    reason: null
+  observe:
+    status: completed
+    started_at: '2026-08-02T06:04:39Z'
+    completed_at: '2026-08-02T06:12:16Z'
+    summary: Observed that the complete documented local quality gate passed, including
+      Ruff linting and formatting, strict mypy, tests with coverage, repository validation,
+      and isolated source and wheel package builds.
+    refs:
+    - OBS-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    reason: null
+  evaluate:
+    status: completed
+    started_at: '2026-08-02T06:12:16Z'
+    completed_at: '2026-08-02T16:14:22Z'
+    summary: Evaluated the successful local quality gate against all four acceptance
+      criteria and confirmed that it supports the Goal 002 intended outcome, with
+      clean-environment installation proof deferred to Goal 003.
+    refs:
+    - EVAL-001
+    - OBS-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    reason: null
+  classify:
+    status: completed
+    started_at: '2026-08-02T16:14:22Z'
+    completed_at: '2026-08-02T22:28:45Z'
+    summary: Classified the successful local quality gate as satisfying Goal 002,
+      with clean external installation proof recorded as a confirmed scope finding
+      deferred to Goal 003.
+    refs:
+    - CLASS-001
+    - FINDING-002-PLATFORM-SCOPE
+    - EVAL-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    reason: null
+  adapt:
+    status: completed
+    started_at: '2026-08-02T22:28:45Z'
+    completed_at: '2026-08-03T00:49:10Z'
+    summary: Recorded the implemented local quality gate as the approved Goal 002
+      tooling adaptation, with validation planned through VAL-001.
+    refs:
+    - ADAPT-001
+    - VAL-001
+    - CLASS-001
+    - EVAL-001
+    - OBS-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    reason: null
+  validate:
+    status: completed
+    started_at: '2026-08-03T00:49:10Z'
+    completed_at: '2026-08-03T00:53:02Z'
+    summary: Validated the approved local quality-gate adaptation through VAL-001;
+      every configured check passed and the planned source and wheel distributions
+      were built successfully.
+    refs:
+    - VAL-001
+    - ADAPT-001
+    - EVIDENCE-003-VALIDATION
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    reason: null
+  persist:
+    status: completed
+    started_at: '2026-08-03T00:53:02Z'
+    completed_at: '2026-08-03T01:21:28Z'
+    summary: Persisted the validated Goal 002 local quality-gate outcome and prepared
+      REUSE-001 for reuse assessment.
+    refs:
+    - PERSIST-20260803T012128Z-001
+    - REUSE-001
+    - VAL-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    - EVIDENCE-003-VALIDATION
+    reason: null
+  reuse:
+    status: completed
+    started_at: '2026-08-03T01:21:28Z'
+    completed_at: '2026-08-03T01:24:19Z'
+    summary: Completed Goal 002 after validating the local quality gate, persisting
+      the outcome, and deferring reusable guidance until clean external installation
+      is proven in Goal 003.
+    refs:
+    - REUSE-001
+    - PERSIST-20260803T012128Z-001
+    - EVIDENCE-002-LOCAL-QUALITY-GATE
+    - EVIDENCE-003-VALIDATION
+    reason: null
+actions:
+- Added the build frontend to development dependencies.
+- Added isolated sdist and wheel builds to python -m tools validate.
+- Documented the complete local quality gate in README.md.
+observations:
+- id: OBS-001
+  statement: The complete documented local quality gate passed and produced both source
+    and wheel distributions using the declared Hatchling backend.
+  type: direct
+  status: complete
+  observed_at: '2026-08-02T06:05:00Z'
+  source_or_method: Executed python -m tools validate in the repository virtual environment
+    on Windows with Python 3.13.14.
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  uncertainty: null
+  conflicts_with: []
+evaluations:
+- id: EVAL-001
+  statement: The adopted local quality gate satisfies all four acceptance criteria
+    for linting and formatting, strict typing, package-backend validation, and one-command
+    local execution.
+  result: supports
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  limitations:
+  - The evidence proves the gate on Windows with Python 3.13.14 and does not yet prove
+    installation into a clean external environment, which is reserved for Goal 003.
+  rationale: Ruff linting and formatting, strict mypy, pytest with coverage, repository
+    validation, and isolated Hatchling source and wheel builds all passed through
+    the documented python -m tools validate command.
+classifications:
+- id: CLASS-001
+  type: finding
+  statement: Goal 002 has confirmed the local quality gate, while clean external installation
+    proof remains outside this goal and is deferred to Goal 003.
+  evaluation_refs:
+  - EVAL-001
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  rationale: The successful gate directly satisfies Goal 002, and its documented platform
+    limitation defines the remaining release-proof boundary without blocking this
+    goal.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-002-PLATFORM-SCOPE
+  validation_refs:
+  - VAL-001
+adaptations:
+- id: ADAPT-001
+  type: tooling
+  statement: Retain the implemented python -m tools validate command as the local
+    release-quality gate for the Python CLI.
+  classification_refs:
+  - CLASS-001
+  evaluation_refs:
+  - EVAL-001
+  observation_refs:
+  - OBS-001
+  evidence_refs:
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  affected_scope:
+  - pyproject.toml
+  - tools/__main__.py
+  - tests/test_tools_tasks.py
+  - README.md
+  rationale: The implemented gate satisfies all Goal 002 acceptance criteria and preserves
+    the clean-environment installation boundary assigned to Goal 003.
+  intended_effect: Provide one documented and repeatable local command that proves
+    linting, formatting, strict typing, tests with coverage, repository validity,
+    and package builds.
+  alternatives:
+  - Keep separate undocumented commands for each quality check.
+  - Introduce hosted automation before the initial release mission authorizes it.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: passed
+  persistence_status: persisted
+  reuse_status: not-assessed
+blockers: []
+approval_refs: []
+evidence_refs:
+- EVIDENCE-002-LOCAL-QUALITY-GATE
+- EVIDENCE-003-VALIDATION
+decision_refs: []
+finding_refs:
+- FINDING-002-PLATFORM-SCOPE
+validation_results:
+- id: VAL-001
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-001
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  rule_refs: []
+  method: Run python -m tools validate from the active repository virtual environment.
+  scope:
+  - Ruff linting and formatting
+  - strict mypy
+  - pytest with coverage
+  - repository validation
+  - isolated source and wheel package builds
+  expected_outcome: Every configured local quality check passes and both distributions
+    are built successfully.
+  actual_outcome: Ruff lint and formatting passed, strict mypy passed, 83 tests passed
+    with 85.83 percent coverage, repository validation passed, and isolated Hatchling
+    builds produced both the source distribution and wheel.
+  expected_evidence:
+  - Complete python -m tools validate output
+  - EVIDENCE-002-LOCAL-QUALITY-GATE
+  evidence_refs:
+  - EVIDENCE-003-VALIDATION
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-03T00:49:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
+outcome: Completed Goal 002 after validating the local quality gate, persisting the
+  outcome, and deferring reusable guidance until clean external installation is proven
+  in Goal 003.
+completion:
+  disposition: goal-completed
+  rationale: All acceptance criteria were supported by recorded evidence and passed
+    validation.

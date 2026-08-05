@@ -1,0 +1,39 @@
+schema_version: 1
+id: 001-establish-release-baseline
+mission_id: prepare-python-cli-initial-release
+title: Establish Release Baseline
+status: completed
+objective: Verify current package metadata, runtime behavior, documentation, and local
+  validation capabilities before changing release policy.
+procedure:
+- Inspect package metadata, dependencies, entry points, README instructions, and implementation
+  manifest.
+- Run the existing test suite and repository validation.
+- Identify missing tools or environment constraints.
+- Record the minimum justified release-readiness changes.
+acceptance_criteria:
+- id: AC-001
+  statement: Current package metadata and entry points are documented and internally
+    consistent.
+- id: AC-002
+  statement: Existing tests and repository validation establish a reproducible baseline.
+- id: AC-003
+  statement: Missing release dependencies and documentation gaps are identified without
+    prematurely adopting tools.
+- id: AC-004
+  statement: A bounded change plan exists for the remaining mission goals.
+evidence_required:
+- criterion_id: AC-001
+  evidence_types:
+  - package metadata and entry-point inspection
+- criterion_id: AC-002
+  evidence_types:
+  - local test and repository-validation results
+- criterion_id: AC-003
+  evidence_types:
+  - documented dependency and documentation-gap findings
+- criterion_id: AC-004
+  artifact_refs:
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/002-apply-local-quality-gates.yaml
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/003-prove-installable-release-candidate.yaml
+  - .flywheel/operations/missions/prepare-python-cli-initial-release/goals/004-finalize-release-readiness.yaml

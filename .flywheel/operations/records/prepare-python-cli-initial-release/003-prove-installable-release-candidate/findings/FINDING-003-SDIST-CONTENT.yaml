@@ -1,0 +1,33 @@
+schema_version: 1
+id: FINDING-003-SDIST-CONTENT
+kind: finding
+mission_id: prepare-python-cli-initial-release
+goal_id: 003-prove-installable-release-candidate
+execution_id: EX-20260803T012500Z-001
+created_at: '2026-08-03T01:41:00Z'
+created_by: ai-flywheel-operator
+summary: The source distribution initially included repository-only content, including the temporary clean-install
+  environment.
+status: resolved
+classification: packaging-defect
+criterion_ids:
+- AC-005
+source_refs:
+- initial sdist archive inspection
+- final sdist archive inspection
+artifact_refs:
+- pyproject.toml
+- tests/test_tools_tasks.py
+- dist/ai_flywheel_cli-0.1.0.tar.gz
+finding:
+  finding_type: defect
+  statement: The Hatchling source distribution configuration did not exclude all repository-only directories,
+    causing oversized and invalid release archives.
+  impact: AC-005 could not pass until repository-only content was excluded.
+  resolution: Added explicit sdist exclusions for .flywheel, .gitignore, tests, tools, and .release-proof,
+    and added a regression test for the configured exclusions.
+  resolved_at: '2026-08-03T01:33:00Z'
+  evidence_refs:
+  - EVIDENCE-003-RELEASE-CANDIDATE
+decision: null
+approval: null

@@ -1,0 +1,31 @@
+schema_version: 1
+id: EVIDENCE-RELEASE-BASELINE-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 001-establish-release-baseline
+execution_id: EX-20260801T234900Z-001
+type: local-release-baseline-validation
+summary: The Python CLI release baseline passed all configured local quality gates and repository validation on Python 3.13.14.
+details:
+  commands:
+    - python -m tools validate
+    - flywheel validate .
+    - flywheel --version
+    - flywheel --help
+    - flywheel doctor .
+  results:
+    ruff_lint: passed
+    ruff_format: passed
+    mypy_strict: passed
+    repository_validation: passed
+    tests_passed: 44
+    tests_failed: 0
+    coverage_percent: 81.40
+    coverage_required_percent: 80
+    cli_version: 0.1.0
+    github_actions_enabled: false
+  source_commits:
+    - 60b6e9f
+    - ba99679
+    - de00fcdd
+    - 8638e78
+recorded_at: "2026-08-02T03:33:00Z"

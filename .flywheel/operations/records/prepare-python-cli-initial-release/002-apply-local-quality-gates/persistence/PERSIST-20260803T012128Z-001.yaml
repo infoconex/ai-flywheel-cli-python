@@ -1,0 +1,59 @@
+schema_version: 1
+id: PERSIST-20260803T012128Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 002-apply-local-quality-gates
+execution_id: EX-20260802T051700Z-001
+created_at: '2026-08-03T01:21:28Z'
+operator: ai-flywheel-cli
+status: applied
+targets:
+- id: PT-001
+  artifact_type: reuse-assessment
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/002-apply-local-quality-gates/reuse/REUSE-001.yaml
+  operation: create
+  mutability: create-only
+  dependency_refs: []
+  expected_precondition:
+    absence: true
+  proposed_content_digest: 44aaccdf2a0be5863e57ba84b49372e0dee0f650687b123c41c0918f4000ced1
+  rollback:
+    mode: delete-created
+    retained_content_digest: null
+- id: PT-002
+  artifact_type: execution
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/002-apply-local-quality-gates/executions/EX-20260802T051700Z-001.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-001
+  expected_precondition:
+    blob_sha: 06125992bb458bd25c87aa84c6a902768dfa69f6be7f0a4109e719717e981e3f
+  proposed_content_digest: 042ab652b74e3f7874e10edd48cc66468a7fec5075a67e577dceeab28ae6a1a8
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 06125992bb458bd25c87aa84c6a902768dfa69f6be7f0a4109e719717e981e3f
+- id: PT-003
+  artifact_type: state
+  path: .flywheel/state.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-002
+  expected_precondition:
+    blob_sha: c7e5678e9e63e2b2bd86281fbd4d776f223717c8b3c446ef5100a7928f381229
+  proposed_content_digest: 269e6ec8720a8d1330c0a07957959201fe092f29e7caa04af3afdf3935deadaf
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: c7e5678e9e63e2b2bd86281fbd4d776f223717c8b3c446ef5100a7928f381229
+write_order:
+- PT-001
+- PT-002
+- PT-003
+recovery:
+  mode: not-started
+  finding_ref: null
+  blocker: null
+final_verification:
+  required: true
+  verified_at: '2026-08-03T01:21:28Z'
+  result: passed

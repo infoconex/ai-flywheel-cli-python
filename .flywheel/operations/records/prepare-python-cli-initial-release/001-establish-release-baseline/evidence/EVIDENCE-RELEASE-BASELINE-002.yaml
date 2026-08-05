@@ -1,0 +1,30 @@
+schema_version: 1
+id: EVIDENCE-RELEASE-BASELINE-002
+mission_id: prepare-python-cli-initial-release
+goal_id: 001-establish-release-baseline
+execution_id: EX-20260801T234900Z-001
+type: local-release-baseline-validation
+summary: The expanded Python CLI lifecycle test suite and all configured local quality gates passed on Python 3.13.14.
+details:
+  commands:
+    - python -m tools validate
+  results:
+    ruff_lint: passed
+    ruff_format: passed
+    mypy_strict: passed
+    tests_passed: 58
+    tests_failed: 0
+    coverage_percent: 81.86
+    coverage_required_percent: 80
+    lifecycle_transition_scenarios_passed: 13
+    github_actions_enabled: false
+  source_commits:
+    - 2757ddc
+    - 04db730
+    - cc0cffd
+    - 8667951
+    - 1d9f098
+    - e4d1a0e
+    - 797fc37
+    - 6985cb8
+recorded_at: "2026-08-02T04:52:00Z"

@@ -1,0 +1,36 @@
+schema_version: 1
+id: REUSE-003
+mission_id: prepare-python-cli-initial-release
+goal_id: 003-prove-installable-release-candidate
+execution_id: EX-20260803T012500Z-001
+subject_type: candidate-learning
+subject_ref: local-quality-gate
+adaptation_refs:
+- ADAPT-003
+status: completed
+disposition: promote
+statement: Assess the validated local quality gate for reusable project guidance.
+evidence_refs:
+- EVIDENCE-003-RELEASE-CANDIDATE
+validation_refs:
+- VAL-003
+applicability:
+- Python CLI repositories using the AI Flywheel operating model
+limitations:
+- Validated on Windows with Python 3.13.14; other supported platforms still require their own execution
+  evidence.
+reuse_guidance: For Python CLI release candidates, build fresh wheel and source distributions, install
+  the wheel into a clean external environment, execute both console and module entrypoints, run representative
+  installed commands, and inspect both archives to ensure repository-only content is excluded. Preserve
+  explicit sdist exclusions and regression coverage for those exclusions.
+duplicate_refs: []
+conflict_refs: []
+proposed_knowledge_ref: null
+supersedes_refs: []
+approval_required: false
+approval_refs: []
+decision_ref: null
+rationale: Goal 003 supplied the clean external installation proof deferred by Goal 002 and demonstrated
+  that archive inspection catches packaging defects not detected by ordinary source-tree quality gates.
+assessed_at: '2026-08-03T01:46:00Z'
+assessed_by: ai-flywheel-cli

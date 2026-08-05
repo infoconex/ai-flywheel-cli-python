@@ -100,11 +100,37 @@ def test_advance_retry_guard_prevents_duplicate_transition(
     goal.parent.mkdir(parents=True)
     state.parent.mkdir(parents=True, exist_ok=True)
     goal.write_text(
-        "schema_version: 1\nid: 001-goal\nmission_id: sample\ntitle: Goal\nstatus: proposed\nobjective: Test.\nacceptance_criteria:\n  - id: AC-001\n    statement: Pass.\n",
+        """\
+schema_version: 1
+id: 001-goal
+mission_id: sample
+title: Goal
+status: proposed
+objective: Test.
+acceptance_criteria:
+  - id: AC-001
+    statement: Pass.
+""",
         encoding="utf-8",
     )
     state.write_text(
-        "schema_version: 1\nphase: operating\nreadiness: ready-for-missions\nstatus: ready\nactive_mission: sample\nactive_goal: null\nactive_execution: null\nlifecycle_stage: null\nimplementation_available: true\napplication_missions_allowed: true\nblockers: []\nlast_durable_update:\n  at: '2026-08-01T18:00:00Z'\n  by: test\n  reason: Ready.\n",
+        """\
+schema_version: 1
+phase: operating
+readiness: ready-for-missions
+status: ready
+active_mission: sample
+active_goal: null
+active_execution: null
+lifecycle_stage: null
+implementation_available: true
+application_missions_allowed: true
+blockers: []
+last_durable_update:
+  at: '2026-08-01T18:00:00Z'
+  by: test
+  reason: Ready.
+""",
         encoding="utf-8",
     )
     monkeypatch.setattr(
