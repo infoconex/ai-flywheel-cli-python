@@ -26,6 +26,37 @@ python -m tools validate
 
 `python -m tools validate` is the single local quality-gate command. It runs Ruff linting, Ruff formatting checks, strict mypy, pytest with coverage enforcement, and an isolated source-distribution and wheel build through the declared Hatchling backend. Build output is written under `.flywheel/.runtime/dist/` and is not committed.
 
+## Quick install by shell
+
+PowerShell example:
+
+```powershell
+PS> python -m venv .venv
+PS> .\.venv\Scripts\Activate.ps1
+PS> python -m pip install --upgrade pip
+PS> python -m pip install -e ".[dev]"
+PS> flywheel --version
+PS> flywheel doctor . --json
+```
+
+Bash example:
+
+```bash
+$ python -m venv .venv
+$ source .venv/bin/activate
+$ python -m pip install --upgrade pip
+$ python -m pip install -e '.[dev]'
+$ flywheel --version
+$ flywheel doctor . --json
+```
+
+If `flywheel` is not yet on `PATH`, use the module entrypoint instead:
+
+```text
+python -m ai_flywheel_cli --version
+python -m ai_flywheel_cli doctor . --json
+```
+
 ## Commands
 
 ### Doctor
@@ -54,7 +85,7 @@ flywheel validate .
 flywheel validate . --json
 ```
 
-Validation failures return exit code `2`.
+Validation failures return Flywheel exit code `3` with structured `category` and `reason` fields in JSON output.
 
 ### Execution lifecycle
 
@@ -133,14 +164,23 @@ flywheel upgrade . \
 
 Use `--apply` after reviewing the requested target. Upgrade refuses to overwrite locally modified framework-owned files and blocks unsupported major-version transitions. Mutable operating content such as state, missions, goals, executions, evidence, approvals, and knowledge is not treated as framework-owned upgrade content.
 
-## Exit categories
+## Exit code contract
 
-- `0`: success or read-only plan produced
-- `2`: validation failure
-- `4`: repository conflict
-- `5`: operation lock contention
-- `8`: other expected operation failure
-- Typer reserves its normal usage-error behavior for invalid command syntax
+- `0`: command completed successfully (including read-only planning paths)
+- `1`: process-level runtime abort outside normal Flywheel error handling (platform-dependent)
+- `2`: Typer/Click usage error for invalid command syntax or argument usage
+
+Flywheel-defined failures are sequential and single-purpose:
+
+- `3`: validation failure (`category=validation-failure`, `reason=repository-validation-errors`)
+- `4`: repository conflict (`category=repository-conflict`, `reason=repository-content-conflict`)
+- `5`: operation lock contention (`category=lock-contention`, `reason=repository-lock-active`)
+- `6`: governed AI fallback required (`category=ai-fallback-required`, `reason=governed-ai-step-required`)
+- `7`: other expected operation failure (`category=operation-failed`, `reason=mutation-rejected` or `operation-error`)
+
+For automation, rely on the numeric exit code for coarse control flow and use structured JSON `category` and `reason` fields for stable, finer-grained branching.
+
+Runtime and shell statuses observed outside explicit Flywheel exits (for example signal termination or shell-specific interruption codes) are platform-dependent and should not be treated as part of the Flywheel-defined contract.
 
 ## Installation metadata
 

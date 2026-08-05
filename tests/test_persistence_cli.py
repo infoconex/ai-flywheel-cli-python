@@ -100,7 +100,8 @@ def test_advance_lifecycle_rejects_direct_persist_completion(tmp_path: Path) -> 
         ],
     )
 
-    assert result.exit_code == 8
+    assert result.exit_code == 7
     payload = json.loads(result.stdout)
     assert payload["command"] == "advance-lifecycle"
+    assert payload["reason"] == "mutation-rejected"
     assert "persist-execution" in payload["error"]

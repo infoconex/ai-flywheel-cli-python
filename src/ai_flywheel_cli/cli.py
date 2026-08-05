@@ -31,6 +31,15 @@ app = typer.Typer(
     invoke_without_command=True,
 )
 
+EXIT_SUCCESS = 0
+EXIT_RUNTIME_ABORT = 1
+EXIT_USAGE_ERROR = 2
+EXIT_VALIDATION_FAILED = 3
+EXIT_REPOSITORY_CONFLICT = 4
+EXIT_LOCK_CONTENTION = 5
+EXIT_AI_FALLBACK_REQUIRED = 6
+EXIT_OPERATION_FAILED = 7
+
 
 def _emit(payload: dict[str, object], *, as_json: bool) -> None:
     if as_json:
@@ -42,20 +51,29 @@ def _emit(payload: dict[str, object], *, as_json: bool) -> None:
 
 def _operation_exit(error: OperationError, *, command: str, as_json: bool) -> None:
     if isinstance(error, LockContentionError):
-        code = 5
+        code = EXIT_LOCK_CONTENTION
         category = "lock-contention"
+        reason = "repository-lock-active"
     elif isinstance(error, UnsupportedDeterministicOperationError):
-        code = 6
+        code = EXIT_AI_FALLBACK_REQUIRED
         category = "ai-fallback-required"
+        reason = "governed-ai-step-required"
     elif isinstance(error, RepositoryConflictError):
-        code = 4
+        code = EXIT_REPOSITORY_CONFLICT
         category = "repository-conflict"
+        reason = "repository-content-conflict"
     else:
-        code = 8
+        code = EXIT_OPERATION_FAILED
         category = "operation-failed"
+        if isinstance(error, MutationRejectedError):
+            reason = "mutation-rejected"
+        else:
+            reason = "operation-error"
     payload: dict[str, object] = {
         "command": command,
         "status": category,
+        "category": category,
+        "reason": reason,
         "error": str(error),
     }
     if isinstance(error, MutationRejectedError):
@@ -134,12 +152,14 @@ def validate(
         "command": "validate",
         "repository": str(repository.resolve()),
         "status": "passed" if result.passed else "validation-failed",
+        "category": "success" if result.passed else "validation-failure",
+        "reason": None if result.passed else "repository-validation-errors",
         "error_count": len(result.issues),
         "errors": [issue.as_dict() for issue in result.issues],
     }
     _emit(payload, as_json=json_output)
     if not result.passed:
-        raise typer.Exit(code=2)
+        raise typer.Exit(code=EXIT_VALIDATION_FAILED)
 
 
 @app.command("start-execution")

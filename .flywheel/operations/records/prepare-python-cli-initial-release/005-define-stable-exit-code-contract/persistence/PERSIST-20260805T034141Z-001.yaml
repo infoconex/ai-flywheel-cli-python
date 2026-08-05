@@ -1,0 +1,59 @@
+schema_version: 1
+id: PERSIST-20260805T034141Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 005-define-stable-exit-code-contract
+execution_id: EX-20260804T180000Z-001
+created_at: '2026-08-05T03:41:41Z'
+operator: ai-flywheel-cli
+status: applied
+targets:
+- id: PT-001
+  artifact_type: reuse-assessment
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/005-define-stable-exit-code-contract/reuse/REUSE-005.yaml
+  operation: create
+  mutability: create-only
+  dependency_refs: []
+  expected_precondition:
+    absence: true
+  proposed_content_digest: 4029e1616a8d913a9f382d6e4eb4832997df0b292954e1ebf141e72b0f825d4a
+  rollback:
+    mode: delete-created
+    retained_content_digest: null
+- id: PT-002
+  artifact_type: execution
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/005-define-stable-exit-code-contract/executions/EX-20260804T180000Z-001.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-001
+  expected_precondition:
+    blob_sha: 67b04030aae80266e992d36e7db1c622d5b5dd7b3f1b983717b5e8cc4d546cd1
+  proposed_content_digest: 4593d91560e4a2d46d809a60cffcd792e3ea2094d9098ee63ff392eff4fe0979
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 67b04030aae80266e992d36e7db1c622d5b5dd7b3f1b983717b5e8cc4d546cd1
+- id: PT-003
+  artifact_type: state
+  path: .flywheel/state.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-002
+  expected_precondition:
+    blob_sha: 5b98a0e68681355ca25e4b80d47d97f12b2dfff83ec898762f3540abf5103dbe
+  proposed_content_digest: 0d9b7f7ebcf329ef23f0c54665a17cf4e216f7244c5a593294620eeee1501778
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 5b98a0e68681355ca25e4b80d47d97f12b2dfff83ec898762f3540abf5103dbe
+write_order:
+- PT-001
+- PT-002
+- PT-003
+recovery:
+  mode: not-started
+  finding_ref: null
+  blocker: null
+final_verification:
+  required: true
+  verified_at: '2026-08-05T03:41:41Z'
+  result: passed

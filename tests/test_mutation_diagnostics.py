@@ -36,7 +36,8 @@ def test_start_execution_reports_structured_mutation_failures(monkeypatch) -> No
         ],
     )
 
-    assert result.exit_code == 8
+    assert result.exit_code == 7
     payload = json.loads(result.stdout)
     assert payload["status"] == "operation-failed"
+    assert payload["reason"] == "mutation-rejected"
     assert payload["failures"] == [failure.as_dict()]

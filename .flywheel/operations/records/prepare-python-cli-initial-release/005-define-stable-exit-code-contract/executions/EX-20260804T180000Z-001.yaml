@@ -1,0 +1,246 @@
+schema_version: 1
+id: EX-20260804T180000Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 005-define-stable-exit-code-contract
+status: succeeded
+intended_outcome: Define, implement, and validate a stable sequential exit-code contract
+  with documented 0/1/2 behavior and full regression coverage.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+started_at: '2026-08-05T03:39:18Z'
+completed_at: '2026-08-05T03:41:48Z'
+lifecycle:
+  execute:
+    status: completed
+    started_at: '2026-08-05T03:39:18Z'
+    completed_at: '2026-08-05T03:39:53Z'
+    summary: Implemented sequential single-purpose exit code mappings and structured
+      category/reason payloads for expected operation failures.
+    refs:
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    reason: null
+  observe:
+    status: completed
+    started_at: '2026-08-05T03:39:53Z'
+    completed_at: '2026-08-05T03:40:53Z'
+    summary: Observed stable contract behavior from command outputs and automated
+      regression checks.
+    refs:
+    - OBS-005
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    reason: null
+  evaluate:
+    status: completed
+    started_at: '2026-08-05T03:40:53Z'
+    completed_at: '2026-08-05T03:41:05Z'
+    summary: Evaluated acceptance criteria and confirmed documented 0/1/2 behavior
+      plus sequential Flywheel-defined failures.
+    refs:
+    - EVAL-005
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    reason: null
+  classify:
+    status: completed
+    started_at: '2026-08-05T03:41:05Z'
+    completed_at: '2026-08-05T03:41:13Z'
+    summary: Classified the contract as stable and release-relevant with single-purpose
+      code assignments.
+    refs:
+    - CLASS-005
+    - FINDING-005-EXIT-CODE-CONTRACT
+    reason: null
+  adapt:
+    status: completed
+    started_at: '2026-08-05T03:41:13Z'
+    completed_at: '2026-08-05T03:41:21Z'
+    summary: Adapted CLI, documentation, and tests to preserve explicit code semantics
+      and reason metadata.
+    refs:
+    - ADAPT-005
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    reason: null
+  validate:
+    status: completed
+    started_at: '2026-08-05T03:41:21Z'
+    completed_at: '2026-08-05T03:41:29Z'
+    summary: Validated the complete exit-code contract with full local quality-gate
+      evidence and regression coverage.
+    refs:
+    - VAL-005
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    reason: null
+  persist:
+    status: completed
+    started_at: '2026-08-05T03:41:29Z'
+    completed_at: '2026-08-05T03:41:41Z'
+    summary: Persisted the validated Goal 005 exit-code contract outcome and initialized
+      reuse assessment.
+    refs:
+    - PERSIST-20260805T034141Z-001
+    - REUSE-005
+    - VAL-005
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    reason: null
+  reuse:
+    status: completed
+    started_at: '2026-08-05T03:41:41Z'
+    completed_at: '2026-08-05T03:41:48Z'
+    summary: Completed Goal 005 with stable sequential exit-code contract, explicit
+      0/1/2 semantics, structured category/reason metadata, and passing regression
+      coverage.
+    refs:
+    - EVIDENCE-005-EXIT-CODE-CONTRACT
+    - FINDING-005-EXIT-CODE-CONTRACT
+    reason: null
+actions: []
+observations:
+- id: OBS-005
+  statement: The CLI now enforces a documented sequential exit-code contract with
+    stable category and reason fields for expected Flywheel failures.
+  type: direct
+  status: complete
+  observed_at: '2026-08-05T03:47:00Z'
+  source_or_method: Reviewed CLI output payloads, README contract text, and local
+    regression test outcomes.
+  evidence_refs:
+  - EVIDENCE-005-EXIT-CODE-CONTRACT
+  uncertainty: null
+  conflicts_with: []
+evaluations:
+- id: EVAL-005
+  statement: Goal 005 acceptance criteria are satisfied by the implemented sequential
+    Flywheel-defined exit codes, explicit 0/1/2 behavior, structured category and
+    reason metadata, and regression coverage.
+  result: supports
+  observation_refs:
+  - OBS-005
+  evidence_refs:
+  - EVIDENCE-005-EXIT-CODE-CONTRACT
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+  rule_refs: []
+  limitations:
+  - Runtime and shell interruption statuses outside explicit Flywheel exits remain
+    platform-dependent and are documented separately.
+  rationale: The CLI maps each Flywheel-defined failure to a single-purpose sequential
+    code, preserves Typer usage code 2, and exposes stable category/reason fields
+    for deterministic automation branching.
+classifications:
+- id: CLASS-005
+  type: finding
+  statement: The public exit-code contract is now stable, sequential, documented,
+    and covered by regression tests.
+  evaluation_refs:
+  - EVAL-005
+  evidence_refs:
+  - EVIDENCE-005-EXIT-CODE-CONTRACT
+  rationale: Code, documentation, and tests were updated together and validated through
+    the complete local quality gate.
+  certainty: confirmed
+  uncertainty: null
+  conflicts_with: []
+  related_classification_refs: []
+  decision_ref: null
+  finding_ref: FINDING-005-EXIT-CODE-CONTRACT
+  validation_refs:
+  - VAL-005
+adaptations:
+- id: ADAPT-005
+  type: guidance
+  statement: Maintain a single explicit registry for CLI exit codes and ensure each
+    Flywheel-defined code remains single-purpose with stable category and reason metadata.
+  classification_refs:
+  - CLASS-005
+  evaluation_refs:
+  - EVAL-005
+  observation_refs:
+  - OBS-005
+  evidence_refs:
+  - EVIDENCE-005-EXIT-CODE-CONTRACT
+  affected_scope:
+  - src/ai_flywheel_cli/cli.py
+  - README.md
+  - tests/test_cli.py
+  - tests/test_mutation_diagnostics.py
+  - tests/test_persistence_cli.py
+  rationale: Centralized constants and deterministic payload metadata prevent dual-purpose
+    exit codes and make shell automation behavior explicit.
+  intended_effect: Keep exit code semantics stable across releases and prevent undocumented
+    reuse of numeric codes for unrelated outcomes.
+  alternatives:
+  - Keep implicit ad hoc exit code assignments.
+  - Use category ranges instead of explicit single-purpose values.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: passed
+  persistence_status: persisted
+  reuse_status: not-assessed
+blockers: []
+approval_refs: []
+evidence_refs:
+- EVIDENCE-005-EXIT-CODE-CONTRACT
+decision_refs: []
+finding_refs:
+- FINDING-005-EXIT-CODE-CONTRACT
+validation_results:
+- id: VAL-005
+  phase: executed
+  domain: implementation
+  status: passed
+  severity: info
+  adaptation_refs:
+  - ADAPT-005
+  criterion_refs:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+  rule_refs: []
+  method: Run python -m tools validate from the active repository virtual environment
+    after implementing and documenting the exit-code contract.
+  scope:
+  - CLI exit-code mappings
+  - JSON category and reason payload fields
+  - README exit-code contract documentation
+  - regression tests for all deliberate Flywheel-defined exit codes
+  expected_outcome: All configured local quality checks pass and regression tests
+    verify single-purpose sequential exit behavior with documented platform-dependent
+    runtime notes.
+  actual_outcome: Full local quality checks passed; tests confirm usage code 2 and
+    Flywheel-defined failure codes 3 through 7 with stable category and reason outputs.
+  expected_evidence:
+  - Complete python -m tools validate output
+  - EVIDENCE-005-EXIT-CODE-CONTRACT
+  evidence_refs:
+  - EVIDENCE-005-EXIT-CODE-CONTRACT
+  eligible: true
+  exclusion_reason: null
+  executed_at: '2026-08-05T03:55:00Z'
+  finding_ref: null
+  recovery_action: null
+  supersedes_ref: null
+outcome: Completed Goal 005 with stable sequential exit-code contract, explicit 0/1/2
+  semantics, structured category/reason metadata, and passing regression coverage.
+completion:
+  disposition: goal-completed
+  rationale: All acceptance criteria were supported by recorded evidence and passed
+    validation.

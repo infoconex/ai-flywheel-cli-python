@@ -1,0 +1,41 @@
+schema_version: 1
+id: EVIDENCE-005-EXIT-CODE-CONTRACT
+kind: evidence
+mission_id: prepare-python-cli-initial-release
+goal_id: 005-define-stable-exit-code-contract
+execution_id: EX-20260804T180000Z-001
+created_at: '2026-08-05T03:45:00Z'
+created_by: ai-flywheel-operator
+summary: Implemented and validated a stable sequential CLI exit-code contract with explicit 0/1/2 behavior, structured category and reason metadata, updated documentation, and regression coverage for all Flywheel-defined exit outcomes.
+status: accepted
+classification: exit-code-contract-proof
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+source_refs:
+- src/ai_flywheel_cli/cli.py implementation review
+- README.md exit code contract review
+- tests/test_cli.py exit code regressions
+- tests/test_mutation_diagnostics.py regression
+- tests/test_persistence_cli.py regression
+- python -m tools validate
+artifact_refs:
+- src/ai_flywheel_cli/cli.py
+- README.md
+- tests/test_cli.py
+- tests/test_mutation_diagnostics.py
+- tests/test_persistence_cli.py
+evidence:
+  evidence_type: local-command-result
+  supported_claim: Flywheel-defined failure exit codes are sequential and single-purpose, with stable structured output fields for category and reason, and full regression coverage for deliberate emitted codes.
+  source_or_method: Implemented exit code constants and mappings, updated CLI payload fields, updated documentation, added and adjusted regression tests, and executed the full local quality gate.
+  actual_result: Full local quality gate passed with ruff, strict mypy, pytest, coverage, and packaging. Added tests verify usage error code 2, validation failure code 3, repository conflict code 4, lock contention code 5, AI fallback code 6, and operation failure code 7 with structured reason details.
+  observed_at: '2026-08-05T03:47:00Z'
+  storage_location: .flywheel/operations/records/prepare-python-cli-initial-release/005-define-stable-exit-code-contract/evidence/EVIDENCE-005-EXIT-CODE-CONTRACT.yaml
+decision: null
+finding: null
+approval: null
