@@ -1,0 +1,28 @@
+schema_version: 1
+id: EVAL-006
+kind: evaluation
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+execution_id: EX-20260805T042900Z-001
+created_at: '2026-08-05T04:40:00Z'
+created_by: ai-flywheel-operator
+summary: Evaluated Goal 006 acceptance criteria and confirmed the persistence correction, documentation alignment, and final local release-candidate proof are complete.
+status: accepted
+classification: final-release-revalidation-evaluation
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+- AC-007
+observation_refs:
+- OBS-006
+evidence_refs:
+- EVIDENCE-006-FINAL-REVALIDATION
+result: supports
+limitations:
+- Release-candidate proof was executed on Windows with Python 3.13.14; other supported platforms still require their own execution evidence.
+- Tagging, GitHub release creation, artifact upload, package-index publication, release-note publication, and hosted automation remain unperformed and approval-bound.
+rationale: Exact persistence regression assertions confirm neutral reusable-assessment defaults without prior-goal leakage. README guidance matches the implemented exit-code and release-approval boundaries. The authoritative local quality gate passed after restoring editable installation, with 94 tests passing, 85.71 percent coverage, strict mypy, Ruff checks, and successful source and wheel builds.
