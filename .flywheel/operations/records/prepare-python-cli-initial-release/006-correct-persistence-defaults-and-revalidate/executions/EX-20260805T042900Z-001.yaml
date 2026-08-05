@@ -151,7 +151,7 @@ classifications:
   conflicts_with: []
   related_classification_refs: []
   decision_ref: null
-  finding_ref: null
+  finding_ref: FINDING-006-FINAL-REVALIDATION
   validation_refs: []
 adaptations: []
 blockers: []
@@ -159,7 +159,8 @@ approval_refs: []
 evidence_refs:
 - EVIDENCE-006-FINAL-REVALIDATION
 decision_refs: []
-finding_refs: []
+finding_refs:
+- FINDING-006-FINAL-REVALIDATION
 validation_results: []
 outcome: null
 completion:
