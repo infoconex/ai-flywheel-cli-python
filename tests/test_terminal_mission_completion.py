@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
-import yaml
+import pytest
 
-from ai_flywheel_cli.completion import complete_execution
-from ai_flywheel_cli.validation import ValidationResult
+from ai_flywheel_cli.completion import CompletionRejectedError, complete_execution
+from ai_flywheel_cli.validation import ValidationIssue, ValidationResult
 from test_completion import MISSION_ID, _load_yaml, _repository, _write_yaml
 
 
@@ -95,9 +95,6 @@ def test_terminal_completion_is_atomic_when_mission_validation_fails(
         path: path.read_bytes()
         for path in (state_path, goal_path, execution_path, mission_path)
     }
-
-    from ai_flywheel_cli.validation import ValidationIssue
-
     monkeypatch.setattr(
         "ai_flywheel_cli.mutation.validate_repository",
         lambda _: ValidationResult(
@@ -111,16 +108,12 @@ def test_terminal_completion_is_atomic_when_mission_validation_fails(
         ),
     )
 
-    try:
+    with pytest.raises(CompletionRejectedError, match="failed validation"):
         complete_execution(
             repository,
             "Complete.",
             ("VAL-001", "REUSE-001"),
         )
-    except Exception:
-        pass
-    else:
-        raise AssertionError("Expected terminal completion validation to fail.")
 
     assert {
         path: path.read_bytes()
