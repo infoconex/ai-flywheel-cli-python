@@ -1,0 +1,61 @@
+schema_version: 1
+id: ADAPT-006
+kind: adaptation
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+execution_id: EX-20260805T042900Z-001
+created_at: '2026-08-05T04:47:00Z'
+created_by: ai-flywheel-operator
+summary: Preserve neutral persistence defaults, require editable local installation for repository validation, and retain explicit approval boundaries for release actions.
+status: accepted
+classification: release-readiness-guidance
+criterion_ids:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+- AC-007
+source_refs:
+- CLASS-006
+- FINDING-006-FINAL-REVALIDATION
+- EVAL-006
+- OBS-006
+- EVIDENCE-006-FINAL-REVALIDATION
+adaptation:
+  type: guidance
+  statement: Keep persistence-generated reuse records goal-neutral, validate the active repository through an editable installation, and treat tags, releases, uploads, publication, and hosted automation as separate human-approved actions.
+  affected_scope:
+  - src/ai_flywheel_cli/persistence.py
+  - tests/test_persistence.py
+  - README.md
+  - local development and release validation workflow
+  rationale: Neutral defaults prevent prior-goal leakage, editable installation ensures tests exercise current source, and explicit approval boundaries prevent technical readiness from being mistaken for release authorization.
+  intended_effect: Preserve reusable persistence behavior, trustworthy local validation, and human authority over external release actions.
+  alternatives:
+  - Allow goal-specific persistence defaults.
+  - Validate against a copied site-packages installation.
+  - Treat successful local validation as implicit release approval.
+  certainty: confirmed
+  uncertainty: null
+  scope_disposition: within-goal
+  approval_required: false
+  approval_status: not-required
+  approval_refs: []
+  decision_ref: null
+  disposition: approved
+  implementation_status: completed
+  validation_status: pending
+  persistence_status: not-persisted
+  reuse_status: not-assessed
+evidence_refs:
+- EVIDENCE-006-FINAL-REVALIDATION
+classification_refs:
+- CLASS-006
+evaluation_refs:
+- EVAL-006
+observation_refs:
+- OBS-006
+finding_refs:
+- FINDING-006-FINAL-REVALIDATION
