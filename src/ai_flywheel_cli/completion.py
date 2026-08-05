@@ -65,6 +65,20 @@ def _dependencies_completed(
     return True
 
 
+def _all_mission_goals_completed(
+    goals_directory: Path,
+    completing_goal_id: str,
+) -> bool:
+    for candidate_path in sorted(goals_directory.glob("*.yaml")):
+        candidate = _load_mapping(candidate_path)
+        candidate_id = candidate.get("id")
+        if candidate_id == completing_goal_id:
+            continue
+        if candidate.get("status") != "completed":
+            return False
+    return True
+
+
 def complete_execution(
     repository: Path,
     summary: str,
@@ -95,6 +109,11 @@ def complete_execution(
         )
     if not summary.strip():
         raise CompletionRejectedError("An execution completion summary is required.")
+
+    mission_relative = f".flywheel/operations/missions/{mission_id}/mission.yaml"
+    mission_path = root / mission_relative
+    mission_bytes = mission_path.read_bytes() if mission_path.is_file() else None
+    mission = _load_mapping(mission_path)
 
     goal_relative = f".flywheel/operations/missions/{mission_id}/goals/{goal_id}.yaml"
     goal_path = root / goal_relative
@@ -173,9 +192,17 @@ def complete_execution(
             next_goal = candidate
             break
 
+    mission_completed = next_goal_id is None and _all_mission_goals_completed(
+        goals_directory,
+        goal_id,
+    )
+    if mission_completed:
+        mission["status"] = "completed"
+
     state.update(
         {
             "status": "ready",
+            "active_mission": None if mission_completed else mission_id,
             "active_goal": None,
             "active_execution": None,
             "lifecycle_stage": None,
@@ -183,7 +210,11 @@ def complete_execution(
             "last_durable_update": {
                 "at": timestamp,
                 "by": "ai-flywheel-cli",
-                "reason": f"Completed execution {execution_id} and goal {goal_id}.",
+                "reason": (
+                    f"Completed execution {execution_id}, goal {goal_id}, and mission {mission_id}."
+                    if mission_completed
+                    else f"Completed execution {execution_id} and goal {goal_id}."
+                ),
             },
         }
     )
@@ -200,6 +231,11 @@ def complete_execution(
         goal_relative: sha256_bytes(goal_bytes) if goal_bytes is not None else None,
         state_relative: sha256_bytes(state_bytes) if state_bytes is not None else None,
     }
+    if mission_completed:
+        changes[mission_relative] = mission
+        expected_sha256[mission_relative] = (
+            sha256_bytes(mission_bytes) if mission_bytes is not None else None
+        )
     if next_goal_relative is not None and next_goal is not None:
         changes[next_goal_relative] = next_goal
         expected_sha256[next_goal_relative] = (
