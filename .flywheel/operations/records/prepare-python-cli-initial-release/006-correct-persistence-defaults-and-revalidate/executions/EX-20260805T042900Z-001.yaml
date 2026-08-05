@@ -65,18 +65,25 @@ lifecycle:
     - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   adapt:
-    status: in-progress
+    status: completed
     started_at: '2026-08-05T04:45:41Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-05T04:51:11Z'
+    summary: Adapted the mission outcome by preserving neutral persistence defaults,
+      retaining the documented exit-code contract and approval boundaries, and recording
+      the editable-installation requirement as an operator safeguard against stale
+      local package code.
+    refs: &id001
+    - ADAPT-006
+    - VAL-006
+    - REUSE-006
+    - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   validate:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-05T04:51:11Z'
     completed_at: null
     summary: null
-    refs: []
+    refs: *id001
     reason: null
   persist:
     status: pending
