@@ -1,0 +1,59 @@
+schema_version: 1
+id: PERSIST-20260805T045356Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+execution_id: EX-20260805T042900Z-001
+created_at: '2026-08-05T04:53:56Z'
+operator: ai-flywheel-operator
+status: applied
+targets:
+- id: PT-001
+  artifact_type: reuse-assessment
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/006-correct-persistence-defaults-and-revalidate/reuse/REUSE-006.yaml
+  operation: create
+  mutability: create-only
+  dependency_refs: []
+  expected_precondition:
+    absence: true
+  proposed_content_digest: 3e58370f442cde85b48e6a603af8adf817da390c10a2ed8d179ba96d6d485810
+  rollback:
+    mode: delete-created
+    retained_content_digest: null
+- id: PT-002
+  artifact_type: execution
+  path: .flywheel/operations/records/prepare-python-cli-initial-release/006-correct-persistence-defaults-and-revalidate/executions/EX-20260805T042900Z-001.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-001
+  expected_precondition:
+    blob_sha: 89618866ff1dff5a73c2da0fb27ae31d4592355dfe3f18acfb9841b980e8212a
+  proposed_content_digest: 667c72c9258f92155c86d176c195fdd89eeaa1d2617a17d9ed0e3d7aa4b7a3e3
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: 89618866ff1dff5a73c2da0fb27ae31d4592355dfe3f18acfb9841b980e8212a
+- id: PT-003
+  artifact_type: state
+  path: .flywheel/state.yaml
+  operation: update
+  mutability: cas-update
+  dependency_refs:
+  - PT-002
+  expected_precondition:
+    blob_sha: f918a925f9c05bb2eed4091033f69c026cac9e0226cd206c31abcf35de68a27e
+  proposed_content_digest: ec5197bab88863cdb8cc1d0e81cbf79bf792b4c17f3463287be6999ed816b273
+  rollback:
+    mode: restore-retained-content
+    retained_content_digest: f918a925f9c05bb2eed4091033f69c026cac9e0226cd206c31abcf35de68a27e
+write_order:
+- PT-001
+- PT-002
+- PT-003
+recovery:
+  mode: not-started
+  finding_ref: null
+  blocker: null
+final_verification:
+  required: true
+  verified_at: '2026-08-05T04:53:56Z'
+  result: passed

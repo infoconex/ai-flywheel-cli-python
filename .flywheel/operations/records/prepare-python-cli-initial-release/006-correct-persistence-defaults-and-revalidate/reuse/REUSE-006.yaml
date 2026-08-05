@@ -1,0 +1,32 @@
+schema_version: 1
+id: REUSE-006
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+execution_id: EX-20260805T042900Z-001
+subject_type: candidate-learning
+subject_ref: validated-adaptations
+adaptation_refs:
+- ADAPT-006
+status: planned
+disposition: null
+statement: Assess validated execution adaptations for reusable guidance.
+evidence_refs:
+- EVIDENCE-006-FINAL-REVALIDATION
+validation_refs:
+- VAL-006
+applicability:
+- Python CLI repositories using the AI Flywheel operating model
+limitations:
+- Validated in the current repository context; verify applicability when platform,
+  process, or policy constraints differ.
+reuse_guidance: null
+duplicate_refs: []
+conflict_refs: []
+proposed_knowledge_ref: null
+supersedes_refs: []
+approval_required: false
+approval_refs: []
+decision_ref: null
+rationale: null
+assessed_at: null
+assessed_by: null

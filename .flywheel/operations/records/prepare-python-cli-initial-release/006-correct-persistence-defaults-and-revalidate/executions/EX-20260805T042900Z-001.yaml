@@ -91,18 +91,26 @@ lifecycle:
     - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   persist:
-    status: in-progress
+    status: completed
     started_at: '2026-08-05T04:52:07Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-05T04:53:56Z'
+    summary: Persisted the validated Goal 006 outcome, including neutral persistence
+      defaults, aligned release documentation, successful final release-candidate
+      validation, and the preserved human-approval boundary for all external release
+      actions.
+    refs:
+    - PERSIST-20260805T045356Z-001
+    - REUSE-006
+    - VAL-006
+    - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   reuse:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-05T04:53:56Z'
     completed_at: null
     summary: null
-    refs: []
+    refs:
+    - REUSE-006
     reason: null
 actions: []
 observations:
@@ -209,7 +217,7 @@ adaptations:
   disposition: approved
   implementation_status: completed
   validation_status: passed
-  persistence_status: not-persisted
+  persistence_status: persisted
   reuse_status: not-assessed
 blockers: []
 approval_refs: []
