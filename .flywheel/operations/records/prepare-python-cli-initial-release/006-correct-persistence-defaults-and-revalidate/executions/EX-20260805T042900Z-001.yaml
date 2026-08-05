@@ -53,15 +53,20 @@ lifecycle:
     - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   classify:
-    status: in-progress
+    status: completed
     started_at: '2026-08-05T04:41:55Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-05T04:45:41Z'
+    summary: 'Classified the final release-candidate state as ready for mission completion:
+      persistence defaults are neutral and reusable, documentation matches implementation,
+      local validation passes, and all release actions remain explicitly approval-bound.'
+    refs:
+    - CLASS-006
+    - FINDING-006-FINAL-REVALIDATION
+    - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   adapt:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-05T04:45:41Z'
     completed_at: null
     summary: null
     refs: []
