@@ -19,15 +19,16 @@ started_at: '2026-08-05T04:30:16Z'
 completed_at: null
 lifecycle:
   execute:
-    status: in-progress
+    status: completed
     started_at: '2026-08-05T04:30:16Z'
-    completed_at: null
-    summary: null
-    refs: []
+    completed_at: '2026-08-05T04:35:00Z'
+    summary: Verified neutral persistence defaults, confirmed release-facing documentation matches the final exit-code contract, and completed the authoritative local quality gate with 94 passing tests, 85.71 percent coverage, strict typing, formatting, linting, and successful wheel and source-distribution builds.
+    refs:
+    - EVIDENCE-006-FINAL-REVALIDATION
     reason: null
   observe:
-    status: pending
-    started_at: null
+    status: in-progress
+    started_at: '2026-08-05T04:35:00Z'
     completed_at: null
     summary: null
     refs: []
@@ -75,13 +76,24 @@ lifecycle:
     refs: []
     reason: null
 actions: []
-observations: []
+observations:
+- id: OBS-006
+  statement: Final revalidation confirmed neutral persistence defaults, aligned release documentation, and a passing release-candidate quality gate; it also showed that stale non-editable package installations can cause tests to execute outdated CLI code.
+  type: direct
+  status: complete
+  observed_at: '2026-08-05T04:35:00Z'
+  source_or_method: Reviewed persistence defaults and README guidance, ran targeted persistence tests, corrected the editable installation, and ran python -m tools validate.
+  evidence_refs:
+  - EVIDENCE-006-FINAL-REVALIDATION
+  uncertainty: null
+  conflicts_with: []
 evaluations: []
 classifications: []
 adaptations: []
 blockers: []
 approval_refs: []
-evidence_refs: []
+evidence_refs:
+- EVIDENCE-006-FINAL-REVALIDATION
 decision_refs: []
 finding_refs: []
 validation_results: []
