@@ -7,19 +7,20 @@ subject_type: candidate-learning
 subject_ref: validated-adaptations
 adaptation_refs:
 - ADAPT-006
-status: planned
-disposition: null
-statement: Assess validated execution adaptations for reusable guidance.
+status: completed
+disposition: promote
+statement: Assess the validated neutral persistence defaults, editable-installation safeguard, and release approval boundaries for reusable operator guidance.
 evidence_refs:
 - EVIDENCE-006-FINAL-REVALIDATION
 validation_refs:
 - VAL-006
 applicability:
 - Python CLI repositories using the AI Flywheel operating model
+- Local release-candidate validation workflows using editable package installations
 limitations:
-- Validated in the current repository context; verify applicability when platform,
-  process, or policy constraints differ.
-reuse_guidance: null
+- Release-candidate proof was executed on Windows with Python 3.13.14; verify applicability on other supported platforms.
+- External release actions remain separately approval-bound and are not authorized by this assessment.
+reuse_guidance: Keep persistence-generated reuse assessments goal-neutral, verify local release candidates through an editable installation so tests exercise current source, and preserve explicit human approval boundaries for tagging, GitHub release creation, artifact upload, package-index publication, release-note publication, and hosted automation.
 duplicate_refs: []
 conflict_refs: []
 proposed_knowledge_ref: null
@@ -27,6 +28,6 @@ supersedes_refs: []
 approval_required: false
 approval_refs: []
 decision_ref: null
-rationale: null
-assessed_at: null
-assessed_by: null
+rationale: Goal 006 confirmed that neutral persistence defaults prevent prior-goal leakage, editable installation prevents stale site-packages code from invalidating local validation, and technical readiness must remain separate from authorization to perform external release actions.
+assessed_at: '2026-08-05T04:55:00Z'
+assessed_by: ai-flywheel-operator
