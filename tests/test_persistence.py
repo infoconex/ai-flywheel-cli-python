@@ -164,6 +164,14 @@ def test_persist_execution_applies_plan_and_starts_reuse(
     )
     reuse = _load_yaml(reuse_path)
     assert reuse["status"] == "planned"
+    assert reuse["subject_ref"] == "validated-adaptations"
+    assert reuse["statement"] == "Assess validated execution adaptations for reusable guidance."
+    assert reuse["limitations"] == [
+        "Validated in the current repository context; verify applicability when "
+        "platform, process, or policy constraints differ."
+    ]
+    assert "local-quality-gate" not in reuse["subject_ref"]
+    assert "Goal 003" not in " ".join(reuse["limitations"])
     plan_path = (
         repository
         / ".flywheel/operations/records"

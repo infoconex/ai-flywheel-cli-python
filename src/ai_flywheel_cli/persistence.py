@@ -211,17 +211,17 @@ def persist_execution(
         "goal_id": goal_id,
         "execution_id": execution_id,
         "subject_type": "candidate-learning",
-        "subject_ref": "local-quality-gate",
+        "subject_ref": "validated-adaptations",
         "adaptation_refs": adaptation_refs,
         "status": "planned",
         "disposition": None,
-        "statement": "Assess the validated local quality gate for reusable project guidance.",
+        "statement": "Assess validated execution adaptations for reusable guidance.",
         "evidence_refs": evidence_refs,
         "validation_refs": validation_refs,
         "applicability": ["Python CLI repositories using the AI Flywheel operating model"],
         "limitations": [
-            "Validated on Windows with Python 3.13.14; clean external installation "
-            "remains Goal 003."
+            "Validated in the current repository context; verify applicability when "
+            "platform, process, or policy constraints differ."
         ],
         "reuse_guidance": None,
         "duplicate_refs": [],
