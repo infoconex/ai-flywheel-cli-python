@@ -1,0 +1,91 @@
+schema_version: 1
+id: EX-20260805T042900Z-001
+mission_id: prepare-python-cli-initial-release
+goal_id: 006-correct-persistence-defaults-and-revalidate
+status: in-progress
+intended_outcome: Verify the neutral persistence defaults, confirm release documentation
+  matches the implemented exit-code contract, rerun the complete local release-candidate
+  proof, and close the final mission goal without tagging, publishing, releasing,
+  uploading artifacts, or enabling hosted automation.
+acceptance_criteria:
+- AC-001
+- AC-002
+- AC-003
+- AC-004
+- AC-005
+- AC-006
+- AC-007
+started_at: '2026-08-05T04:30:16Z'
+completed_at: null
+lifecycle:
+  execute:
+    status: in-progress
+    started_at: '2026-08-05T04:30:16Z'
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  observe:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  evaluate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  classify:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  adapt:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  validate:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  persist:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+  reuse:
+    status: pending
+    started_at: null
+    completed_at: null
+    summary: null
+    refs: []
+    reason: null
+actions: []
+observations: []
+evaluations: []
+classifications: []
+adaptations: []
+blockers: []
+approval_refs: []
+evidence_refs: []
+decision_refs: []
+finding_refs: []
+validation_results: []
+outcome: null
+completion:
+  disposition: null
+  rationale: null
