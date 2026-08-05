@@ -2,7 +2,7 @@ schema_version: 1
 id: 006-correct-persistence-defaults-and-revalidate
 mission_id: prepare-python-cli-initial-release
 title: Correct Persistence Defaults and Revalidate Release
-status: active
+status: completed
 objective: Remove goal-specific reuse defaults from persistence, add regression coverage,
   and rerun final release-candidate validation after all human-review corrections.
 depends_on:

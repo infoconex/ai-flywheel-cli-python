@@ -1,15 +1,15 @@
 schema_version: 1
 phase: operating
 readiness: ready-for-missions
-status: active
+status: ready
 active_mission: prepare-python-cli-initial-release
-active_goal: 006-correct-persistence-defaults-and-revalidate
-active_execution: EX-20260805T042900Z-001
-lifecycle_stage: reuse
+active_goal: null
+active_execution: null
+lifecycle_stage: null
 implementation_available: true
 application_missions_allowed: true
 blockers: []
 last_durable_update:
-  at: '2026-08-05T04:53:56Z'
-  by: ai-flywheel-operator
-  reason: Applied PERSIST-20260805T045356Z-001; completed persist and started reuse.
+  at: '2026-08-05T04:58:42Z'
+  by: ai-flywheel-cli
+  reason: Completed execution EX-20260805T042900Z-001 and goal 006-correct-persistence-defaults-and-revalidate.
