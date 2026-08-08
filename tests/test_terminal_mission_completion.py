@@ -32,9 +32,7 @@ def _completion(
             }
         )
     return {
-        "criterion_evidence": [
-            {"criterion_id": "MSC-001", "evidence_refs": ["EVIDENCE-001"]}
-        ],
+        "criterion_evidence": [{"criterion_id": "MSC-001", "evidence_refs": ["EVIDENCE-001"]}],
         "blocker_refs": blocker_refs or [],
         "approval_evaluations": approvals,
     }
@@ -50,9 +48,7 @@ def _write_mission(repository, *, approvals_required: list[str] | None = None) -
             "status": "active",
             "objective": "Complete the sample mission.",
             "constraints": [],
-            "success_criteria": [
-                {"id": "MSC-001", "statement": "The sample goal completes."}
-            ],
+            "success_criteria": [{"id": "MSC-001", "statement": "The sample goal completes."}],
             "goals": ["001-sample-goal"],
             "approvals_required": approvals_required or [],
         },
@@ -170,8 +166,7 @@ def test_terminal_completion_rejects_missing_explicit_evaluation_without_changes
     _write_mission(repository)
     mission_path = _mission_path(repository)
     originals = {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     }
 
     with pytest.raises(CompletionRejectedError, match="explicit mission completion evaluation"):
@@ -182,8 +177,7 @@ def test_terminal_completion_rejects_missing_explicit_evaluation_without_changes
         )
 
     assert {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     } == originals
 
 
@@ -195,8 +189,7 @@ def test_terminal_completion_rejects_incomplete_criterion_mapping_without_change
     _write_mission(repository)
     mission_path = _mission_path(repository)
     originals = {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     }
     proposed = _completion()
     proposed["criterion_evidence"] = []
@@ -210,8 +203,7 @@ def test_terminal_completion_rejects_incomplete_criterion_mapping_without_change
         )
 
     assert {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     } == originals
 
 
@@ -224,8 +216,7 @@ def test_terminal_completion_rejects_ambiguous_approval_scope_without_changes(
     _write_mission(repository, approvals_required=[requirement])
     mission_path = _mission_path(repository)
     originals = {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     }
     proposed = _completion(requirement=requirement)
     proposed["approval_evaluations"][0]["scope"] = "unknown"
@@ -239,8 +230,7 @@ def test_terminal_completion_rejects_ambiguous_approval_scope_without_changes(
         )
 
     assert {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     } == originals
 
 
@@ -253,8 +243,7 @@ def test_terminal_completion_is_atomic_when_mission_validation_fails(
     _write_mission(repository)
     mission_path = _mission_path(repository)
     originals = {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     }
     monkeypatch.setattr(
         "ai_flywheel_cli.mutation.validate_repository",
