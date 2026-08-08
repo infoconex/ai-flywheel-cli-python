@@ -8,7 +8,7 @@ from typer.testing import CliRunner
 import ai_flywheel_cli.cli as cli
 from ai_flywheel_cli.validation import ValidationResult
 from test_completion import _repository, _write_yaml
-from test_terminal_mission_completion import MISSION_ID, _completion, _mission_path, _write_mission
+from test_terminal_mission_completion import _completion, _mission_path, _write_mission
 
 runner = CliRunner()
 
