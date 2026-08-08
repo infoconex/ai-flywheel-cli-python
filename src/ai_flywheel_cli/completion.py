@@ -356,7 +356,12 @@ def complete_execution(
             summary.strip(),
         )
         mission["completion"] = mission_completion_value
-        mission["status"] = "completed" if mission_completed else "blocked" if blockers else "active"
+        if mission_completed:
+            mission["status"] = "completed"
+        elif blockers:
+            mission["status"] = "blocked"
+        else:
+            mission["status"] = "active"
 
     state.update(
         {
