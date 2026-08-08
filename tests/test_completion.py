@@ -35,6 +35,7 @@ def _repository(
     repository = tmp_path / "repository"
     repository.mkdir()
     state_path = repository / ".flywheel/state.yaml"
+    mission_path = repository / ".flywheel/operations/missions" / MISSION_ID / "mission.yaml"
     goals_path = repository / ".flywheel/operations/missions" / MISSION_ID / "goals"
     goal_path = goals_path / f"{GOAL_ID}.yaml"
     next_goal_path = goals_path / f"{NEXT_GOAL_ID}.yaml"
@@ -66,6 +67,20 @@ def _repository(
                 "by": "test",
                 "reason": "Fixture active.",
             },
+        },
+    )
+    _write_yaml(
+        mission_path,
+        {
+            "schema_version": 1,
+            "id": MISSION_ID,
+            "title": "Sample Mission",
+            "status": "active",
+            "objective": "Complete the sample mission.",
+            "constraints": [],
+            "success_criteria": [{"id": "MSC-001", "statement": "The mission completes."}],
+            "goals": [GOAL_ID, NEXT_GOAL_ID],
+            "approvals_required": [],
         },
     )
     _write_yaml(
