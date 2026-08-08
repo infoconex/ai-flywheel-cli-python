@@ -201,10 +201,9 @@ def _mission_completion_evaluation(
         if scope == "mission-objective" and status != "approved":
             mission_objective_approval_blocking = True
 
-    if (
-        len(evaluated_requirements) != len(set(evaluated_requirements))
-        or set(evaluated_requirements) != set(approvals_required)
-    ):
+    if len(evaluated_requirements) != len(set(evaluated_requirements)) or set(
+        evaluated_requirements
+    ) != set(approvals_required):
         raise CompletionRejectedError(
             "Mission completion must evaluate every declared approval requirement exactly once."
         )
