@@ -6,13 +6,13 @@ from pathlib import Path
 import typer
 
 from ai_flywheel_cli import __version__
-from ai_flywheel_cli.completion import complete_execution
+from ai_flywheel_cli.completion import CompletionRejectedError, complete_execution
 from ai_flywheel_cli.deterministic_operations import (
     UnsupportedDeterministicOperationError,
     advance_lifecycle,
     start_execution,
 )
-from ai_flywheel_cli.mutation import MutationRejectedError
+from ai_flywheel_cli.mutation import MutationRejectedError, load_yaml_mapping
 from ai_flywheel_cli.operations import (
     LockContentionError,
     OperationError,
@@ -233,12 +233,29 @@ def persist_execution_command(
 def complete_execution_command(
     summary: str = typer.Option(..., "--summary"),
     ref: list[str] | None = typer.Option(None, "--ref"),
+    mission_completion_file: Path | None = typer.Option(
+        None,
+        "--mission-completion-file",
+        exists=True,
+        dir_okay=False,
+        help="Explicit mission completion evaluation for a final-goal completion.",
+    ),
     repository: Path = typer.Option(Path.cwd(), "--repository", exists=True, file_okay=False),
     json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
 ) -> None:
-    """Complete reuse, close the active execution, and ready the next dependent goal."""
+    """Complete Reuse, close the active execution, and evaluate terminal mission state."""
     try:
-        result = complete_execution(repository, summary, tuple(ref or ()))
+        mission_completion = (
+            load_yaml_mapping(mission_completion_file, CompletionRejectedError)
+            if mission_completion_file is not None
+            else None
+        )
+        result = complete_execution(
+            repository,
+            summary,
+            tuple(ref or ()),
+            mission_completion=mission_completion,
+        )
     except OperationError as error:
         _operation_exit(error, command="complete-execution", as_json=json_output)
         return
