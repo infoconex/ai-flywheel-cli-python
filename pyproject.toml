@@ -35,6 +35,10 @@ exclude = [
   "/.flywheel",
   "/.gitignore",
   "/.release-proof",
+  "/.test-temp",
+  "/.pytest_cache",
+  "/.mypy_cache",
+  "/.ruff_cache",
   "/tests",
   "/tools",
 ]
