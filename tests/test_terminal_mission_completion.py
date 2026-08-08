@@ -278,6 +278,5 @@ def test_terminal_completion_is_atomic_when_mission_validation_fails(
         )
 
     assert {
-        path: path.read_bytes()
-        for path in (state_path, goal_path, execution_path, mission_path)
+        path: path.read_bytes() for path in (state_path, goal_path, execution_path, mission_path)
     } == originals
