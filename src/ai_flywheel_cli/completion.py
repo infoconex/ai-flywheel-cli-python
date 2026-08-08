@@ -92,80 +92,134 @@ def _blocker_refs(*values: object) -> list[str]:
     return list(dict.fromkeys(refs))
 
 
-def _is_external_follow_on(requirement: str) -> bool:
-    normalized = requirement.casefold()
-    external_terms = (
-        "publish",
-        "publication",
-        "tag",
-        "release",
-        "upload",
-        "pypi",
-        "hosted automation",
-        "github actions",
-    )
-    return any(term in normalized for term in external_terms)
+def _required_strings(value: object, label: str) -> list[str]:
+    if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+        raise CompletionRejectedError(f"{label} must be a list of strings.")
+    return [str(item) for item in value]
 
 
 def _mission_completion_evaluation(
     mission: dict[str, Any],
-    refs: list[str],
+    proposed: dict[str, Any] | None,
     blockers: list[str],
     timestamp: str,
     summary: str,
 ) -> tuple[dict[str, Any], bool]:
-    success_criteria = mission.get("success_criteria", [])
-    criterion_evidence: list[dict[str, object]] = []
-    if isinstance(success_criteria, list):
-        for criterion in success_criteria:
-            if not isinstance(criterion, dict) or not isinstance(criterion.get("id"), str):
-                continue
-            criterion_evidence.append(
-                {
-                    "criterion_id": str(criterion["id"]),
-                    "evidence_refs": refs,
-                }
-            )
+    if proposed is None:
+        raise CompletionRejectedError(
+            "Final-goal completion requires an explicit mission completion evaluation."
+        )
 
-    approval_evaluations: list[dict[str, object]] = []
-    mission_objective_approval_pending = False
-    approvals_required = mission.get("approvals_required", [])
-    if isinstance(approvals_required, list):
-        for requirement in approvals_required:
-            if not isinstance(requirement, str):
-                continue
-            external_follow_on = _is_external_follow_on(requirement)
-            if not external_follow_on:
-                mission_objective_approval_pending = True
-            approval_evaluations.append(
-                {
-                    "requirement": requirement,
-                    "scope": (
-                        "external-follow-on"
-                        if external_follow_on
-                        else "mission-objective"
-                    ),
-                    "status": "not-required" if external_follow_on else "pending",
-                    "approval_ref": None,
-                    "rationale": (
-                        "The approval governs external follow-on work outside the completed "
-                        "preparation objective."
-                        if external_follow_on
-                        else "The approval applies within the mission objective and remains pending."
-                    ),
-                }
-            )
+    success_criteria = mission.get("success_criteria")
+    if not isinstance(success_criteria, list):
+        raise CompletionRejectedError("Mission success criteria must be a list.")
+    criterion_ids: list[str] = []
+    for criterion in success_criteria:
+        if not isinstance(criterion, dict) or not isinstance(criterion.get("id"), str):
+            raise CompletionRejectedError("Every mission success criterion must have an id.")
+        criterion_ids.append(str(criterion["id"]))
 
-    completed = (
-        bool(criterion_evidence)
-        and bool(refs)
-        and not blockers
-        and not mission_objective_approval_pending
+    criterion_evidence = proposed.get("criterion_evidence")
+    if not isinstance(criterion_evidence, list):
+        raise CompletionRejectedError("criterion_evidence must be a list.")
+    mapped_ids: list[str] = []
+    normalized_criterion_evidence: list[dict[str, object]] = []
+    for mapping in criterion_evidence:
+        if not isinstance(mapping, dict) or not isinstance(mapping.get("criterion_id"), str):
+            raise CompletionRejectedError("Each criterion evidence mapping requires criterion_id.")
+        criterion_id = str(mapping["criterion_id"])
+        evidence_refs = _required_strings(
+            mapping.get("evidence_refs"),
+            f"Evidence references for {criterion_id}",
+        )
+        if not evidence_refs:
+            raise CompletionRejectedError(
+                f"Mission criterion {criterion_id} requires at least one evidence reference."
+            )
+        mapped_ids.append(criterion_id)
+        normalized_criterion_evidence.append(
+            {
+                "criterion_id": criterion_id,
+                "evidence_refs": list(dict.fromkeys(evidence_refs)),
+            }
+        )
+    if len(mapped_ids) != len(set(mapped_ids)) or set(mapped_ids) != set(criterion_ids):
+        raise CompletionRejectedError(
+            "Mission completion evidence must map every success criterion exactly once."
+        )
+
+    approvals_required = _required_strings(
+        mission.get("approvals_required", []),
+        "Mission approvals_required",
     )
+    proposed_approvals = proposed.get("approval_evaluations")
+    if not isinstance(proposed_approvals, list):
+        raise CompletionRejectedError("approval_evaluations must be a list.")
+    evaluated_requirements: list[str] = []
+    normalized_approvals: list[dict[str, object]] = []
+    mission_objective_approval_blocking = False
+    for evaluation in proposed_approvals:
+        if not isinstance(evaluation, dict):
+            raise CompletionRejectedError("Each approval evaluation must be a mapping.")
+        requirement = evaluation.get("requirement")
+        scope = evaluation.get("scope")
+        status = evaluation.get("status")
+        rationale = evaluation.get("rationale")
+        approval_ref = evaluation.get("approval_ref")
+        if not isinstance(requirement, str):
+            raise CompletionRejectedError("Each approval evaluation requires requirement.")
+        if scope not in {"mission-objective", "external-follow-on"}:
+            raise CompletionRejectedError(
+                f"Approval requirement {requirement} requires an explicit valid scope."
+            )
+        if status not in {"not-required", "pending", "approved", "rejected"}:
+            raise CompletionRejectedError(
+                f"Approval requirement {requirement} requires an explicit valid status."
+            )
+        if not isinstance(rationale, str) or not rationale.strip():
+            raise CompletionRejectedError(
+                f"Approval requirement {requirement} requires a rationale."
+            )
+        if status == "approved" and not isinstance(approval_ref, str):
+            raise CompletionRejectedError(
+                f"Approved requirement {requirement} requires approval_ref."
+            )
+        if approval_ref is not None and not isinstance(approval_ref, str):
+            raise CompletionRejectedError(
+                f"Approval reference for {requirement} must be a string or null."
+            )
+        evaluated_requirements.append(requirement)
+        normalized_approvals.append(
+            {
+                "requirement": requirement,
+                "scope": scope,
+                "status": status,
+                "approval_ref": approval_ref,
+                "rationale": rationale.strip(),
+            }
+        )
+        if scope == "mission-objective" and status != "approved":
+            mission_objective_approval_blocking = True
+
+    if (
+        len(evaluated_requirements) != len(set(evaluated_requirements))
+        or set(evaluated_requirements) != set(approvals_required)
+    ):
+        raise CompletionRejectedError(
+            "Mission completion must evaluate every declared approval requirement exactly once."
+        )
+
+    proposed_blockers = proposed.get("blocker_refs", blockers)
+    if _required_strings(proposed_blockers, "blocker_refs") != blockers:
+        raise CompletionRejectedError(
+            "Mission completion blocker_refs must exactly match governed unresolved blockers."
+        )
+
+    completed = not blockers and not mission_objective_approval_blocking
     completion: dict[str, Any] = {
-        "criterion_evidence": criterion_evidence,
+        "criterion_evidence": normalized_criterion_evidence,
         "blocker_refs": blockers,
-        "approval_evaluations": approval_evaluations,
+        "approval_evaluations": normalized_approvals,
         "completed_at": timestamp if completed else None,
         "completed_by": "ai-flywheel-cli" if completed else None,
         "summary": summary if completed else None,
@@ -178,6 +232,7 @@ def complete_execution(
     summary: str,
     refs: tuple[str, ...],
     *,
+    mission_completion: dict[str, Any] | None = None,
     completed_at: datetime | None = None,
 ) -> CompletionResult:
     root = repository.resolve()
@@ -291,26 +346,26 @@ def complete_execution(
         goal_id,
     )
     mission_completed = False
+    blockers = _blocker_refs(state.get("blockers"), execution.get("blockers"))
     if mission_evaluated:
-        blockers = _blocker_refs(state.get("blockers"), execution.get("blockers"))
-        mission_completion, mission_completed = _mission_completion_evaluation(
+        mission_completion_value, mission_completed = _mission_completion_evaluation(
             mission,
-            unique_refs,
+            mission_completion,
             blockers,
             timestamp,
             summary.strip(),
         )
-        mission["completion"] = mission_completion
-        mission["status"] = "completed" if mission_completed else "active"
+        mission["completion"] = mission_completion_value
+        mission["status"] = "completed" if mission_completed else "blocked" if blockers else "active"
 
     state.update(
         {
-            "status": "ready",
+            "status": "ready" if not blockers else "blocked",
             "active_mission": None if mission_completed else mission_id,
             "active_goal": None,
             "active_execution": None,
             "lifecycle_stage": None,
-            "blockers": [],
+            "blockers": blockers,
             "last_durable_update": {
                 "at": timestamp,
                 "by": "ai-flywheel-cli",
