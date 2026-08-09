@@ -31,3 +31,40 @@ properties:
     type: array
     uniqueItems: true
     items: {type: string, minLength: 1}
+  completion:
+    type: object
+    additionalProperties: false
+    required: [criterion_evidence, blocker_refs, approval_evaluations]
+    properties:
+      criterion_evidence:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [criterion_id, evidence_refs]
+          properties:
+            criterion_id: {type: string, pattern: '^MSC-[0-9]{3,}$'}
+            evidence_refs:
+              type: array
+              minItems: 1
+              uniqueItems: true
+              items: {type: string, minLength: 1}
+      blocker_refs:
+        type: array
+        uniqueItems: true
+        items: {type: string, minLength: 1}
+      approval_evaluations:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required: [requirement, scope, status]
+          properties:
+            requirement: {type: string, minLength: 1}
+            scope: {type: string, enum: [mission-objective, external-follow-on]}
+            status: {type: string, enum: [not-required, pending, approved, rejected]}
+            approval_ref: {type: [string, 'null'], minLength: 1}
+            rationale: {type: string, minLength: 1}
+      completed_at: {type: [string, 'null'], format: date-time}
+      completed_by: {type: [string, 'null'], minLength: 1}
+      summary: {type: [string, 'null'], minLength: 1}

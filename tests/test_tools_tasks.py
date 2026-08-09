@@ -40,6 +40,10 @@ def test_source_distribution_excludes_repository_only_content() -> None:
         "/.flywheel",
         "/.gitignore",
         "/.release-proof",
+        "/.test-temp",
+        "/.pytest_cache",
+        "/.mypy_cache",
+        "/.ruff_cache",
         "/tests",
         "/tools",
     ]
