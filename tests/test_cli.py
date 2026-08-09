@@ -1,24 +1,17 @@
 from __future__ import annotations
 
-import hashlib
 import json
-import zipfile
 from pathlib import Path
 
 from typer.testing import CliRunner
 
 import ai_flywheel_cli.cli as cli
 from ai_flywheel_cli.deterministic_operations import UnsupportedDeterministicOperationError
-from ai_flywheel_cli.operations import LockContentionError, OperationError
+from ai_flywheel_cli.framework_compatibility import FrameworkCompatibility
+from ai_flywheel_cli.operations import OperationError
+from ai_flywheel_cli.validation import ValidationResult
 
 runner = CliRunner()
-
-
-def _archive(path: Path, files: dict[str, str]) -> Path:
-    with zipfile.ZipFile(path, "w") as archive:
-        for name, content in files.items():
-            archive.writestr(name, content)
-    return path
 
 
 def test_version_is_available() -> None:
@@ -31,11 +24,32 @@ def test_version_is_available() -> None:
 def test_doctor_reports_repository_without_modifying_it(tmp_path: Path) -> None:
     result = runner.invoke(cli.app, ["doctor", str(tmp_path), "--json"])
 
-    assert result.exit_code == 0
+    assert result.exit_code == 8
     payload = json.loads(result.stdout)
     assert payload["command"] == "doctor"
-    assert payload["flywheel_exists"] is False
+    assert payload["framework_status"] == "not-installed"
+    assert payload["supported_framework_version"] == "2026.08.08"
+    assert payload["repository_validation_status"] == "not-run"
     assert list(tmp_path.iterdir()) == []
+
+
+def test_doctor_reports_compatible_valid_repository(monkeypatch, tmp_path: Path) -> None:
+    monkeypatch.setattr(
+        cli,
+        "classify_framework",
+        lambda _: FrameworkCompatibility("compatible", "2026.08.08", "Compatible."),
+    )
+    monkeypatch.setattr(cli, "validate_repository", lambda _: ValidationResult(issues=()))
+
+    result = runner.invoke(cli.app, ["doctor", str(tmp_path), "--json"])
+
+    assert result.exit_code == 0
+    payload = json.loads(result.stdout)
+    assert payload["status"] == "ok"
+    assert payload["cli_version"] == "0.1.0"
+    assert payload["framework_status"] == "compatible"
+    assert payload["installed_framework_version"] == "2026.08.08"
+    assert payload["repository_validation_status"] == "passed"
 
 
 def test_status_reports_not_installed_when_state_is_missing(tmp_path: Path) -> None:
@@ -77,94 +91,11 @@ def test_usage_errors_keep_typer_exit_code_2() -> None:
     assert result.exit_code == 2
 
 
-def test_install_displays_plan_without_apply(tmp_path: Path) -> None:
-    archive = _archive(
-        tmp_path / "framework.zip",
-        {".flywheel/manifest.yaml": "schema_version: 1\n"},
-    )
-
-    result = runner.invoke(
-        cli.app,
-        [
-            "install",
-            str(tmp_path),
-            "--archive",
-            str(archive),
-            "--checksum",
-            hashlib.sha256(archive.read_bytes()).hexdigest(),
-            "--framework-version",
-            "0.1.0",
-            "--json",
-        ],
-    )
-
-    assert result.exit_code == 0
-    payload = json.loads(result.stdout)
-    assert payload["status"] == "planned"
-    assert payload["apply_required"] is True
-
-
-def test_install_reports_repository_conflict(tmp_path: Path) -> None:
-    (tmp_path / ".flywheel").mkdir()
-    archive = _archive(
-        tmp_path / "framework.zip",
-        {".flywheel/manifest.yaml": "schema_version: 1\n"},
-    )
-
-    result = runner.invoke(
-        cli.app,
-        [
-            "install",
-            str(tmp_path),
-            "--archive",
-            str(archive),
-            "--checksum",
-            hashlib.sha256(archive.read_bytes()).hexdigest(),
-            "--framework-version",
-            "0.1.0",
-            "--apply",
-            "--json",
-        ],
-    )
-
-    assert result.exit_code == 4
-    payload = json.loads(result.stdout)
-    assert payload["status"] == "repository-conflict"
-    assert payload["category"] == "repository-conflict"
-    assert payload["reason"] == "repository-content-conflict"
-
-
-def test_install_reports_lock_contention(monkeypatch, tmp_path: Path) -> None:
-    archive = _archive(
-        tmp_path / "framework.zip",
-        {".flywheel/manifest.yaml": "schema_version: 1\n"},
-    )
-
-    def conflict(*_args, **_kwargs):
-        raise LockContentionError("lock busy")
-
-    monkeypatch.setattr(cli, "install_from_archive", conflict)
-
-    result = runner.invoke(
-        cli.app,
-        [
-            "install",
-            str(tmp_path),
-            "--archive",
-            str(archive),
-            "--checksum",
-            hashlib.sha256(archive.read_bytes()).hexdigest(),
-            "--framework-version",
-            "0.1.0",
-            "--apply",
-            "--json",
-        ],
-    )
-
-    assert result.exit_code == 5
-    payload = json.loads(result.stdout)
-    assert payload["status"] == "lock-contention"
-    assert payload["reason"] == "repository-lock-active"
+def test_install_and_upgrade_commands_are_not_exposed() -> None:
+    for command in ("install", "upgrade"):
+        result = runner.invoke(cli.app, [command])
+        assert result.exit_code == 2
+        assert "No such command" in result.output
 
 
 def test_advance_lifecycle_reports_ai_fallback(monkeypatch, tmp_path: Path) -> None:
@@ -216,58 +147,3 @@ def test_start_execution_reports_generic_operation_error(monkeypatch) -> None:
     assert payload["category"] == "operation-failed"
     assert payload["reason"] == "operation-error"
     assert "failures" not in payload
-
-
-def test_upgrade_displays_plan_without_apply(tmp_path: Path) -> None:
-    archive = _archive(
-        tmp_path / "framework.zip",
-        {".flywheel/manifest.yaml": "schema_version: 1\n"},
-    )
-
-    result = runner.invoke(
-        cli.app,
-        [
-            "upgrade",
-            str(tmp_path),
-            "--archive",
-            str(archive),
-            "--checksum",
-            hashlib.sha256(archive.read_bytes()).hexdigest(),
-            "--framework-version",
-            "0.2.0",
-            "--json",
-        ],
-    )
-
-    assert result.exit_code == 0
-    payload = json.loads(result.stdout)
-    assert payload["status"] == "planned"
-
-
-def test_upgrade_reports_repository_conflict(tmp_path: Path) -> None:
-    archive = _archive(
-        tmp_path / "framework.zip",
-        {".flywheel/manifest.yaml": "schema_version: 1\n"},
-    )
-
-    result = runner.invoke(
-        cli.app,
-        [
-            "upgrade",
-            str(tmp_path),
-            "--archive",
-            str(archive),
-            "--checksum",
-            hashlib.sha256(archive.read_bytes()).hexdigest(),
-            "--framework-version",
-            "0.2.0",
-            "--apply",
-            "--json",
-        ],
-    )
-
-    assert result.exit_code == 4
-    payload = json.loads(result.stdout)
-    assert payload["status"] == "repository-conflict"
-    assert payload["category"] == "repository-conflict"
-    assert payload["reason"] == "repository-content-conflict"
