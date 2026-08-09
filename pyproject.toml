@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "ai-flywheel-cli"
 version = "0.1.0"
-description = "Repository-local CLI for installing, validating, inspecting, and upgrading AI Flywheel operating artifacts."
+description = "Repository-local CLI for validating, inspecting, and operating AI Flywheel artifacts."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }

@@ -12,21 +12,22 @@ from ai_flywheel_cli.deterministic_operations import (
     advance_lifecycle,
     start_execution,
 )
+from ai_flywheel_cli.framework_compatibility import (
+    SUPPORTED_FRAMEWORK_VERSION,
+    classify_framework,
+)
 from ai_flywheel_cli.mutation import MutationRejectedError, load_yaml_mapping
 from ai_flywheel_cli.operations import (
     LockContentionError,
     OperationError,
     RepositoryConflictError,
-    install_from_archive,
-    plan_install,
 )
 from ai_flywheel_cli.persistence import persist_execution
-from ai_flywheel_cli.upgrade import upgrade_from_archive
 from ai_flywheel_cli.validation import validate_repository
 
 app = typer.Typer(
     name="flywheel",
-    help="Install, inspect, validate, upgrade, and safely operate AI Flywheel artifacts.",
+    help="Inspect, validate, and safely operate AI Flywheel artifacts.",
     no_args_is_help=True,
     invoke_without_command=True,
 )
@@ -39,6 +40,7 @@ EXIT_REPOSITORY_CONFLICT = 4
 EXIT_LOCK_CONTENTION = 5
 EXIT_AI_FALLBACK_REQUIRED = 6
 EXIT_OPERATION_FAILED = 7
+EXIT_FRAMEWORK_INCOMPATIBLE = 8
 
 
 def _emit(payload: dict[str, object], *, as_json: bool) -> None:
@@ -98,18 +100,37 @@ def doctor(
     repository: Path = typer.Argument(Path.cwd(), exists=True, file_okay=False),
     json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
 ) -> None:
-    """Inspect local prerequisites without modifying the repository."""
-    flywheel_path = repository / ".flywheel"
+    """Report CLI, framework-compatibility, and repository health without mutation."""
+    compatibility = classify_framework(repository)
+    validation_status = "not-run"
+    validation_issues: list[dict[str, str]] = []
+    status_value = "framework-incompatible"
+    exit_code = EXIT_FRAMEWORK_INCOMPATIBLE
+    if compatibility.compatible:
+        validation = validate_repository(repository)
+        validation_issues = [issue.as_dict() for issue in validation.issues]
+        validation_status = "passed" if validation.passed else "failed"
+        status_value = "ok" if validation.passed else "validation-failed"
+        exit_code = EXIT_SUCCESS if validation.passed else EXIT_VALIDATION_FAILED
+
     _emit(
         {
             "command": "doctor",
             "repository": str(repository.resolve()),
-            "flywheel_exists": flywheel_path.is_dir(),
-            "repository_writable": repository.exists() and repository.is_dir(),
-            "status": "ok",
+            "cli_version": __version__,
+            "supported_framework_version": SUPPORTED_FRAMEWORK_VERSION,
+            "installed_framework_version": compatibility.installed_version,
+            "framework_status": compatibility.status,
+            "framework_reason": compatibility.reason,
+            "repository_validation_status": validation_status,
+            "repository_issue_count": len(validation_issues),
+            "repository_issues": validation_issues,
+            "status": status_value,
         },
         as_json=json_output,
     )
+    if exit_code != EXIT_SUCCESS:
+        raise typer.Exit(code=exit_code)
 
 
 @app.command()
@@ -258,73 +279,5 @@ def complete_execution_command(
         )
     except OperationError as error:
         _operation_exit(error, command="complete-execution", as_json=json_output)
-        return
-    _emit(result.as_dict(), as_json=json_output)
-
-
-@app.command()
-def install(
-    repository: Path = typer.Argument(Path.cwd(), exists=True, file_okay=False),
-    archive: Path = typer.Option(..., "--archive", exists=True, dir_okay=False),
-    checksum: str = typer.Option(..., "--checksum", help="Expected SHA-256 checksum."),
-    framework_version: str = typer.Option(..., "--framework-version"),
-    source_identity: str = typer.Option("local-archive", "--source-identity"),
-    apply: bool = typer.Option(False, "--apply", "--yes", help="Apply the displayed plan."),
-    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
-) -> None:
-    """Install verified Flywheel artifacts transactionally from an immutable archive."""
-    try:
-        plan = plan_install(archive, framework_version)
-        if not apply:
-            _emit(
-                {**plan.as_dict(), "status": "planned", "apply_required": True},
-                as_json=json_output,
-            )
-            return
-        result = install_from_archive(
-            repository,
-            archive,
-            checksum,
-            framework_version,
-            source_identity,
-        )
-    except OperationError as error:
-        _operation_exit(error, command="install", as_json=json_output)
-        return
-    _emit(result.as_dict(), as_json=json_output)
-
-
-@app.command()
-def upgrade(
-    repository: Path = typer.Argument(Path.cwd(), exists=True, file_okay=False),
-    archive: Path = typer.Option(..., "--archive", exists=True, dir_okay=False),
-    checksum: str = typer.Option(..., "--checksum", help="Expected SHA-256 checksum."),
-    framework_version: str = typer.Option(..., "--framework-version"),
-    source_identity: str = typer.Option("local-archive", "--source-identity"),
-    apply: bool = typer.Option(False, "--apply", "--yes", help="Apply the displayed upgrade."),
-    json_output: bool = typer.Option(False, "--json", help="Emit deterministic JSON output."),
-) -> None:
-    """Upgrade verified Flywheel artifacts with conflict detection and rollback."""
-    if not apply:
-        _emit(
-            {
-                "command": "upgrade",
-                "status": "planned",
-                "framework_version": framework_version,
-                "apply_required": True,
-            },
-            as_json=json_output,
-        )
-        return
-    try:
-        result = upgrade_from_archive(
-            repository,
-            archive,
-            checksum,
-            framework_version,
-            source_identity,
-        )
-    except OperationError as error:
-        _operation_exit(error, command="upgrade", as_json=json_output)
         return
     _emit(result.as_dict(), as_json=json_output)
