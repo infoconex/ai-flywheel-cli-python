@@ -11,8 +11,9 @@ an isolated child scope, downloads the reviewed canonical installer to a tempora
 launcher artifact afterward.
 
 The canonical Python bootstrap detects framework compatibility and delegates an
-absent framework to the official published framework installer. It then prepares
-the Python CLI and performs compatibility and health checks.
+absent framework to the official published framework installer. It then asks the
+user to choose repository-owned source or a managed CLI and performs compatibility
+and health checks.
 #>
 
 & {
@@ -20,7 +21,7 @@ the Python CLI and performs compatibility and health checks.
     $ErrorActionPreference = 'Stop'
     $ProgressPreference = 'SilentlyContinue'
 
-    $installerCommit = 'f87e458564c0de85f780c584d6ad7a22780c10a6'
+    $installerCommit = '4f787819df1617d0a6b8435196e9c978cfbf1457'
     $installerUri = "https://raw.githubusercontent.com/Infoconex/ai-flywheel-cli-python/$installerCommit/scripts/install-ai-flywheel.ps1"
     $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('ai-flywheel-installer-{0}.ps1' -f [guid]::NewGuid().ToString('N').Substring(0, 8))
 
