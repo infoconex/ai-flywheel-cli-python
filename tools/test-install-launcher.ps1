@@ -45,6 +45,10 @@ if ($launcherText -notmatch "installerCommit\s*=\s*'[0-9a-f]{40}'") {
     throw 'Public install launcher must pin an immutable canonical installer commit.'
 }
 
+if (-not $launcherText.Contains("installerCommit = 'f87e458564c0de85f780c584d6ad7a22780c10a6'")) {
+    throw 'Public install launcher does not pin the reviewed framework-delegating bootstrap.'
+}
+
 if (-not $launcherText.Contains('/scripts/install-ai-flywheel.ps1')) {
     throw 'Public install launcher must delegate to the canonical installer script.'
 }

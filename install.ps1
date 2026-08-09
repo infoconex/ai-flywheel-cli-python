@@ -20,7 +20,7 @@ the Python CLI and performs compatibility and health checks.
     $ErrorActionPreference = 'Stop'
     $ProgressPreference = 'SilentlyContinue'
 
-    $installerCommit = 'a8cbeb6796ea0725cb179de4d289bb78d9707d5f'
+    $installerCommit = 'f87e458564c0de85f780c584d6ad7a22780c10a6'
     $installerUri = "https://raw.githubusercontent.com/Infoconex/ai-flywheel-cli-python/$installerCommit/scripts/install-ai-flywheel.ps1"
     $installerPath = Join-Path ([System.IO.Path]::GetTempPath()) ('ai-flywheel-installer-{0}.ps1' -f [guid]::NewGuid().ToString('N').Substring(0, 8))
 
