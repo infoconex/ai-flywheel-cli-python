@@ -83,6 +83,7 @@ try {
     }
 
     Assert-BootstrapTest -Condition ($sourceText.Contains('fe11b801b5dfeef812377a978558fd563b67fa9e')) -Message 'Official framework installer commit is not pinned.'
+    Assert-BootstrapTest -Condition ($sourceText.Contains("`$CliRef = '2d84294cbe9922ec907fe718e9dd06e9944e0ebc'")) -Message 'Default CLI source is not pinned to the compatible implementation.'
     Assert-BootstrapTest -Condition ($sourceText.Contains('/scripts/install-framework.ps1')) -Message 'Bootstrap does not invoke the official framework installer.'
     $frameworkStageIndex = $sourceText.IndexOf('$script:CurrentStage = ''Framework''')
     $pythonStageIndex = $sourceText.IndexOf('$script:CurrentStage = ''Python''')

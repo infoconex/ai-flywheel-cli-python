@@ -58,7 +58,7 @@ param(
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
-    [string]$CliRef = 'e766886acf35b145023292b954ff097b63e95b29',
+    [string]$CliRef = '2d84294cbe9922ec907fe718e9dd06e9944e0ebc',
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]

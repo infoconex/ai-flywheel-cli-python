@@ -35,6 +35,7 @@ Release tag: v2026.08.08
 Package: ai-flywheel-framework-2026.08.08.zip
 Checksum asset: ai-flywheel-framework-2026.08.08.zip.sha256
 Installer commit: fe11b801b5dfeef812377a978558fd563b67fa9e
+Default CLI source commit: 2d84294cbe9922ec907fe718e9dd06e9944e0ebc
 ```
 
 ## Invocation
