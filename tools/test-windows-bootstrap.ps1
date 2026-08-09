@@ -5,9 +5,9 @@
 Runs dependency-free regression tests for the AI Flywheel Windows bootstrap.
 
 .DESCRIPTION
-Verifies CLI-source extraction and the boundary between framework installation and
-Python CLI setup. Framework compatibility classification is exercised without
-network access or repository mutation.
+Verifies managed and repository-owned CLI selection, CLI-source extraction, and
+the boundary between framework installation and Python CLI setup. Framework
+compatibility classification is exercised without network access.
 #>
 
 [CmdletBinding()]
@@ -81,6 +81,7 @@ try {
     foreach ($removedParameter in @('FrameworkVersion', 'FrameworkRef', 'FrameworkPath')) {
         Assert-BootstrapTest -Condition ($parameterNames -notcontains $removedParameter) -Message "Removed parameter remains exposed: $removedParameter"
     }
+    Assert-BootstrapTest -Condition ($parameterNames -contains 'CliInstallMode') -Message 'CLI installation mode parameter is missing.'
 
     Assert-BootstrapTest -Condition ($sourceText.Contains('fe11b801b5dfeef812377a978558fd563b67fa9e')) -Message 'Official framework installer commit is not pinned.'
     Assert-BootstrapTest -Condition ($sourceText.Contains("`$CliRef = '2d84294cbe9922ec907fe718e9dd06e9944e0ebc'")) -Message 'Default CLI source is not pinned to the compatible implementation.'
@@ -92,6 +93,12 @@ try {
         Assert-BootstrapTest -Condition (-not $sourceText.Contains($forbidden)) -Message "Framework-owned installation logic remains: $forbidden"
     }
     Assert-BootstrapTest -Condition (-not $sourceText.Contains("'start-execution'")) -Message 'Bootstrap must not invoke lifecycle operations.'
+    Assert-BootstrapTest -Condition (-not $sourceText.Contains('SetEnvironmentVariable')) -Message 'Bootstrap must not add the managed CLI to PATH yet.'
+
+    $CliInstallMode = 'Source'
+    Assert-BootstrapTest -Condition ((Resolve-CliInstallMode) -eq 'Source') -Message 'Explicit source mode selection failed.'
+    $CliInstallMode = 'Managed'
+    Assert-BootstrapTest -Condition ((Resolve-CliInstallMode) -eq 'Managed') -Message 'Explicit managed mode selection failed.'
 
     $absentRoot = Join-Path $testRoot 'absent'
     New-Item -ItemType Directory -Path $absentRoot | Out-Null
@@ -152,6 +159,9 @@ Set-Content -LiteralPath $record -Encoding UTF8 -Value ("{0}|{1}|{2}" -f $Reposi
 
     Assert-BootstrapTest -Condition (Test-CliArchiveEntryExcluded -EntryName 'repo/.flywheel/state.yaml') -Message 'CLI .flywheel exclusion failed.'
     Assert-BootstrapTest -Condition (-not (Test-CliArchiveEntryExcluded -EntryName 'repo/src/ai_flywheel_cli/cli.py')) -Message 'CLI source was incorrectly excluded.'
+    Assert-BootstrapTest -Condition (Test-CliArchiveEntryExcluded -EntryName 'repo/tests/test_cli.py') -Message 'Managed CLI development-file exclusion failed.'
+    Assert-BootstrapTest -Condition (-not (Test-CliArchiveEntryExcluded -EntryName 'repo/tests/test_cli.py' -IncludeDevelopmentFiles)) -Message 'Repository-owned CLI tests were incorrectly excluded.'
+    Assert-BootstrapTest -Condition (-not (Test-CliArchiveEntryExcluded -EntryName 'repo/tools/__main__.py' -IncludeDevelopmentFiles)) -Message 'Repository-owned CLI project tasks were incorrectly excluded.'
 
     $cliArchive = Join-Path $testRoot 'cli.zip'
     $deepSegment = 'deep-' + ('x' * 120)
@@ -167,6 +177,68 @@ Set-Content -LiteralPath $record -Encoding UTF8 -Value ("{0}|{1}|{2}" -f $Reposi
     Assert-BootstrapTest -Condition (-not (Test-Path -LiteralPath (Join-Path $cliRoot '.flywheel'))) -Message 'Excluded .flywheel content was extracted.'
     $deepPath = Join-Path $cliRoot "src\$deepSegment\$deepSegment\value.txt"
     Assert-BootstrapTest -Condition ([System.IO.File]::Exists((ConvertTo-BootstrapExtendedPath -Path $deepPath))) -Message 'Deep-path extraction failed.'
+
+    $sourceFixture = Join-Path $testRoot 'source-fixture'
+    foreach ($directory in @('src\ai_flywheel_cli', 'tests', 'tools')) {
+        New-Item -ItemType Directory -Path (Join-Path $sourceFixture $directory) -Force | Out-Null
+    }
+    Set-Content -LiteralPath (Join-Path $sourceFixture 'pyproject.toml') -Value '[project]' -Encoding UTF8
+    Set-Content -LiteralPath (Join-Path $sourceFixture 'README.md') -Value 'fixture' -Encoding UTF8
+    Set-Content -LiteralPath (Join-Path $sourceFixture 'src\ai_flywheel_cli\cli.py') -Value 'app = None' -Encoding UTF8
+    Set-Content -LiteralPath (Join-Path $sourceFixture 'tests\test_cli.py') -Value 'def test_cli(): pass' -Encoding UTF8
+    Set-Content -LiteralPath (Join-Path $sourceFixture 'tools\__main__.py') -Value 'pass' -Encoding UTF8
+
+    $sourceRoot = Join-Path $testRoot 'source-install'
+    New-Item -ItemType Directory -Path (Join-Path $sourceRoot '.flywheel') -Force | Out-Null
+    $script:InvocationBoundParameters = @{ CliPath = $sourceFixture }
+    $CliPath = $sourceFixture
+    $ValidateOnly = $false
+    $NonInteractive = $true
+    function Invoke-BootstrapPython {
+        [CmdletBinding()]
+        param([Parameter(Mandatory)]$Python, [Parameter(Mandatory)][string[]]$ArgumentList)
+        $environment = $ArgumentList[-1]
+        $scripts = Join-Path $environment 'Scripts'
+        New-Item -ItemType Directory -Path $scripts -Force | Out-Null
+        Set-Content -LiteralPath (Join-Path $scripts 'python.exe') -Value 'fixture' -Encoding ASCII
+        Set-Content -LiteralPath (Join-Path $scripts 'flywheel.exe') -Value 'fixture' -Encoding ASCII
+        return [pscustomobject]@{ ExitCode = 0; Output = @() }
+    }
+    function Invoke-BootstrapNativeCommand {
+        [CmdletBinding()]
+        param(
+            [Parameter(Mandatory)][string]$FilePath,
+            [Parameter()][string[]]$ArgumentList = @(),
+            [switch]$AllowFailure
+        )
+        if ($ArgumentList -contains '--version') { return [pscustomobject]@{ ExitCode = 0; Output = @('0.1.0') } }
+        return [pscustomobject]@{ ExitCode = 0; Output = @() }
+    }
+    $sourceCli = Initialize-RepositoryFlywheelCli -Python ([pscustomobject]@{}) -Root $sourceRoot -FlywheelHome $testRoot -TemporaryRoot $testRoot -Confirm:$false
+    $installedTools = Join-Path $sourceRoot '.flywheel\tools'
+    Assert-BootstrapTest -Condition ($sourceCli.InstallMode -eq 'Source') -Message 'Repository-owned CLI mode was not reported.'
+    Assert-BootstrapTest -Condition (Test-Path -LiteralPath (Join-Path $installedTools 'src\ai_flywheel_cli\cli.py')) -Message 'Repository-owned CLI source was not installed.'
+    Assert-BootstrapTest -Condition (Test-Path -LiteralPath (Join-Path $installedTools 'tests\test_cli.py')) -Message 'Repository-owned CLI tests were not installed.'
+    Assert-BootstrapTest -Condition (Test-Path -LiteralPath (Join-Path $installedTools 'tools\__main__.py')) -Message 'Repository-owned CLI project tasks were not installed.'
+    Assert-BootstrapTest -Condition (Test-Path -LiteralPath (Join-Path $installedTools 'cli-source.yaml')) -Message 'Repository-owned CLI source metadata was not installed.'
+    Set-Content -LiteralPath (Join-Path $installedTools 'src\ai_flywheel_cli\cli.py') -Value 'repository-owned adaptation' -Encoding UTF8
+    $beforeSourceHash = (Get-FileHash -LiteralPath (Join-Path $installedTools 'src\ai_flywheel_cli\cli.py') -Algorithm SHA256).Hash
+    Initialize-RepositoryFlywheelCli -Python ([pscustomobject]@{}) -Root $sourceRoot -FlywheelHome $testRoot -TemporaryRoot $testRoot -Confirm:$false | Out-Null
+    $afterSourceHash = (Get-FileHash -LiteralPath (Join-Path $installedTools 'src\ai_flywheel_cli\cli.py') -Algorithm SHA256).Hash
+    Assert-BootstrapTest -Condition ($beforeSourceHash -eq $afterSourceHash) -Message 'Repeat source setup overwrote a repository-owned CLI adaptation.'
+
+    $conflictRoot = Join-Path $testRoot 'source-conflict'
+    New-Item -ItemType Directory -Path (Join-Path $conflictRoot '.flywheel\tools') -Force | Out-Null
+    Set-Content -LiteralPath (Join-Path $conflictRoot '.flywheel\tools\existing-tool.py') -Value 'preserve' -Encoding UTF8
+    $conflictDetected = $false
+    try {
+        Initialize-RepositoryFlywheelCli -Python ([pscustomobject]@{}) -Root $conflictRoot -FlywheelHome $testRoot -TemporaryRoot $testRoot -Confirm:$false | Out-Null
+    }
+    catch {
+        $conflictDetected = $_.Exception.Data['BootstrapExitCode'] -eq $script:ExitCode.RepositoryConflict
+    }
+    Assert-BootstrapTest -Condition $conflictDetected -Message 'Existing untracked .flywheel/tools content was not protected.'
+    Assert-BootstrapTest -Condition ((Get-Content -LiteralPath (Join-Path $conflictRoot '.flywheel\tools\existing-tool.py') -Raw).Trim() -eq 'preserve') -Message 'Existing repository tools were modified during conflict handling.'
 
     Write-Output 'Windows bootstrap regression tests passed.'
 }

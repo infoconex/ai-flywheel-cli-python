@@ -3,8 +3,8 @@
 ## Purpose
 
 The Windows bootstrap ensures a compatible published AI Flywheel framework is
-present, configures an isolated Python CLI, and verifies runtime health. It never
-starts onboarding or lifecycle work.
+present, asks the user to choose a Python CLI installation model, and verifies the
+selected runtime. It never starts onboarding or lifecycle work.
 
 Dependency direction is:
 
@@ -22,8 +22,9 @@ Python runtime implementation
   verification, archive safety, provenance, staging, atomic `.flywheel`
   publication, rollback, and refusal to overwrite.
 - **Windows Python bootstrap** detects framework compatibility, invokes the official
-  installer only when the framework is absent, prepares Python and the managed CLI,
-  and runs health checks.
+  installer only when the framework is absent, asks whether the CLI should be
+  repository-owned source or managed, prepares the selected runtime, and runs
+  health checks.
 - **Python CLI** validates and operates an installed framework. It does not install,
   extract, checksum, publish, or upgrade framework artifacts.
 
@@ -50,8 +51,12 @@ Supported inputs:
 - `-Repository <path>`: target Git repository or a path inside it.
 - `-CliRef <branch|tag|commit>`: CLI source ref; the normal default is immutable.
 - `-CliPath <path>`: local CLI source/package for development testing.
+- `-CliInstallMode Source|Managed`: makes the installation choice explicitly.
+  Interactive runs prompt when this parameter is omitted. Non-interactive runs
+  require it.
 - `-NonInteractive`: disables prompts.
-- `-Apply`: required with `-NonInteractive` when framework installation is needed.
+- `-Apply`: required with `-NonInteractive` when framework installation or initial
+  repository-owned source installation is needed.
 - `-ValidateOnly`: checks an existing installation without installing one.
 - Common `-WhatIf` and `-Confirm` semantics are passed to the official installer.
 
@@ -68,12 +73,52 @@ select a local framework, development ref, archive, checksum, or source identity
    Python setup.
 5. Reject older, newer, malformed, inconsistent, legacy, or untracked frameworks
    without overwriting them.
-6. Detect Python 3.11+ and offer explicit `winget` remediation when appropriate.
-7. Create or reuse a managed CLI environment under
-   `%LOCALAPPDATA%\AI-Flywheel\environments`.
-8. Run `flywheel doctor`, which verifies CLI version, framework identity,
+6. Ask the user to choose repository-owned source or a managed CLI.
+7. Detect Python 3.11+ and offer explicit `winget` remediation when appropriate.
+8. Install or reuse the selected CLI model.
+9. Run `flywheel doctor`, which verifies CLI version, framework identity,
    compatibility, and repository validation.
-9. Stop without invoking onboarding or lifecycle commands.
+10. Stop without invoking onboarding or lifecycle commands.
+
+## CLI installation modes
+
+### Repository-owned source (recommended)
+
+This mode seeds an editable Python project into `.flywheel/tools`:
+
+```text
+.flywheel/
+├── tools/
+│   ├── cli-source.yaml
+│   ├── pyproject.toml
+│   ├── README.md
+│   ├── src/
+│   ├── tests/
+│   └── tools/
+└── .runtime/
+    └── python-cli/
+```
+
+The seed includes the CLI package source, tests, project quality-gate tasks,
+project metadata, and README. It intentionally excludes the CLI repository's own
+`.flywheel` records, Git metadata, release-proof files, installer scripts, and
+distribution-only documentation.
+
+The runtime under `.flywheel/.runtime/python-cli` installs `.flywheel/tools` in
+editable mode with development dependencies. AI may therefore adapt the source
+and tests through the repository's governed lifecycle without rebuilding or
+activating the virtual environment. Re-running setup preserves existing source;
+the installer never replaces an existing `.flywheel/tools` directory.
+
+This milestone does not make the managed CLI discover repository extensions and
+does not implement a hybrid CLI.
+
+### Managed CLI
+
+This mode retains the existing PR #9 behavior. It creates or reuses a versioned
+environment under `%LOCALAPPDATA%\AI-Flywheel\environments`. The CLI source is not
+copied into the application repository. This milestone does not add a stable PATH
+launcher; the completion output reports the exact CLI executable path.
 
 ## Framework compatibility
 
@@ -134,7 +179,7 @@ locations.
 
 ## Storage and safety
 
-Managed Python assets remain outside the target repository:
+Managed-mode Python assets remain outside the target repository:
 
 ```text
 %LOCALAPPDATA%\AI-Flywheel\
@@ -147,6 +192,9 @@ Temporary CLI-source extraction occurs under `%TEMP%\AIFW\<run-id>` and is
 removed after the run. The bootstrap never commits, pushes, merges, changes
 application source, enables application missions, or begins lifecycle execution.
 
+Source mode additionally writes the governed seed to `.flywheel/tools` and keeps
+its generated virtual environment under `.flywheel/.runtime`.
+
 ## Validation
 
 The full gate includes:
@@ -157,8 +205,9 @@ The full gate includes:
 .\tools\test-windows-bootstrap.ps1
 ```
 
-Regression coverage verifies compatibility classifications, immutable official
-installer identity, framework-before-Python ordering, preservation of compatible
-framework files, absence of Python-owned framework installation logic, CLI source
-archive safety, and removal of lifecycle invocation from bootstrap. Python tests
-cover the same compatibility policy and deterministic `doctor` output.
+Regression coverage verifies compatibility classifications, explicit CLI mode
+selection, immutable official installer identity, framework-before-Python ordering,
+preservation of compatible framework files, repository-owned source seeding and
+repeat-run preservation, absence of Python-owned framework installation logic, CLI
+source archive safety, and removal of lifecycle invocation from bootstrap. Python
+tests cover the same compatibility policy and deterministic `doctor` output.

@@ -5,10 +5,12 @@
 Prepares a Windows Git repository for AI Flywheel onboarding.
 
 .DESCRIPTION
-Ensures the official AI Flywheel framework is installed, then installs and
-validates the Python CLI without starting onboarding. The bootstrap delegates all
-framework acquisition, verification, provenance, archive safety, and repository
-mutation to the published framework installer.
+Ensures the official AI Flywheel framework is installed, then asks whether the
+Python CLI should be installed as repository-owned editable source or as a managed
+CLI outside the repository. The bootstrap validates the selected installation
+without starting onboarding. It delegates all framework acquisition, verification,
+provenance, archive safety, and framework publication to the published framework
+installer.
 
 The bootstrap never commits, pushes, merges, enables application missions, or
 starts an onboarding execution.
@@ -23,11 +25,16 @@ CLI Git branch, tag, or commit. Defaults to an approved immutable CLI commit.
 .PARAMETER CliPath
 Local CLI source directory, wheel, or sdist for development/testing.
 
+.PARAMETER CliInstallMode
+Selects Source or Managed CLI installation. Interactive runs prompt when omitted.
+Non-interactive runs require an explicit selection.
+
 .PARAMETER NonInteractive
 Disables prompts. Repository mutation additionally requires -Apply.
 
 .PARAMETER Apply
-Explicitly authorizes repository mutation in non-interactive mode.
+Explicitly authorizes framework or repository-owned source mutation in
+non-interactive mode.
 
 .PARAMETER ValidateOnly
 Validates prerequisites and an existing installation without installing.
@@ -63,6 +70,10 @@ param(
     [Parameter()]
     [ValidateNotNullOrEmpty()]
     [string]$CliPath,
+
+    [Parameter()]
+    [ValidateSet('Source', 'Managed')]
+    [string]$CliInstallMode,
 
     [Parameter()]
     [switch]$NonInteractive,
@@ -111,6 +122,8 @@ $script:BootstrapContext = [ordered]@{
     CliVersion = $null
     CliExecutable = $null
     CliResolvedCommit = $null
+    CliInstallMode = $null
+    CliSourcePath = $null
     FrameworkVersion = $null
     FrameworkCompatibility = $null
     FrameworkInstallerCommit = $script:FrameworkInstallerCommit
@@ -267,6 +280,31 @@ function Confirm-BootstrapAction {
     $answer = Read-Host "$Prompt $suffix"
     if ([string]::IsNullOrWhiteSpace($answer)) { return $DefaultYes }
     return $answer.Trim().StartsWith('y', [System.StringComparison]::OrdinalIgnoreCase)
+}
+
+function Resolve-CliInstallMode {
+    [CmdletBinding()]
+    param()
+
+    if (-not [string]::IsNullOrWhiteSpace($CliInstallMode)) { return $CliInstallMode }
+    if ($NonInteractive) {
+        Invoke-BootstrapFailure -Message 'Non-interactive setup requires an explicit CLI installation mode.' -Code $script:ExitCode.Cancelled -Remediation 'Specify -CliInstallMode Source or -CliInstallMode Managed.'
+    }
+
+    Write-Host 'How should the AI Flywheel CLI be installed?'
+    Write-Host ''
+    Write-Host '  1. Repository-owned source (recommended)'
+    Write-Host '     Seed editable Python source in .flywheel/tools so this repository can evolve it.'
+    Write-Host ''
+    Write-Host '  2. Managed CLI'
+    Write-Host '     Install a shared, versioned CLI outside the repository.'
+    Write-Host ''
+    while ($true) {
+        $selection = Read-Host 'Selection [1]'
+        if ([string]::IsNullOrWhiteSpace($selection) -or $selection.Trim() -eq '1') { return 'Source' }
+        if ($selection.Trim() -eq '2') { return 'Managed' }
+        Write-BootstrapWarning -Message 'Enter 1 for repository-owned source or 2 for managed CLI.'
+    }
 }
 
 function New-BootstrapDirectory {
@@ -525,19 +563,24 @@ function ConvertTo-BootstrapExtendedPath {
 
 function Test-CliArchiveEntryExcluded {
     [CmdletBinding()]
-    param([Parameter(Mandatory)][ValidateNotNullOrEmpty()][string]$EntryName)
+    param(
+        [Parameter(Mandatory)][ValidateNotNullOrEmpty()][string]$EntryName,
+        [switch]$IncludeDevelopmentFiles
+    )
 
     $parts = @($EntryName.Replace('\', '/').Split('/') | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
     if ($parts.Count -lt 2) { return $false }
     $rootChild = $parts[1]
-    return $rootChild -in @('.flywheel', '.gitignore', '.release-proof', 'tests', 'tools')
+    if ($rootChild -in @('.flywheel', '.git', '.gitignore', '.release-proof')) { return $true }
+    return (-not $IncludeDevelopmentFiles) -and $rootChild -in @('tests', 'tools')
 }
 
 function Expand-BootstrapArchive {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter(Mandatory)][ValidateNotNullOrEmpty()][string]$Archive,
-        [Parameter(Mandatory)][ValidateNotNullOrEmpty()][string]$Destination
+        [Parameter(Mandatory)][ValidateNotNullOrEmpty()][string]$Destination,
+        [switch]$IncludeDevelopmentFiles
     )
 
     Add-Type -AssemblyName System.IO.Compression -ErrorAction Stop
@@ -559,7 +602,7 @@ function Expand-BootstrapArchive {
     try {
         foreach ($entry in $zip.Entries) {
             if ([string]::IsNullOrWhiteSpace($entry.FullName)) { continue }
-            if ($isCliExtraction -and (Test-CliArchiveEntryExcluded -EntryName $entry.FullName)) { continue }
+            if ($isCliExtraction -and (Test-CliArchiveEntryExcluded -EntryName $entry.FullName -IncludeDevelopmentFiles:$IncludeDevelopmentFiles)) { continue }
 
             $relativeName = $entry.FullName.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
             $targetPath = [System.IO.Path]::GetFullPath((Join-Path $destinationRoot $relativeName))
@@ -600,6 +643,36 @@ function Expand-BootstrapArchive {
     return $roots[0].FullName
 }
 
+function Get-FlywheelCliSource {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][string]$FlywheelHome,
+        [Parameter(Mandatory)][string]$TemporaryRoot,
+        [switch]$IncludeDevelopmentFiles
+    )
+
+    if ($script:InvocationBoundParameters.ContainsKey('CliPath')) {
+        $sourcePath = (Resolve-Path -LiteralPath $CliPath -ErrorAction Stop).Path
+        return [pscustomobject]@{
+            Path = $sourcePath
+            Identity = "local:$sourcePath"
+            ResolvedCommit = $null
+        }
+    }
+
+    $resolvedCommit = Resolve-GitHubCommit -RepositoryName $script:CliRepository -Ref $CliRef
+    $cacheDirectory = Join-Path $FlywheelHome 'cache\cli'
+    New-BootstrapDirectory -Path $cacheDirectory -Confirm:$false
+    $archive = Join-Path $cacheDirectory ("$resolvedCommit.zip")
+    Save-GitHubArchive -RepositoryName $script:CliRepository -CommitSha $resolvedCommit -Destination $archive
+    $sourcePath = Expand-BootstrapArchive -Archive $archive -Destination (Join-Path $TemporaryRoot 'cli') -IncludeDevelopmentFiles:$IncludeDevelopmentFiles -Confirm:$false
+    return [pscustomobject]@{
+        Path = $sourcePath
+        Identity = "github-ref:$script:CliRepository@$resolvedCommit"
+        ResolvedCommit = $resolvedCommit
+    }
+}
+
 function Initialize-FlywheelCliEnvironment {
     [CmdletBinding()]
     param(
@@ -607,21 +680,12 @@ function Initialize-FlywheelCliEnvironment {
         [Parameter(Mandatory)][string]$FlywheelHome,
         [Parameter(Mandatory)][string]$TemporaryRoot
     )
-    $resolvedCommit = $null
+    $source = Get-FlywheelCliSource -FlywheelHome $FlywheelHome -TemporaryRoot $TemporaryRoot
     if ($script:InvocationBoundParameters.ContainsKey('CliPath')) {
-        $sourcePath = (Resolve-Path -LiteralPath $CliPath -ErrorAction Stop).Path
-        $sourceIdentity = "local:$sourcePath"
         $environmentName = 'cli-local'
     }
     else {
-        $resolvedCommit = Resolve-GitHubCommit -RepositoryName $script:CliRepository -Ref $CliRef
-        $cacheDirectory = Join-Path $FlywheelHome 'cache\cli'
-        New-BootstrapDirectory -Path $cacheDirectory -Confirm:$false
-        $archive = Join-Path $cacheDirectory ("$resolvedCommit.zip")
-        Save-GitHubArchive -RepositoryName $script:CliRepository -CommitSha $resolvedCommit -Destination $archive
-        $sourcePath = Expand-BootstrapArchive -Archive $archive -Destination (Join-Path $TemporaryRoot 'cli') -Confirm:$false
-        $sourceIdentity = "github-ref:$script:CliRepository@$resolvedCommit"
-        $environmentName = "cli-$($resolvedCommit.Substring(0, 12))"
+        $environmentName = "cli-$($source.ResolvedCommit.Substring(0, 12))"
     }
 
     $environment = Join-Path $FlywheelHome ("environments\$environmentName")
@@ -632,6 +696,9 @@ function Initialize-FlywheelCliEnvironment {
         $healthy = (Invoke-BootstrapNativeCommand -FilePath $flywheel -ArgumentList @('--version') -AllowFailure).ExitCode -eq 0
     }
     if (-not $healthy) {
+        if ($ValidateOnly) {
+            Invoke-BootstrapFailure -Message 'The managed CLI environment is not healthy.' -Code $script:ExitCode.Validation -Remediation 'Run setup without -ValidateOnly and select Managed to rebuild the environment.'
+        }
         if (Test-Path -LiteralPath $environment) {
             Write-BootstrapWarning -Message 'Existing managed CLI environment is unhealthy.'
             if ($NonInteractive -or (Confirm-BootstrapAction -Prompt 'Rebuild the Flywheel-owned CLI environment?' -DefaultYes $true)) { Remove-Item -LiteralPath $environment -Recurse -Force -ErrorAction Stop }
@@ -640,7 +707,111 @@ function Initialize-FlywheelCliEnvironment {
         New-BootstrapDirectory -Path (Split-Path -Parent $environment) -Confirm:$false
         Write-Host 'Preparing managed AI Flywheel CLI environment...' -ForegroundColor DarkGray
         Invoke-BootstrapPython -Python $Python -ArgumentList @('-m', 'venv', $environment) | Out-Null
-        Invoke-BootstrapNativeCommand -FilePath $venvPython -ArgumentList @('-m', 'pip', 'install', '--disable-pip-version-check', $sourcePath) | Out-Null
+        Invoke-BootstrapNativeCommand -FilePath $venvPython -ArgumentList @('-m', 'pip', 'install', '--disable-pip-version-check', $source.Path) | Out-Null
+    }
+    $versionResult = Invoke-BootstrapNativeCommand -FilePath $flywheel -ArgumentList @('--version')
+    return [pscustomobject]@{
+        Executable = $flywheel
+        Python = $venvPython
+        Version = (($versionResult.Output | Select-Object -Last 1).ToString().Trim())
+        Environment = $environment
+        SourceIdentity = $source.Identity
+        ResolvedCommit = $source.ResolvedCommit
+        InstallMode = 'Managed'
+        SourcePath = $null
+    }
+}
+
+function Initialize-RepositoryFlywheelCli {
+    [CmdletBinding(SupportsShouldProcess = $true)]
+    param(
+        [Parameter(Mandatory)]$Python,
+        [Parameter(Mandatory)][string]$Root,
+        [Parameter(Mandatory)][string]$FlywheelHome,
+        [Parameter(Mandatory)][string]$TemporaryRoot
+    )
+
+    $target = Join-Path $Root '.flywheel\tools'
+    $metadataPath = Join-Path $target 'cli-source.yaml'
+    if (Test-Path -LiteralPath $target) {
+        if (-not (Test-Path -LiteralPath $metadataPath -PathType Leaf)) {
+            Invoke-BootstrapFailure -Message 'Repository-owned CLI source cannot be installed because .flywheel/tools already exists without CLI source metadata.' -Code $script:ExitCode.RepositoryConflict -Remediation 'Preserve or relocate the existing tools, then retry. The installer will not overwrite them.'
+        }
+        $recordedMode = Get-TopLevelYamlValue -Path $metadataPath -Key 'installation_mode'
+        if ($recordedMode -ne 'source') {
+            Invoke-BootstrapFailure -Message 'Repository-owned CLI source metadata is malformed or uses an unsupported installation mode.' -Code $script:ExitCode.RepositoryConflict -Remediation 'Repair cli-source.yaml before retrying. The installer will not overwrite repository tools.'
+        }
+        if (-not (Test-Path -LiteralPath (Join-Path $target 'pyproject.toml') -PathType Leaf)) {
+            Invoke-BootstrapFailure -Message 'Repository-owned CLI source metadata exists, but pyproject.toml is missing.' -Code $script:ExitCode.RepositoryConflict -Remediation 'Repair the governed repository-owned tools before retrying.'
+        }
+        $sourceIdentity = Get-TopLevelYamlValue -Path $metadataPath -Key 'source_identity'
+        $resolvedCommit = Get-TopLevelYamlValue -Path $metadataPath -Key 'source_commit'
+        Write-BootstrapSuccess -Message 'Existing repository-owned CLI source preserved'
+    }
+    else {
+        if ($ValidateOnly) {
+            Invoke-BootstrapFailure -Message 'Repository-owned CLI source is not installed.' -Code $script:ExitCode.Validation -Remediation 'Run setup without -ValidateOnly and select Source.'
+        }
+        $source = Get-FlywheelCliSource -FlywheelHome $FlywheelHome -TemporaryRoot $TemporaryRoot -IncludeDevelopmentFiles
+        if (-not (Test-Path -LiteralPath $source.Path -PathType Container)) {
+            Invoke-BootstrapFailure -Message 'Repository-owned installation requires a CLI source directory.' -Code $script:ExitCode.Acquisition -Remediation 'Use a source directory with -CliPath or use -CliInstallMode Managed for a wheel or sdist.'
+        }
+
+        $stagingParent = Join-Path $Root '.flywheel\.runtime'
+        New-BootstrapDirectory -Path $stagingParent -Confirm:$false
+        $staging = Join-Path $stagingParent ("cli-source-$($script:RunId.Substring(0, 8))")
+        New-BootstrapDirectory -Path $staging -Confirm:$false
+        try {
+            foreach ($item in @('pyproject.toml', 'README.md', 'src', 'tests', 'tools')) {
+                $sourceItem = Join-Path $source.Path $item
+                if (-not (Test-Path -LiteralPath $sourceItem)) {
+                    Invoke-BootstrapFailure -Message "CLI source is missing required project content: $item" -Code $script:ExitCode.Integrity
+                }
+                Copy-Item -LiteralPath $sourceItem -Destination $staging -Recurse -Force -ErrorAction Stop
+            }
+            $sourceCommit = if ($source.ResolvedCommit) { $source.ResolvedCommit } else { 'local' }
+            @(
+                'schema_version: 1'
+                'installation_mode: source'
+                "source_repository: $($script:CliRepository)"
+                "source_commit: $sourceCommit"
+                "source_identity: '$($source.Identity.Replace("'", "''"))'"
+                'update_policy: repository-governed'
+            ) | Set-Content -LiteralPath (Join-Path $staging 'cli-source.yaml') -Encoding UTF8 -ErrorAction Stop
+            if ($PSCmdlet.ShouldProcess($target, 'Publish repository-owned CLI source')) {
+                Move-Item -LiteralPath $staging -Destination $target -ErrorAction Stop
+            }
+        }
+        finally {
+            if (Test-Path -LiteralPath $staging) {
+                Remove-Item -LiteralPath $staging -Recurse -Force -ErrorAction SilentlyContinue
+            }
+        }
+        $sourceIdentity = $source.Identity
+        $resolvedCommit = $source.ResolvedCommit
+        Write-BootstrapSuccess -Message 'Editable CLI source installed in .flywheel/tools'
+    }
+
+    $environment = Join-Path $Root '.flywheel\.runtime\python-cli'
+    $venvPython = Join-Path $environment 'Scripts\python.exe'
+    $flywheel = Join-Path $environment 'Scripts\flywheel.exe'
+    $healthy = $false
+    if ((Test-Path -LiteralPath $venvPython) -and (Test-Path -LiteralPath $flywheel)) {
+        $healthy = (Invoke-BootstrapNativeCommand -FilePath $flywheel -ArgumentList @('--version') -AllowFailure).ExitCode -eq 0
+    }
+    if (-not $healthy) {
+        if ($ValidateOnly) {
+            Invoke-BootstrapFailure -Message 'The repository-owned CLI runtime is not healthy.' -Code $script:ExitCode.Validation -Remediation 'Run setup without -ValidateOnly and select Source to rebuild the runtime.'
+        }
+        if (Test-Path -LiteralPath $environment) {
+            Write-BootstrapWarning -Message 'Existing repository-owned CLI runtime is unhealthy.'
+            if ($NonInteractive -or (Confirm-BootstrapAction -Prompt 'Rebuild the Flywheel-owned repository runtime?' -DefaultYes $true)) { Remove-Item -LiteralPath $environment -Recurse -Force -ErrorAction Stop }
+            else { Invoke-BootstrapFailure -Message 'A healthy repository-owned CLI runtime is required.' -Code $script:ExitCode.Cancelled }
+        }
+        New-BootstrapDirectory -Path (Split-Path -Parent $environment) -Confirm:$false
+        Write-Host 'Preparing repository-owned AI Flywheel CLI runtime...' -ForegroundColor DarkGray
+        Invoke-BootstrapPython -Python $Python -ArgumentList @('-m', 'venv', $environment) | Out-Null
+        Invoke-BootstrapNativeCommand -FilePath $venvPython -ArgumentList @('-m', 'pip', 'install', '--disable-pip-version-check', '--editable', "$target[dev]") | Out-Null
     }
     $versionResult = Invoke-BootstrapNativeCommand -FilePath $flywheel -ArgumentList @('--version')
     return [pscustomobject]@{
@@ -650,6 +821,8 @@ function Initialize-FlywheelCliEnvironment {
         Environment = $environment
         SourceIdentity = $sourceIdentity
         ResolvedCommit = $resolvedCommit
+        InstallMode = 'Source'
+        SourcePath = $target
     }
 }
 
@@ -835,6 +1008,23 @@ function Invoke-AIFlywheelBootstrap {
         if ($frameworkInstalled) { Write-BootstrapSuccess -Message "Official framework $($compatibility.Version) installed" }
         else { Write-BootstrapSuccess -Message "Compatible framework $($compatibility.Version) already installed and left intact" }
 
+        $script:CurrentStage = 'CLI Installation Mode'
+        Write-BootstrapSection -Title 'CLI Installation Mode'
+        $installMode = Resolve-CliInstallMode
+        $script:BootstrapContext.CliInstallMode = $installMode
+        if ($installMode -eq 'Source') {
+            if ($NonInteractive -and -not $Apply -and -not (Test-Path -LiteralPath (Join-Path $root '.flywheel\tools\cli-source.yaml') -PathType Leaf)) {
+                Invoke-BootstrapFailure -Message 'Non-interactive repository-owned source installation requires explicit -Apply authorization.' -Code $script:ExitCode.Cancelled
+            }
+            Write-BootstrapSuccess -Message 'Repository-owned editable source selected'
+        }
+        else {
+            if (Test-Path -LiteralPath (Join-Path $root '.flywheel\tools\cli-source.yaml') -PathType Leaf) {
+                Invoke-BootstrapFailure -Message 'This repository already uses repository-owned CLI source.' -Code $script:ExitCode.RepositoryConflict -Remediation 'Select Source. Hybrid operation is not implemented in this milestone.'
+            }
+            Write-BootstrapSuccess -Message 'Managed CLI selected'
+        }
+
         $script:CurrentStage = 'Python'
         Write-BootstrapSection -Title 'Python'
         $python = Get-OrInstallPythonRuntime
@@ -845,10 +1035,16 @@ function Invoke-AIFlywheelBootstrap {
 
         $script:CurrentStage = 'CLI'
         Write-BootstrapSection -Title 'AI Flywheel CLI'
-        $cli = Initialize-FlywheelCliEnvironment -Python $python -FlywheelHome $flywheelHome -TemporaryRoot $script:TemporaryRoot
+        if ($installMode -eq 'Source') {
+            $cli = Initialize-RepositoryFlywheelCli -Python $python -Root $root -FlywheelHome $flywheelHome -TemporaryRoot $script:TemporaryRoot -Confirm:$false
+        }
+        else {
+            $cli = Initialize-FlywheelCliEnvironment -Python $python -FlywheelHome $flywheelHome -TemporaryRoot $script:TemporaryRoot
+        }
         $script:BootstrapContext.CliVersion = $cli.Version
         $script:BootstrapContext.CliExecutable = $cli.Executable
         $script:BootstrapContext.CliResolvedCommit = $cli.ResolvedCommit
+        $script:BootstrapContext.CliSourcePath = $cli.SourcePath
         Write-BootstrapSuccess -Message "AI Flywheel CLI $($cli.Version) ready"
 
         $script:CurrentStage = 'Validation'
@@ -866,6 +1062,9 @@ function Invoke-AIFlywheelBootstrap {
         Write-Host "Repository: $root"
         Write-Host "Framework: $($compatibility.Version)"
         Write-Host "Framework installer commit: $($script:FrameworkInstallerCommit)"
+        Write-Host "CLI installation mode: $($cli.InstallMode)"
+        if ($cli.SourcePath) { Write-Host "CLI source: $($cli.SourcePath)" }
+        Write-Host "CLI command: $($cli.Executable)"
         Write-Host "CLI: $($cli.Version)"
         Write-Host 'Compatibility: Passed'
         Write-Host 'Repository validation: Passed'

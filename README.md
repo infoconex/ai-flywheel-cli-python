@@ -131,8 +131,8 @@ These commands enforce schema validation, active-stage boundaries, reference int
 
 The Python CLI does not install or upgrade `.flywheel`. Framework installation is
 owned by the published AI Flywheel Framework installer. On Windows, use the
-repository bootstrap to ensure framework `2026.08.08` is present before preparing
-the managed Python CLI:
+repository bootstrap to ensure framework `2026.08.08` is present and choose either
+repository-owned editable source or a managed Python CLI:
 
 ```powershell
 .\scripts\install-ai-flywheel.ps1
@@ -140,7 +140,27 @@ the managed Python CLI:
 
 The bootstrap invokes the official framework installer when `.flywheel` is absent,
 leaves a compatible installation intact, and stops without overwriting older,
-newer, malformed, legacy, or untracked installations.
+newer, malformed, legacy, or untracked installations. Interactive setup prompts:
+
+```text
+1. Repository-owned source (recommended)
+   Seeds editable source, tests, and project tasks under .flywheel/tools.
+
+2. Managed CLI
+   Installs the current versioned CLI outside the repository.
+```
+
+For automation, select the mode explicitly:
+
+```powershell
+.\scripts\install-ai-flywheel.ps1 -NonInteractive -Apply -CliInstallMode Source
+.\scripts\install-ai-flywheel.ps1 -NonInteractive -Apply -CliInstallMode Managed
+```
+
+Source mode creates an editable runtime under `.flywheel/.runtime/python-cli` and
+preserves `.flywheel/tools` on later runs so repository-governed adaptations are
+never overwritten. Managed mode retains the existing isolated environment under
+`%LOCALAPPDATA%\AI-Flywheel`. A hybrid extension system is not part of this change.
 
 ## Exit code contract
 
